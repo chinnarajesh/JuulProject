@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Flow xmlns="http://soap.sforce.com/2006/04/metadata">
+    <apiVersion>62.0</apiVersion>
+    <areMetricsLoggedToDataCloud>false</areMetricsLoggedToDataCloud>
+    <description>Migrated from the: UPDATE - Account Score - Score Totals workflow rule
+Workflow rule description: &quot;</description>
+    <environments>Default</environments>
+    <formulas>
+        <name>UPDATE_Account_Score_ERA_Total_ScoFormula</name>
+        <dataType>Number</dataType>
+        <expression>IF( 
+$Record.ERA__c = TRUE, 
+$Record.ERA_Collateral_Score__c + $Record.ERA_Merchandising_Score__c + $Record.ERA_Training_Score__c, 
+0)</expression>
+        <scale>0</scale>
+    </formulas>
+    <formulas>
+        <name>UPDATE_Account_Score_JUUL_Total_ScorFormula</name>
+        <dataType>Number</dataType>
+        <expression>IF(
+$Record.JUUL__c = TRUE, 
+$Record.JUUL_Collateral_Score__c + $Record.JUUL_Fixture_Score__c + $Record.JUUL_Merchandising_Score__c + $Record.JUUL_Training_Score__c,  
+
+0)</expression>
+        <scale>0</scale>
+    </formulas>
+    <formulas>
+        <name>UPDATE_Account_Score_PAX_Total_ScoFormula</name>
+        <dataType>Number</dataType>
+        <expression>IF(
+$Record.PAX__c = TRUE, 
+$Record.PAX_Collateral_Score__c + $Record.PAX_Fixture_Score__c + $Record.PAX_Merchandising_Score__c + $Record.PAX_Training_Score__c,  
+
+0)</expression>
+        <scale>0</scale>
+    </formulas>
+    <label>UPDATE - Account Score - Score Totals</label>
+    <migratedFromWorkflowRuleName>UPDATE - Account Score - Score Totals</migratedFromWorkflowRuleName>
+    <processMetadataValues>
+        <name>BuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>CanvasMode</name>
+        <value>
+            <stringValue>AUTO_LAYOUT_CANVAS</stringValue>
+        </value>
+    </processMetadataValues>
+    <processType>AutoLaunchedFlow</processType>
+    <recordUpdates>
+        <name>mainUpdate</name>
+        <label>mainUpdate</label>
+        <locationX>176</locationX>
+        <locationY>323</locationY>
+        <inputAssignments>
+            <field>ERA_Total_Score__c</field>
+            <value>
+                <elementReference>UPDATE_Account_Score_ERA_Total_ScoFormula</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>JUUL_Total_Score__c</field>
+            <value>
+                <elementReference>UPDATE_Account_Score_JUUL_Total_ScorFormula</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>PAX_Total_Score__c</field>
+            <value>
+                <elementReference>UPDATE_Account_Score_PAX_Total_ScoFormula</elementReference>
+            </value>
+        </inputAssignments>
+        <inputReference>$Record</inputReference>
+    </recordUpdates>
+    <start>
+        <locationX>50</locationX>
+        <locationY>0</locationY>
+        <connector>
+            <targetReference>mainUpdate</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>CreatedDate</field>
+            <operator>IsNull</operator>
+            <value>
+                <booleanValue>false</booleanValue>
+            </value>
+        </filters>
+        <object>Account_Score__c</object>
+        <recordTriggerType>CreateAndUpdate</recordTriggerType>
+        <triggerType>RecordAfterSave</triggerType>
+    </start>
+    <status>Active</status>
+</Flow>

@@ -1,0 +1,542 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Flow xmlns="http://soap.sforce.com/2006/04/metadata">
+    <apiVersion>49.0</apiVersion>
+    <areMetricsLoggedToDataCloud>false</areMetricsLoggedToDataCloud>
+    <assignments>
+        <name>Add_Accessible_By_to_text_variable</name>
+        <label>Add Accessible By to text variable</label>
+        <locationX>839</locationX>
+        <locationY>388</locationY>
+        <assignmentItems>
+            <assignToReference>OriginalSelectedGroups</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>Get_Change.Accessible_By__c</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Updated_OriginalSelectedGroups</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Assign_Change_owner_and_adjust_task_name</name>
+        <label>Assign Change owner and adjust task name</label>
+        <locationX>1644</locationX>
+        <locationY>63</locationY>
+        <assignmentItems>
+            <assignToReference>TaskAssignee</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>Get_Change.CreatedById</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Create_Project_for_CM</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Assign_Implementation_approver_to_task</name>
+        <label>Assign Implementation approver to task</label>
+        <locationX>1431</locationX>
+        <locationY>273</locationY>
+        <assignmentItems>
+            <assignToReference>TaskAssignee</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>AccountRecord.Implementation_Approver__c</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Create_Project_for_CM</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Port_Quality_Review_Approver_from_Account_to_Task</name>
+        <label>Port Quality Review Approver from Account to Task</label>
+        <locationX>1272</locationX>
+        <locationY>63</locationY>
+        <assignmentItems>
+            <assignToReference>QualityReviewApprover</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>AccountRecord.Quality_Review_Approver__c</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Is_implementation_approver_blank</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Store_next_value_in_collection_variable</name>
+        <label>Store next value in collection variable</label>
+        <locationX>965</locationX>
+        <locationY>187</locationY>
+        <assignmentItems>
+            <assignToReference>CollectionOfGroups</assignToReference>
+            <operator>Add</operator>
+            <value>
+                <elementReference>GrabNextValue</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>UpdatedOriginalSelectedGroups</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>RemainingValue</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Are_values_separated</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Updated_OriginalSelectedGroups</name>
+        <label>Updated OriginalSelectedGroups</label>
+        <locationX>901</locationX>
+        <locationY>555</locationY>
+        <assignmentItems>
+            <assignToReference>UpdatedOriginalSelectedGroups</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>UpdatedOriginalSelectedGroupsFormula</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Are_values_separated</targetReference>
+        </connector>
+    </assignments>
+    <decisions>
+        <name>Are_values_separated</name>
+        <label>Are values separated?</label>
+        <locationX>959</locationX>
+        <locationY>390</locationY>
+        <defaultConnector>
+            <targetReference>Create_task_for_each_group</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Yes</defaultConnectorLabel>
+        <rules>
+            <name>No_remove_one</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>UpdatedOriginalSelectedGroups</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Store_next_value_in_collection_variable</targetReference>
+            </connector>
+            <label>No, remove one</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <name>Has_Account_Record</name>
+        <label>Has Account Record?</label>
+        <locationX>1265</locationX>
+        <locationY>275</locationY>
+        <defaultConnector>
+            <targetReference>Create_task_for_each_group</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>No</defaultConnectorLabel>
+        <rules>
+            <name>Yes_1</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>AccountRecord</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Port_Quality_Review_Approver_from_Account_to_Task</targetReference>
+            </connector>
+            <label>Yes</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <name>Is_implementation_approver_blank</name>
+        <label>Is implementation approver blank?</label>
+        <locationX>1422</locationX>
+        <locationY>65</locationY>
+        <defaultConnector>
+            <targetReference>Assign_Implementation_approver_to_task</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>imp approver exists</defaultConnectorLabel>
+        <rules>
+            <name>imp_approver_blank</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>AccountRecord.Implementation_Approver__c</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Assign_Change_owner_and_adjust_task_name</targetReference>
+            </connector>
+            <label>imp approver blank</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <name>Phase_Exists</name>
+        <label>Phase Exists?</label>
+        <locationX>670</locationX>
+        <locationY>390</locationY>
+        <defaultConnectorLabel>No</defaultConnectorLabel>
+        <rules>
+            <name>Yes</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>ImplementationAndQRPhase</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Add_Accessible_By_to_text_variable</targetReference>
+            </connector>
+            <label>Yes</label>
+        </rules>
+    </decisions>
+    <description>This version utilizes the Accessible By field instead of individual checkboxes
+V8 - This version adds Quality Review Approver from account to the task
+V7 - Removing &quot;UNASSIGNED&quot; value from task name formula to avoid 80 char limit</description>
+    <formulas>
+        <name>FormulaOfGroupNames</name>
+        <dataType>String</dataType>
+        <expression>(IF({!Get_Change.AFG_CHINA__c}, &quot;AFG (Suzhou, CN);&quot;, &quot;&quot;) )&amp; 
+(IF({!Get_Change.AFG_NC__c}, &quot;AFG (Morrisville, NC, US);&quot;, &quot;&quot;) )&amp; 
+(IF({!Get_Change.DEFOND_CHINA__c}, &quot;DEFOND (CN);&quot;, &quot;&quot;) )&amp;
+(IF({!Get_Change.DEFOND_NA__c}, &quot;DEFOND (NA);&quot;, &quot;&quot;) )&amp;
+(IF({!Get_Change.FLEX_US__c}, &quot;FLEX (Buffalo Grove, IL, US);&quot;, &quot;&quot;) )&amp;
+(IF({!Get_Change.FLEX_GDL__c}, &quot;FLEX (Guadalajara, MX);&quot;, &quot;&quot;) )&amp;
+(IF({!Get_Change.Flex_Sarvar_Hungary__c}, &quot;FLEX (Sarvar, HU);&quot;, &quot;&quot;) )&amp;
+(IF({!Get_Change.PEGATRON_SUZHOU__c}, &quot;Pegatron (Suzhou, CN);&quot;, &quot;&quot;) )&amp; 
+(IF({!Get_Change.PHILLIPS_MEDISIZE_CHINA__c}, &quot;Phillips Medisize (Suzhou, CN);&quot;, &quot;&quot;) )&amp;
+(IF({!Get_Change.PHILLIPS_MEDISIZE_US__c}, &quot;Phillips Medisize (Menomonie, WI, US);&quot;, &quot;&quot;) )&amp;
+(IF({!Get_Change.ATL_AMPEREX_TECHNOLOGY__c}, &quot;Amperex Tech Limited (Tsuen Wan, CN);&quot;, &quot;&quot;) )&amp;
+(IF({!Get_Change.GENHON__c}, &quot;Genhon (Suzhou, CN);&quot;, &quot;&quot;) )&amp;
+(IF({!Get_Change.HONDA_HOLDINGS__c}, &quot;Honda Holdings (Suzhou, CN);&quot;, &quot;&quot;) )&amp;
+(IF({!Get_Change.PMP_PIONEER_MATERIAL_PRECISION__c}, &quot;PMP (New Taipei City, TW);&quot;, &quot;&quot;) )&amp;
+(IF({!Get_Change.PSI_PRINTED_SPECIALTIES__c}, &quot;Printed Specialties Inc (Carrollton, US);&quot;, &quot;&quot;) )&amp; 
+(IF({!Get_Change.RR_DONNELLEY__c}, &quot;RR Donnelley (Durham, NC, US);&quot;, &quot;&quot;) )&amp;
+(IF({!Get_Change.RR_DONNELLEY_REY__c}, &quot;RR Donnelley (Reynosa, MX);&quot;, &quot;&quot;) )&amp;
+(IF({!Get_Change.DECI_NC_US__c}, &quot;DECI (Durham, NC, US);&quot;, &quot;&quot;) )&amp;
+(IF({!Get_Change.HuiZhou_Desay_Battery_Co_LTD__c}, &quot;HuiZhou Desay Battery Co., LTD;&quot;, &quot;&quot;) )&amp;
+(IF({!Get_Change.Luxshare_Dongguan_CN__c}, &quot;Luxshare (Dongguan, CN);&quot;, &quot;&quot;) )&amp;
+(IF({!Get_Change.Molex_Shanghai_CN__c}, &quot;Molex Shanghai CN;&quot;, &quot;&quot;) )&amp;
+(IF({!Get_Change.Opple_Suzhou_CN__c}, &quot;Opple (Suzhou, CN);&quot;, &quot;&quot;) )&amp;
+(IF({!Get_Change.Aphena_Pharma_Solution_Easton_MD_US__c}, &quot;Aphena Pharma Solution Easton MD US;&quot;, &quot;&quot;) )&amp;
+(IF({!Get_Change.Sunningdale_Tech_Suzhou_CN__c}, &quot;Sunningdale Tech (Suzhou, CN);&quot;, &quot;&quot;) )&amp;
+(IF({!Get_Change.Ulife_Suzhou_CN__c}, &quot;Ulife (Suzhou, CN);&quot;, &quot;&quot;) )&amp;
+(IF({!Get_Change.Vigon_Inc_East_Stroudsburg_PA_US__c}, &quot;Vigon Inc. East Stroudsburg PA US;&quot;, &quot;&quot;) )&amp;
+(IF({!Get_Change.Flex_Columbia_US__c}, &quot;Flex (Columbia, SC, US);&quot;, &quot;&quot;) )&amp;
+(IF({!Get_Change.Phillips_Medisize_New_Richmond_US__c}, &quot;Phillips Medisize (New Richmond, WI, US);&quot;, &quot;&quot;) )&amp;
+(IF({!Get_Change.TBA5__c}, &quot;Phillips Medisize GID (Hudson, WI, US);&quot;, &quot;&quot;) )&amp;
+(IF({!Get_Change.TBA3__c}, &quot;Phillips Medisize (St. Croix, WI, US);&quot;, &quot;&quot;) )&amp;
+(IF({!Get_Change.DECI_NC_US__c}, &quot;DECI (Durham, NC, US);&quot;, &quot;&quot;) )&amp;
+(IF({!Get_Change.TBA4__c}, &quot;eLiquiTech (Eldersburg, MD, US);&quot;, &quot;&quot;) )</expression>
+    </formulas>
+    <formulas>
+        <name>GrabNextValue</name>
+        <dataType>String</dataType>
+        <expression>LEFT({!UpdatedOriginalSelectedGroups}, (FIND(&quot;;&quot;, {!UpdatedOriginalSelectedGroups}) -1))</expression>
+    </formulas>
+    <formulas>
+        <name>ImplementationTaskName</name>
+        <dataType>String</dataType>
+        <expression>{!Get_Change.Name} &amp; &quot; / &quot; &amp; {!ThisLoopGroup} &amp; &quot; / Implementation Task&quot;</expression>
+    </formulas>
+    <formulas>
+        <name>ProjectNameFormula</name>
+        <dataType>String</dataType>
+        <expression>{!Get_Change.Name} &amp; &quot; - &quot; &amp; {!ThisLoopGroup} &amp; &quot; Project&quot;</expression>
+    </formulas>
+    <formulas>
+        <name>RemainingValue</name>
+        <dataType>String</dataType>
+        <expression>RIGHT( {!UpdatedOriginalSelectedGroups}, (LEN({!UpdatedOriginalSelectedGroups}) - FIND(&quot;;&quot;, {!UpdatedOriginalSelectedGroups}) ) )</expression>
+    </formulas>
+    <formulas>
+        <name>UpdatedOriginalSelectedGroupsFormula</name>
+        <dataType>String</dataType>
+        <expression>{!OriginalSelectedGroups} &amp; &quot;;&quot;</expression>
+    </formulas>
+    <interviewLabel>Create Implementation Tasks for XCO {!$Flow.CurrentDateTime}</interviewLabel>
+    <label>Create Implementation Tasks for XCO</label>
+    <loops>
+        <name>Create_task_for_each_group</name>
+        <label>Create task for each group</label>
+        <locationX>1119</locationX>
+        <locationY>389</locationY>
+        <assignNextValueToReference>ThisLoopGroup</assignNextValueToReference>
+        <collectionReference>CollectionOfGroups</collectionReference>
+        <iterationOrder>Asc</iterationOrder>
+        <nextValueConnector>
+            <targetReference>Get_account_s_implementation_approver</targetReference>
+        </nextValueConnector>
+    </loops>
+    <processMetadataValues>
+        <name>BuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>CanvasMode</name>
+        <value>
+            <stringValue>FREE_FORM_CANVAS</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>OriginBuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processType>AutoLaunchedFlow</processType>
+    <recordCreates>
+        <name>Create_implementation_task</name>
+        <label>Create implementation task</label>
+        <locationX>1541</locationX>
+        <locationY>397</locationY>
+        <connector>
+            <targetReference>Create_task_for_each_group</targetReference>
+        </connector>
+        <inputAssignments>
+            <field>CM_Supplier_Manufacturer__c</field>
+            <value>
+                <elementReference>ThisLoopGroup</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Name</field>
+            <value>
+                <elementReference>ImplementationTaskName</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>PDLM__Assigned_To__c</field>
+            <value>
+                <elementReference>TaskAssignee</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>PDLM__Change_Phase__c</field>
+            <value>
+                <elementReference>ImplementationAndQRPhase.Id</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>PDLM__Change__c</field>
+            <value>
+                <elementReference>Get_Change.Id</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>PDLM__Project__c</field>
+            <value>
+                <elementReference>Create_Project_for_CM</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>PDLM__Type__c</field>
+            <value>
+                <stringValue>Task</stringValue>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Quality_Review_Approver__c</field>
+            <value>
+                <elementReference>QualityReviewApprover</elementReference>
+            </value>
+        </inputAssignments>
+        <object>PDLM__Deliverable__c</object>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </recordCreates>
+    <recordCreates>
+        <name>Create_Project_for_CM</name>
+        <label>Create Project for CM</label>
+        <locationX>1644</locationX>
+        <locationY>281</locationY>
+        <connector>
+            <targetReference>Create_implementation_task</targetReference>
+        </connector>
+        <inputAssignments>
+            <field>CM_Name__c</field>
+            <value>
+                <elementReference>ThisLoopGroup</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Name</field>
+            <value>
+                <elementReference>ProjectNameFormula</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>PDLM__Status__c</field>
+            <value>
+                <stringValue>Open</stringValue>
+            </value>
+        </inputAssignments>
+        <object>PDLM__Project__c</object>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </recordCreates>
+    <recordLookups>
+        <name>Get_account_s_implementation_approver</name>
+        <label>Get account&apos;s implementation approver</label>
+        <locationX>1118</locationX>
+        <locationY>190</locationY>
+        <assignNullValuesIfNoRecordsFound>true</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>Has_Account_Record</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>Name</field>
+            <operator>Contains</operator>
+            <value>
+                <elementReference>ThisLoopGroup</elementReference>
+            </value>
+        </filters>
+        <object>Account</object>
+        <outputReference>AccountRecord</outputReference>
+        <queriedFields>Id</queriedFields>
+        <queriedFields>Implementation_Approver__c</queriedFields>
+        <queriedFields>Quality_Review_Approver__c</queriedFields>
+    </recordLookups>
+    <recordLookups>
+        <name>Get_Change</name>
+        <label>Get Change</label>
+        <locationX>400</locationX>
+        <locationY>388</locationY>
+        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>Get_Implementation_Quality_Review_Phase</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>Id</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>ChangeID</elementReference>
+            </value>
+        </filters>
+        <getFirstRecordOnly>true</getFirstRecordOnly>
+        <object>PDLM__Change__c</object>
+        <queriedFields>Id</queriedFields>
+        <queriedFields>PDLM__Record_Tasks_Project__c</queriedFields>
+        <queriedFields>Name</queriedFields>
+        <queriedFields>Change_Status_Name__c</queriedFields>
+        <queriedFields>CreatedById</queriedFields>
+        <queriedFields>Accessible_By__c</queriedFields>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </recordLookups>
+    <recordLookups>
+        <name>Get_Implementation_Quality_Review_Phase</name>
+        <label>Get Implementation &amp; Quality Review Phase</label>
+        <locationX>539</locationX>
+        <locationY>388</locationY>
+        <assignNullValuesIfNoRecordsFound>true</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>Phase_Exists</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>Name</field>
+            <operator>Contains</operator>
+            <value>
+                <stringValue>Implementation</stringValue>
+            </value>
+        </filters>
+        <filters>
+            <field>PDLM__Change_lk__c</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>Get_Change.Id</elementReference>
+            </value>
+        </filters>
+        <object>PDLM__Change_Phase__c</object>
+        <outputReference>ImplementationAndQRPhase</outputReference>
+        <queriedFields>Id</queriedFields>
+    </recordLookups>
+    <runInMode>SystemModeWithoutSharing</runInMode>
+    <start>
+        <locationX>274</locationX>
+        <locationY>190</locationY>
+        <connector>
+            <targetReference>Get_Change</targetReference>
+        </connector>
+    </start>
+    <status>Active</status>
+    <variables>
+        <name>AccountRecord</name>
+        <dataType>SObject</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+        <objectType>Account</objectType>
+    </variables>
+    <variables>
+        <name>ChangeID</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>true</isInput>
+        <isOutput>false</isOutput>
+    </variables>
+    <variables>
+        <name>CollectionOfGroups</name>
+        <dataType>String</dataType>
+        <isCollection>true</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+    </variables>
+    <variables>
+        <name>ImplementationAndQRPhase</name>
+        <dataType>SObject</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+        <objectType>PDLM__Change_Phase__c</objectType>
+    </variables>
+    <variables>
+        <name>OriginalSelectedGroups</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+    </variables>
+    <variables>
+        <name>QualityReviewApprover</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+    </variables>
+    <variables>
+        <name>TaskAssignee</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+    </variables>
+    <variables>
+        <name>ThisLoopGroup</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+    </variables>
+    <variables>
+        <name>UpdatedOriginalSelectedGroups</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+    </variables>
+</Flow>

@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Flow xmlns="http://soap.sforce.com/2006/04/metadata">
+    <actionCalls>
+        <name>createDocument</name>
+        <label>createDocument</label>
+        <locationX>50</locationX>
+        <locationY>276</locationY>
+        <actionName>driveconnect__automateDrive</actionName>
+        <actionType>apex</actionType>
+        <flowTransactionModel>CurrentTransaction</flowTransactionModel>
+        <inputParameters>
+            <name>data</name>
+            <value>
+                <stringValue>{&quot;recordId&quot;:&quot;{!$Record.Id}&quot;,&quot;actionApiName&quot;:&quot;createDocument&quot;,&quot;operations&quot;:[{&quot;key&quot;:&quot;1720463245924&quot;,&quot;type&quot;:{&quot;value&quot;:&quot;merge&quot;,&quot;supportsChildOperations&quot;:true},&quot;config&quot;:{&quot;publishResultsEvent&quot;:false,&quot;template&quot;:{&quot;label&quot;:&quot;Enforcement Letter Template_Universal Enforcement&quot;,&quot;value&quot;:&quot;1_dAZxuHpRMQaqpoOdhlpS5UO6x8x2RcGP6jhS4YHNOE&quot;,&quot;mimeType&quot;:&quot;application/vnd.google-apps.document&quot;},&quot;destinationFolder&quot;:{&quot;value&quot;:&quot;defaultObject&quot;,&quot;lookupObject&quot;:&quot;&quot;,&quot;recordId&quot;:&quot;&quot;,&quot;lookup&quot;:&quot;&quot;},&quot;format&quot;:&quot;application/pdf&quot;,&quot;linkFile&quot;:false,&quot;experienceCloudShare&quot;:false},&quot;childOperations&quot;:[{&quot;key&quot;:&quot;1720463287851&quot;,&quot;type&quot;:{&quot;value&quot;:&quot;saveToSalesforce&quot;,&quot;supportsChildOperations&quot;:true},&quot;config&quot;:{&quot;publishResultsEvent&quot;:false,&quot;format&quot;:&quot;application/pdf&quot;},&quot;childOperations&quot;:[{&quot;key&quot;:&quot;1720797566066&quot;,&quot;type&quot;:{&quot;value&quot;:&quot;updateField&quot;,&quot;supportsChildOperations&quot;:false},&quot;config&quot;:{&quot;publishResultsEvent&quot;:false,&quot;recordId&quot;:&quot;{!$Record.Id}&quot;,&quot;field&quot;:&quot;Case.Enforcement_Letter_Content_Version_ID__c&quot;,&quot;parentType&quot;:&quot;saveToSalesforce&quot;,&quot;value&quot;:&quot;contentVersionId&quot;},&quot;childOperations&quot;:[]}]}]}]}</stringValue>
+            </value>
+        </inputParameters>
+        <nameSegment>driveconnect__automateDrive</nameSegment>
+    </actionCalls>
+    <apiVersion>61.0</apiVersion>
+    <areMetricsLoggedToDataCloud>false</areMetricsLoggedToDataCloud>
+    <environments>Default</environments>
+    <interviewLabel>Veezla | Drive Connect Document Generation {!$Flow.CurrentDateTime}</interviewLabel>
+    <label>Veezla | Case Enforcement Letter Generation (Drive Connect)</label>
+    <processMetadataValues>
+        <name>BuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>CanvasMode</name>
+        <value>
+            <stringValue>AUTO_LAYOUT_CANVAS</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>OriginBuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processType>AutoLaunchedFlow</processType>
+    <start>
+        <locationX>56</locationX>
+        <locationY>0</locationY>
+        <connector>
+            <targetReference>createDocument</targetReference>
+        </connector>
+        <doesRequireRecordChangedToMeetCriteria>true</doesRequireRecordChangedToMeetCriteria>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>Secret_Shop_Status__c</field>
+            <operator>EqualTo</operator>
+            <value>
+                <stringValue>Fail</stringValue>
+            </value>
+        </filters>
+        <filters>
+            <field>Status</field>
+            <operator>EqualTo</operator>
+            <value>
+                <stringValue>Retail Case Closed</stringValue>
+            </value>
+        </filters>
+        <object>Case</object>
+        <recordTriggerType>CreateAndUpdate</recordTriggerType>
+        <scheduledPaths>
+            <pathType>AsyncAfterCommit</pathType>
+        </scheduledPaths>
+        <triggerType>RecordAfterSave</triggerType>
+    </start>
+    <status>Active</status>
+</Flow>

@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Flow xmlns="http://soap.sforce.com/2006/04/metadata">
+    <apiVersion>63.0</apiVersion>
+    <areMetricsLoggedToDataCloud>false</areMetricsLoggedToDataCloud>
+    <description>Migrated from the: Days Since Last Sales Order workflow rule
+Workflow rule description: &quot;</description>
+    <formulas>
+        <name>Populate_Days_Since_Previous_OrderFormula</name>
+        <dataType>Number</dataType>
+        <expression>$Record.Order_Date__c -  $Record.Customer__r.Date_of_Newest_Sales_Order__c</expression>
+        <scale>0</scale>
+    </formulas>
+    <label>Days Since Last Sales Order</label>
+    <migratedFromWorkflowRuleName>Days Since Last Sales Order</migratedFromWorkflowRuleName>
+    <processMetadataValues>
+        <name>CanvasMode</name>
+        <value>
+            <stringValue>AUTO_LAYOUT_CANVAS</stringValue>
+        </value>
+    </processMetadataValues>
+    <processType>AutoLaunchedFlow</processType>
+    <recordUpdates>
+        <description>Update the days since previous order.</description>
+        <name>mainUpdate</name>
+        <label>mainUpdate</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <inputAssignments>
+            <field>Days_Since_Previous_Order__c</field>
+            <value>
+                <elementReference>Populate_Days_Since_Previous_OrderFormula</elementReference>
+            </value>
+        </inputAssignments>
+        <inputReference>$Record</inputReference>
+    </recordUpdates>
+    <start>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <connector>
+            <targetReference>mainUpdate</targetReference>
+        </connector>
+        <filterFormula>NOT(ISBLANK( {!$Record.Customer__r.Date_of_Newest_Sales_Order__c} ))</filterFormula>
+        <object>salesOrder__c</object>
+        <recordTriggerType>Create</recordTriggerType>
+        <triggerType>RecordAfterSave</triggerType>
+    </start>
+    <status>Active</status>
+</Flow>

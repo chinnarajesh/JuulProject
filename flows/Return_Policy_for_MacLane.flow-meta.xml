@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Flow xmlns="http://soap.sforce.com/2006/04/metadata">
+    <actionCalls>
+        <name>Return_Policy_and_Form_to_McLane1</name>
+        <label>Case.Return_Policy_and_Form_to_McLane1</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <actionName>Case.Return_Policy_and_Form_to_McLane1</actionName>
+        <actionType>emailAlert</actionType>
+        <flowTransactionModel>CurrentTransaction</flowTransactionModel>
+        <inputParameters>
+            <name>SObjectRowId</name>
+            <value>
+                <elementReference>$Record.Id</elementReference>
+            </value>
+        </inputParameters>
+        <nameSegment>Case.Return_Policy_and_Form_to_McLane1</nameSegment>
+    </actionCalls>
+    <apiVersion>63.0</apiVersion>
+    <areMetricsLoggedToDataCloud>false</areMetricsLoggedToDataCloud>
+    <description>Migrated from the: Return Policy for MacLane workflow rule
+Workflow rule description: Return Policy and Guideline for McLane&quot;</description>
+    <label>Return Policy for MacLane</label>
+    <migratedFromWorkflowRuleName>Return Policy for MacLane</migratedFromWorkflowRuleName>
+    <processMetadataValues>
+        <name>CanvasMode</name>
+        <value>
+            <stringValue>AUTO_LAYOUT_CANVAS</stringValue>
+        </value>
+    </processMetadataValues>
+    <processType>AutoLaunchedFlow</processType>
+    <start>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <connector>
+            <targetReference>Return_Policy_and_Form_to_McLane1</targetReference>
+        </connector>
+        <doesRequireRecordChangedToMeetCriteria>true</doesRequireRecordChangedToMeetCriteria>
+        <filterFormula>IF({!$Setup.Bypass_Workflow_Rules__c.Case_Workflow_Rules__c} = TRUE,FALSE, AND({!$Record.RecordType.DeveloperName} = &apos;B2B_RMA&apos;,     ISPICKVAL({!$Record.Status}, &quot;Pending Info from Customer&quot;),     ISPICKVAL({!$Record.Account_Type__c}, &quot;Standard Distributor&quot;),     CONTAINS( {!$Record.Account.Name} , &quot;McLane&quot;)    )  )</filterFormula>
+        <object>Case</object>
+        <recordTriggerType>CreateAndUpdate</recordTriggerType>
+        <triggerType>RecordAfterSave</triggerType>
+    </start>
+    <status>Active</status>
+</Flow>

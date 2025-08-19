@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Flow xmlns="http://soap.sforce.com/2006/04/metadata">
+    <actionCalls>
+        <name>sp1Propel_Deviation_Expiring_in_15_Days</name>
+        <label>PDLM__Quality__c.Propel_Deviation_Expiring_in_15_Days</label>
+        <locationX>308</locationX>
+        <locationY>276</locationY>
+        <actionName>PDLM__Quality__c.Propel_Deviation_Expiring_in_15_Days</actionName>
+        <actionType>emailAlert</actionType>
+        <flowTransactionModel>CurrentTransaction</flowTransactionModel>
+        <inputParameters>
+            <name>SObjectRowId</name>
+            <value>
+                <elementReference>$Record.Id</elementReference>
+            </value>
+        </inputParameters>
+        <nameSegment>PDLM__Quality__c.Propel_Deviation_Expiring_in_15_Days</nameSegment>
+        <offset>0</offset>
+    </actionCalls>
+    <apiVersion>63.0</apiVersion>
+    <areMetricsLoggedToDataCloud>false</areMetricsLoggedToDataCloud>
+    <description>Migrated from the: Time-Dependent Rule - Notification when Extended Deviation Expires in 15 Days workflow rule
+Workflow rule description: &quot;</description>
+    <environments>Default</environments>
+    <label>Time-Dependent Rule - Notification when Extended Deviation Expires in 15 Days</label>
+    <migratedFromWorkflowRuleName>Time-Dependent Rule - Notification when Extended Deviation Expires in 15 Days</migratedFromWorkflowRuleName>
+    <processMetadataValues>
+        <name>BuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>CanvasMode</name>
+        <value>
+            <stringValue>AUTO_LAYOUT_CANVAS</stringValue>
+        </value>
+    </processMetadataValues>
+    <processType>AutoLaunchedFlow</processType>
+    <start>
+        <locationX>50</locationX>
+        <locationY>0</locationY>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>Revised_Deviation_Expiration_Date__c</field>
+            <operator>IsNull</operator>
+            <value>
+                <booleanValue>false</booleanValue>
+            </value>
+        </filters>
+        <object>PDLM__Quality__c</object>
+        <recordTriggerType>CreateAndUpdate</recordTriggerType>
+        <scheduledPaths>
+            <name>ScheduledPath1</name>
+            <connector>
+                <targetReference>sp1Propel_Deviation_Expiring_in_15_Days</targetReference>
+            </connector>
+            <label>ScheduledPath1</label>
+            <offsetNumber>-15</offsetNumber>
+            <offsetUnit>Days</offsetUnit>
+            <recordField>Revised_Deviation_Expiration_Date__c</recordField>
+            <timeSource>RecordField</timeSource>
+        </scheduledPaths>
+        <triggerType>RecordAfterSave</triggerType>
+    </start>
+    <status>Active</status>
+</Flow>

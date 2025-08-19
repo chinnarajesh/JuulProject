@@ -1,0 +1,170 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Flow xmlns="http://soap.sforce.com/2006/04/metadata">
+    <actionCalls>
+        <name>Send_Email</name>
+        <label>Send Email</label>
+        <locationX>50</locationX>
+        <locationY>494</locationY>
+        <actionName>PropelEmailAlertToSuppliers</actionName>
+        <actionType>apex</actionType>
+        <flowTransactionModel>CurrentTransaction</flowTransactionModel>
+        <inputParameters>
+            <name>accessibleBy</name>
+            <value>
+                <elementReference>Change.Accessible_By__c</elementReference>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>changeID</name>
+            <value>
+                <elementReference>Change.Id</elementReference>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>emailTemplate</name>
+            <value>
+                <stringValue>Change_Shared_with_Accessible_By_Group_s</stringValue>
+            </value>
+        </inputParameters>
+        <nameSegment>PropelEmailAlertToSuppliers</nameSegment>
+        <offset>0</offset>
+    </actionCalls>
+    <actionCalls>
+        <name>Share_Change_with_Mfrs_and_CMs</name>
+        <label>Share Change with Mfrs and CMs</label>
+        <locationX>50</locationX>
+        <locationY>386</locationY>
+        <actionName>PDLM__SharingRuleAction</actionName>
+        <actionType>apex</actionType>
+        <connector>
+            <targetReference>Send_Email</targetReference>
+        </connector>
+        <flowTransactionModel>CurrentTransaction</flowTransactionModel>
+        <inputParameters>
+            <name>reason</name>
+            <value>
+                <stringValue>Share Changes with Mfrs and CMs</stringValue>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>recordId</name>
+            <value>
+                <elementReference>Change.Id</elementReference>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>ruleName</name>
+            <value>
+                <elementReference>sharingRuleFormula</elementReference>
+            </value>
+        </inputParameters>
+        <nameSegment>PDLM__SharingRuleAction</nameSegment>
+        <offset>0</offset>
+    </actionCalls>
+    <apiVersion>63.0</apiVersion>
+    <areMetricsLoggedToDataCloud>false</areMetricsLoggedToDataCloud>
+    <decisions>
+        <name>Decision_1</name>
+        <label>Decision 1</label>
+        <locationX>182</locationX>
+        <locationY>278</locationY>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>Outcome_1_of_Decision_1</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>Formula1</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Share_Change_with_Mfrs_and_CMs</targetReference>
+            </connector>
+            <label>Outcome 1 of Decision 1</label>
+        </rules>
+    </decisions>
+    <environments>Default</environments>
+    <formulas>
+        <name>Formula1</name>
+        <dataType>Boolean</dataType>
+        <expression>OR(
+AND(
+CONTAINS({!Change.PDLM__Category__r.Name} , &quot;XCO&quot;),
+{!$Record.PDLM__Is_Approved__c} = TRUE,
+NOT ISBLANK({!Change.Accessible_By__c})
+),
+AND(
+CONTAINS({!Change.PDLM__Category__r.Name} , &quot;DEV&quot;),
+{!$Record.PDLM__Is_Update__c } = TRUE,
+{!Change.Change_Status_Name__c} = &quot;Active&quot;,
+NOT ISBLANK({!Change.Accessible_By__c})
+),
+AND(
+CONTAINS({!Change.PDLM__Category__r.Name} , &quot;QUAL&quot;),
+{!$Record.PDLM__Is_Update__c}  = TRUE,
+{!Change.Change_Status_Name__c} = &quot;Qualification&quot;,
+NOT ISBLANK({!Change.Accessible_By__c})
+)
+)</expression>
+    </formulas>
+    <formulas>
+        <name>sharingRuleFormula</name>
+        <dataType>String</dataType>
+        <expression>{!$CustomMetadata.PDLM__SharingRule__mdt.Share_Changes_with_CMs.DeveloperName}</expression>
+    </formulas>
+    <interviewLabel>00 - Propel Change Sharing with Mfrs and CMs {!$Flow.CurrentDateTime}</interviewLabel>
+    <label>00 - Propel Change Sharing with Mfrs and CMs 1</label>
+    <processMetadataValues>
+        <name>BuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>CanvasMode</name>
+        <value>
+            <stringValue>AUTO_LAYOUT_CANVAS</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>OriginBuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processType>AutoLaunchedFlow</processType>
+    <recordLookups>
+        <name>Change</name>
+        <label>Change</label>
+        <locationX>182</locationX>
+        <locationY>170</locationY>
+        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>Decision_1</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>Id</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>$Record.PDLM__Record_Id__c</elementReference>
+            </value>
+        </filters>
+        <getFirstRecordOnly>true</getFirstRecordOnly>
+        <object>PDLM__Change__c</object>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </recordLookups>
+    <start>
+        <locationX>56</locationX>
+        <locationY>0</locationY>
+        <connector>
+            <targetReference>Change</targetReference>
+        </connector>
+        <flowRunAsUser>TriggeringUser</flowRunAsUser>
+        <object>PDLM__Change_Event__e</object>
+        <triggerType>PlatformEvent</triggerType>
+    </start>
+    <status>Draft</status>
+</Flow>

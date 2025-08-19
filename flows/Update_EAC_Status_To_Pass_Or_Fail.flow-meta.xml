@@ -1,0 +1,137 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Flow xmlns="http://soap.sforce.com/2006/04/metadata">
+    <apiVersion>55.0</apiVersion>
+    <areMetricsLoggedToDataCloud>false</areMetricsLoggedToDataCloud>
+    <decisions>
+        <name>Case_Status_Checking</name>
+        <label>Case Status Checking</label>
+        <locationX>656</locationX>
+        <locationY>380</locationY>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>Certification_Pass</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>$Record.Status</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Certification Passed</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Update_to_Certification_Pass</targetReference>
+            </connector>
+            <label>Certification Pass</label>
+        </rules>
+        <rules>
+            <name>Certification_Fail</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>$Record.Status</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Certification Failed</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Update_to_further_Evidence_needed</targetReference>
+            </connector>
+            <label>Certification Fail</label>
+        </rules>
+    </decisions>
+    <environments>Default</environments>
+    <interviewLabel>Update EAC Status To Pass Or Fail {!$Flow.CurrentDateTime}</interviewLabel>
+    <label>Update EAC Status To Pass Or Fail</label>
+    <processMetadataValues>
+        <name>BuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>CanvasMode</name>
+        <value>
+            <stringValue>FREE_FORM_CANVAS</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>OriginBuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processType>AutoLaunchedFlow</processType>
+    <recordUpdates>
+        <name>Update_to_Certification_Pass</name>
+        <label>Update to Certification Pass</label>
+        <locationX>400</locationX>
+        <locationY>501</locationY>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>Id</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>$Record.Account.Id</elementReference>
+            </value>
+        </filters>
+        <inputAssignments>
+            <field>EAC_Certification_Status__c</field>
+            <value>
+                <stringValue>Certification Passed</stringValue>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Update_Via_EAC_Process__c</field>
+            <value>
+                <booleanValue>false</booleanValue>
+            </value>
+        </inputAssignments>
+        <object>Account</object>
+    </recordUpdates>
+    <recordUpdates>
+        <name>Update_to_further_Evidence_needed</name>
+        <label>Update to further Evidence needed</label>
+        <locationX>886</locationX>
+        <locationY>487</locationY>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>Id</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>$Record.Account.Id</elementReference>
+            </value>
+        </filters>
+        <inputAssignments>
+            <field>EAC_Certification_Status__c</field>
+            <value>
+                <stringValue>Further Evidence Needed</stringValue>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Update_Via_EAC_Process__c</field>
+            <value>
+                <booleanValue>false</booleanValue>
+            </value>
+        </inputAssignments>
+        <object>Account</object>
+    </recordUpdates>
+    <start>
+        <locationX>543</locationX>
+        <locationY>48</locationY>
+        <connector>
+            <targetReference>Case_Status_Checking</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>RecordTypeId</field>
+            <operator>EqualTo</operator>
+            <value>
+                <stringValue>0124T000000YWY1</stringValue>
+            </value>
+        </filters>
+        <object>Case</object>
+        <recordTriggerType>Update</recordTriggerType>
+        <triggerType>RecordAfterSave</triggerType>
+    </start>
+    <status>Active</status>
+</Flow>

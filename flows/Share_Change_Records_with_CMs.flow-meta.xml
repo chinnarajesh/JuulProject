@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Flow xmlns="http://soap.sforce.com/2006/04/metadata">
+    <apiVersion>49.0</apiVersion>
+    <areMetricsLoggedToDataCloud>false</areMetricsLoggedToDataCloud>
+    <interviewLabel>Share Change Records with CMs {!$Flow.CurrentDateTime}</interviewLabel>
+    <label>Share Change Records with CMs</label>
+    <processType>AutoLaunchedFlow</processType>
+    <recordCreates>
+        <name>Share_Change_Records_with_CMs</name>
+        <label>Share Change Records with CMs</label>
+        <locationX>622</locationX>
+        <locationY>280</locationY>
+        <inputAssignments>
+            <field>AccessLevel</field>
+            <value>
+                <stringValue>Read</stringValue>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>ParentId</field>
+            <value>
+                <elementReference>VarT_RecordID</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>RowCause</field>
+            <value>
+                <stringValue>Share_Record_with_CMs__c</stringValue>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>UserOrGroupId</field>
+            <value>
+                <elementReference>varT_UserOrGroupId</elementReference>
+            </value>
+        </inputAssignments>
+        <object>PDLM__Change__Share</object>
+    </recordCreates>
+    <startElementReference>Share_Change_Records_with_CMs</startElementReference>
+    <status>Active</status>
+    <variables>
+        <name>VarT_RecordID</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>true</isInput>
+        <isOutput>true</isOutput>
+        <value>
+            <stringValue></stringValue>
+        </value>
+    </variables>
+    <variables>
+        <name>varT_UserOrGroupId</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>true</isInput>
+        <isOutput>true</isOutput>
+        <value>
+            <stringValue></stringValue>
+        </value>
+    </variables>
+</Flow>

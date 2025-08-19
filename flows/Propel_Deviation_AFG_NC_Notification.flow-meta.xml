@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Flow xmlns="http://soap.sforce.com/2006/04/metadata">
+    <actionCalls>
+        <name>Send_e_mail_to_AFG_NC_Public_Group</name>
+        <label>PDLM__Change__c.Send_e_mail_to_AFG_NC_Public_Group</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <actionName>PDLM__Change__c.Send_e_mail_to_AFG_NC_Public_Group</actionName>
+        <actionType>emailAlert</actionType>
+        <flowTransactionModel>CurrentTransaction</flowTransactionModel>
+        <inputParameters>
+            <name>SObjectRowId</name>
+            <value>
+                <elementReference>$Record.Id</elementReference>
+            </value>
+        </inputParameters>
+        <nameSegment>PDLM__Change__c.Send_e_mail_to_AFG_NC_Public_Group</nameSegment>
+    </actionCalls>
+    <apiVersion>63.0</apiVersion>
+    <areMetricsLoggedToDataCloud>false</areMetricsLoggedToDataCloud>
+    <description>Migrated from the: Propel Deviation - AFG NC Notification workflow rule
+Workflow rule description: Notification to AFG NC for Deviation Phases&quot;</description>
+    <label>Propel Deviation - AFG NC Notification</label>
+    <migratedFromWorkflowRuleName>Propel Deviation - AFG NC Notification</migratedFromWorkflowRuleName>
+    <processMetadataValues>
+        <name>CanvasMode</name>
+        <value>
+            <stringValue>AUTO_LAYOUT_CANVAS</stringValue>
+        </value>
+    </processMetadataValues>
+    <processType>AutoLaunchedFlow</processType>
+    <start>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <connector>
+            <targetReference>Send_e_mail_to_AFG_NC_Public_Group</targetReference>
+        </connector>
+        <filterLogic>1 AND 2 AND (3 OR 4)</filterLogic>
+        <filters>
+            <field>Name</field>
+            <operator>StartsWith</operator>
+            <value>
+                <stringValue>DEV-</stringValue>
+            </value>
+        </filters>
+        <filters>
+            <field>AFG_NC__c</field>
+            <operator>EqualTo</operator>
+            <value>
+                <booleanValue>true</booleanValue>
+            </value>
+        </filters>
+        <filters>
+            <field>Change_Status_Name__c</field>
+            <operator>EqualTo</operator>
+            <value>
+                <stringValue>Active</stringValue>
+            </value>
+        </filters>
+        <filters>
+            <field>Change_Status_Name__c</field>
+            <operator>EqualTo</operator>
+            <value>
+                <stringValue>Extension Active</stringValue>
+            </value>
+        </filters>
+        <object>PDLM__Change__c</object>
+        <recordTriggerType>CreateAndUpdate</recordTriggerType>
+        <triggerType>RecordAfterSave</triggerType>
+    </start>
+    <status>Active</status>
+</Flow>

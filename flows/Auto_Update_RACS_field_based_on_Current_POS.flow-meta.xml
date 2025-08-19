@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Flow xmlns="http://soap.sforce.com/2006/04/metadata">
+    <apiVersion>62.0</apiVersion>
+    <areMetricsLoggedToDataCloud>false</areMetricsLoggedToDataCloud>
+    <description>Migrated from the: Auto Update RACS field based on Current POS workflow rule
+Workflow rule description: &quot;</description>
+    <label>Auto Update RACS field based on Current POS</label>
+    <migratedFromWorkflowRuleName>Auto Update RACS field based on Current POS</migratedFromWorkflowRuleName>
+    <processMetadataValues>
+        <name>CanvasMode</name>
+        <value>
+            <stringValue>AUTO_LAYOUT_CANVAS</stringValue>
+        </value>
+    </processMetadataValues>
+    <processType>AutoLaunchedFlow</processType>
+    <recordUpdates>
+        <name>mainUpdate</name>
+        <label>mainUpdate</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <inputAssignments>
+            <field>Non_Compliant_Pathway_Reason__c</field>
+            <value>
+                <stringValue>POS Not Supported</stringValue>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>RACS_Pathway_Certified__c</field>
+            <value>
+                <stringValue>No</stringValue>
+            </value>
+        </inputAssignments>
+        <inputReference>$Record</inputReference>
+    </recordUpdates>
+    <start>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <connector>
+            <targetReference>mainUpdate</targetReference>
+        </connector>
+        <doesRequireRecordChangedToMeetCriteria>true</doesRequireRecordChangedToMeetCriteria>
+        <filterLogic>(1 OR 2 OR 3 OR 4 OR 5 OR 6 OR 7 OR 8 OR 9)</filterLogic>
+        <filters>
+            <field>CurrentPOSProvider__c</field>
+            <operator>EqualTo</operator>
+            <value>
+                <stringValue>CAP Retail</stringValue>
+            </value>
+        </filters>
+        <filters>
+            <field>CurrentPOSProvider__c</field>
+            <operator>EqualTo</operator>
+            <value>
+                <stringValue>Korona POS</stringValue>
+            </value>
+        </filters>
+        <filters>
+            <field>CurrentPOSProvider__c</field>
+            <operator>EqualTo</operator>
+            <value>
+                <stringValue>Microsoft Dinamyx POS</stringValue>
+            </value>
+        </filters>
+        <filters>
+            <field>CurrentPOSProvider__c</field>
+            <operator>EqualTo</operator>
+            <value>
+                <stringValue>No POS (Cash Register)</stringValue>
+            </value>
+        </filters>
+        <filters>
+            <field>CurrentPOSProvider__c</field>
+            <operator>EqualTo</operator>
+            <value>
+                <stringValue>Poynt</stringValue>
+            </value>
+        </filters>
+        <filters>
+            <field>CurrentPOSProvider__c</field>
+            <operator>EqualTo</operator>
+            <value>
+                <stringValue>Quickbooks</stringValue>
+            </value>
+        </filters>
+        <filters>
+            <field>CurrentPOSProvider__c</field>
+            <operator>EqualTo</operator>
+            <value>
+                <stringValue>Sam4POS</stringValue>
+            </value>
+        </filters>
+        <filters>
+            <field>CurrentPOSProvider__c</field>
+            <operator>EqualTo</operator>
+            <value>
+                <stringValue>Square</stringValue>
+            </value>
+        </filters>
+        <filters>
+            <field>CurrentPOSProvider__c</field>
+            <operator>EqualTo</operator>
+            <value>
+                <stringValue>Vend</stringValue>
+            </value>
+        </filters>
+        <object>Account</object>
+        <recordTriggerType>CreateAndUpdate</recordTriggerType>
+        <triggerType>RecordBeforeSave</triggerType>
+    </start>
+    <status>Active</status>
+</Flow>

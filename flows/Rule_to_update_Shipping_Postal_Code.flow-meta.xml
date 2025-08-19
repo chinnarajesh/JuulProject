@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Flow xmlns="http://soap.sforce.com/2006/04/metadata">
+    <apiVersion>63.0</apiVersion>
+    <areMetricsLoggedToDataCloud>false</areMetricsLoggedToDataCloud>
+    <description>Migrated from the: Rule to update Shipping Postal Code workflow rule
+Workflow rule description: &quot;</description>
+    <formulas>
+        <name>Update_Shipping_Postal_C_with_Upper_CaseFormula</name>
+        <dataType>String</dataType>
+        <expression>UPPER($Record.Shipping_Postal_Code__c)</expression>
+    </formulas>
+    <label>Rule to update Shipping Postal Code</label>
+    <migratedFromWorkflowRuleName>Rule to update Shipping Postal Code</migratedFromWorkflowRuleName>
+    <processMetadataValues>
+        <name>CanvasMode</name>
+        <value>
+            <stringValue>AUTO_LAYOUT_CANVAS</stringValue>
+        </value>
+    </processMetadataValues>
+    <processType>AutoLaunchedFlow</processType>
+    <recordUpdates>
+        <description>This will update Shipping Postal Code with Upper Case</description>
+        <name>mainUpdate</name>
+        <label>mainUpdate</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <inputAssignments>
+            <field>Shipping_Postal_Code__c</field>
+            <value>
+                <elementReference>Update_Shipping_Postal_C_with_Upper_CaseFormula</elementReference>
+            </value>
+        </inputAssignments>
+        <inputReference>$Record</inputReference>
+    </recordUpdates>
+    <start>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <connector>
+            <targetReference>mainUpdate</targetReference>
+        </connector>
+        <filterFormula>IF({!$Setup.Bypass_Workflow_Rules__c.Field_B2B_Goods_Requests_Workflow_Rules__c} = TRUE,FALSE,
+   OR(ISNEW(),    
+      ISCHANGED({!$Record.Shipping_Postal_Code__c}) 
+     )
+)</filterFormula>
+        <object>Field_B2B_Goods_Request__c</object>
+        <recordTriggerType>CreateAndUpdate</recordTriggerType>
+        <triggerType>RecordAfterSave</triggerType>
+    </start>
+    <status>Active</status>
+</Flow>

@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Flow xmlns="http://soap.sforce.com/2006/04/metadata">
+    <apiVersion>55.0</apiVersion>
+    <areMetricsLoggedToDataCloud>false</areMetricsLoggedToDataCloud>
+    <decisions>
+        <name>Check_Account_Type</name>
+        <label>Check Account Type</label>
+        <locationX>446</locationX>
+        <locationY>335</locationY>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>If_Account_Type_is_National_Chain_Retailer</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>$Record.RecordType.Name</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>National Chain Retailer</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Update_Subtype_As_National_Chain_Retailer</targetReference>
+            </connector>
+            <label>If Account Type is &quot;National Chain Retailer&quot;</label>
+        </rules>
+        <rules>
+            <name>If_Account_Type_is_Regional_Chain_Retailer</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>$Record.RecordType.Name</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Regional Chain Retailer</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Update_SubType_As_Small_Chain</targetReference>
+            </connector>
+            <label>If Account Type is &quot;Regional Chain Retailer&quot;</label>
+        </rules>
+        <rules>
+            <name>If_Account_Type_is_Independent_Retailer</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>$Record.RecordType.Name</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Independent Retailer</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Update_Subtype_As_Independent_Retailer</targetReference>
+            </connector>
+            <label>If Account Type is &quot;Independent Retailer&quot;</label>
+        </rules>
+    </decisions>
+    <environments>Default</environments>
+    <interviewLabel>Update Account Sub Type Process to Flow {!$Flow.CurrentDateTime}</interviewLabel>
+    <label>Update Account Sub Type Process to Flow</label>
+    <processMetadataValues>
+        <name>BuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>CanvasMode</name>
+        <value>
+            <stringValue>AUTO_LAYOUT_CANVAS</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>OriginBuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processType>AutoLaunchedFlow</processType>
+    <recordUpdates>
+        <name>Update_Subtype_As_Independent_Retailer</name>
+        <label>Update Subtype As Independent Retailer</label>
+        <locationX>578</locationX>
+        <locationY>455</locationY>
+        <inputAssignments>
+            <field>Account_Sub_Type__c</field>
+            <value>
+                <stringValue>Independent Retailer</stringValue>
+            </value>
+        </inputAssignments>
+        <inputReference>$Record</inputReference>
+    </recordUpdates>
+    <recordUpdates>
+        <name>Update_Subtype_As_National_Chain_Retailer</name>
+        <label>Update Subtype As National Chain Retailer</label>
+        <locationX>50</locationX>
+        <locationY>455</locationY>
+        <inputAssignments>
+            <field>Account_Sub_Type__c</field>
+            <value>
+                <stringValue>National Chain Retailer</stringValue>
+            </value>
+        </inputAssignments>
+        <inputReference>$Record</inputReference>
+    </recordUpdates>
+    <recordUpdates>
+        <name>Update_SubType_As_Small_Chain</name>
+        <label>Update SubType As Small Chain</label>
+        <locationX>314</locationX>
+        <locationY>455</locationY>
+        <inputAssignments>
+            <field>Account_Sub_Type__c</field>
+            <value>
+                <stringValue>Small Chain</stringValue>
+            </value>
+        </inputAssignments>
+        <inputReference>$Record</inputReference>
+    </recordUpdates>
+    <start>
+        <locationX>320</locationX>
+        <locationY>0</locationY>
+        <connector>
+            <targetReference>Check_Account_Type</targetReference>
+        </connector>
+        <object>Account</object>
+        <recordTriggerType>CreateAndUpdate</recordTriggerType>
+        <triggerType>RecordAfterSave</triggerType>
+    </start>
+    <status>Active</status>
+</Flow>

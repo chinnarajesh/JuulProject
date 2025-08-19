@@ -1,0 +1,385 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Flow xmlns="http://soap.sforce.com/2006/04/metadata" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+    <apiVersion>49.0</apiVersion>
+    <areMetricsLoggedToDataCloud>false</areMetricsLoggedToDataCloud>
+    <decisions>
+        <name>suggestion_type_routing</name>
+        <label>suggestion type routing</label>
+        <locationX>404</locationX>
+        <locationY>500</locationY>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>New_Dashboard_request</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>How_can_we_help1</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>New Dashboard</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>New_dashboard_suggestion</targetReference>
+            </connector>
+            <label>New Dashboard request</label>
+        </rules>
+        <rules>
+            <name>Existing_Dashboard_Request</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>Typeofsuggestion</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Existing Dashboard</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Showpad_request_details</targetReference>
+            </connector>
+            <label>Existing Dashboard Request</label>
+        </rules>
+    </decisions>
+    <dynamicChoiceSets>
+        <name>Platform_picklist</name>
+        <dataType>Picklist</dataType>
+        <displayField xsi:nil="true"/>
+        <object xsi:nil="true"/>
+        <picklistField>Platform__c</picklistField>
+        <picklistObject>ticket__c</picklistObject>
+    </dynamicChoiceSets>
+    <dynamicChoiceSets>
+        <name>prioritylevel</name>
+        <dataType>Picklist</dataType>
+        <displayField xsi:nil="true"/>
+        <object xsi:nil="true"/>
+        <picklistField>Priority__c</picklistField>
+        <picklistObject>ticket__c</picklistObject>
+    </dynamicChoiceSets>
+    <dynamicChoiceSets>
+        <name>Typeofsuggestion</name>
+        <dataType>Picklist</dataType>
+        <displayField xsi:nil="true"/>
+        <object xsi:nil="true"/>
+        <picklistField>Type_of_Change__c</picklistField>
+        <picklistObject>ticket__c</picklistObject>
+    </dynamicChoiceSets>
+    <interviewLabel>PPI Suggestion Flow {!$Flow.CurrentDateTime}</interviewLabel>
+    <label>Make a suggestion</label>
+    <processMetadataValues>
+        <name>BuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>CanvasMode</name>
+        <value>
+            <stringValue>FREE_FORM_CANVAS</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>OriginBuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processType>Flow</processType>
+    <recordCreates>
+        <name>Create_new_dashboard_request</name>
+        <label>Create new dashboard request</label>
+        <locationX>882</locationX>
+        <locationY>351</locationY>
+        <inputAssignments>
+            <field>Current_Solution__c</field>
+            <value>
+                <elementReference>Current_Solution</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Data_Details__c</field>
+            <value>
+                <elementReference>Data_Details</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>End_Users__c</field>
+            <value>
+                <elementReference>End_Users</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Epic__c</field>
+            <value>
+                <stringValue>aAK4T000000bmZkWAI</stringValue>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Priority__c</field>
+            <value>
+                <elementReference>dashboard_priority_picklist</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>RecordTypeId</field>
+            <value>
+                <stringValue>0121O000001ZXymQAG</stringValue>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Status__c</field>
+            <value>
+                <stringValue>Open</stringValue>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Summary__c</field>
+            <value>
+                <elementReference>Dashboard_suggestion_summary</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Type_of_Change__c</field>
+            <value>
+                <elementReference>Typeofsuggestion</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Use_Case__c</field>
+            <value>
+                <elementReference>Use_Case</elementReference>
+            </value>
+        </inputAssignments>
+        <object>ticket__c</object>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </recordCreates>
+    <recordCreates>
+        <name>create_showpad_request</name>
+        <label>create showpad request</label>
+        <locationX>895</locationX>
+        <locationY>596</locationY>
+        <inputAssignments>
+            <field>Desired_Changes__c</field>
+            <value>
+                <elementReference>Desired_Changes</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Epic__c</field>
+            <value>
+                <stringValue>aAK4T000000bmZkWAI</stringValue>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Existing_Dashboard_Name__c</field>
+            <value>
+                <elementReference>Existing_Dashboard_URL</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Priority__c</field>
+            <value>
+                <elementReference>existing_dashboard_priority</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>RecordTypeId</field>
+            <value>
+                <stringValue>0121O000001ZXymQAG</stringValue>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Status__c</field>
+            <value>
+                <stringValue>Open</stringValue>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Summary__c</field>
+            <value>
+                <elementReference>Existing_Dashboard_Name</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Type_of_Change__c</field>
+            <value>
+                <elementReference>Typeofsuggestion</elementReference>
+            </value>
+        </inputAssignments>
+        <object>ticket__c</object>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </recordCreates>
+    <screens>
+        <name>How_can_we_help</name>
+        <label>How can we help?</label>
+        <locationX>156</locationX>
+        <locationY>499</locationY>
+        <allowBack>true</allowBack>
+        <allowFinish>true</allowFinish>
+        <allowPause>true</allowPause>
+        <connector>
+            <targetReference>suggestion_type_routing</targetReference>
+        </connector>
+        <fields>
+            <name>suggestion_home_welcome</name>
+            <fieldText>&lt;p style=&quot;text-align: center;&quot;&gt;Start a suggestion by picking a type below and clicking next. &lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+        </fields>
+        <fields>
+            <name>How_can_we_help1</name>
+            <choiceReferences>Typeofsuggestion</choiceReferences>
+            <dataType>String</dataType>
+            <fieldText>How can we help?</fieldText>
+            <fieldType>DropdownBox</fieldType>
+            <isRequired>true</isRequired>
+        </fields>
+        <showFooter>true</showFooter>
+        <showHeader>true</showHeader>
+    </screens>
+    <screens>
+        <name>New_dashboard_suggestion</name>
+        <label>New dashboard suggestion</label>
+        <locationX>710</locationX>
+        <locationY>351</locationY>
+        <allowBack>true</allowBack>
+        <allowFinish>true</allowFinish>
+        <allowPause>false</allowPause>
+        <connector>
+            <targetReference>Create_new_dashboard_request</targetReference>
+        </connector>
+        <fields>
+            <name>dashboard_help_text</name>
+            <fieldText>&lt;p style=&quot;text-align: center;&quot;&gt;&lt;b style=&quot;font-size: 14px; background-color: rgb(255, 255, 255);&quot;&gt;This request will be reviewed during the next CAB. &lt;/b&gt;&lt;/p&gt;&lt;p style=&quot;text-align: center;&quot;&gt;&lt;b style=&quot;font-size: 14px; background-color: rgb(255, 255, 255);&quot;&gt;After clicking next, this window will auto-refresh and your request will show to the left. &lt;/b&gt;&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+        </fields>
+        <fields>
+            <name>Dashboard_suggestion_summary</name>
+            <dataType>String</dataType>
+            <fieldText>New Dashboard Summary</fieldText>
+            <fieldType>InputField</fieldType>
+            <helpText>&lt;p&gt;Give a brief description of what you are requesting.&lt;/p&gt;</helpText>
+            <isRequired>true</isRequired>
+        </fields>
+        <fields>
+            <name>Data_Details</name>
+            <fieldText>Data Details</fieldText>
+            <fieldType>LargeTextArea</fieldType>
+            <helpText>&lt;p&gt;&lt;span style=&quot;color: rgb(62, 62, 60); background-color: rgb(255, 255, 255);&quot;&gt;Give a detailed description of what you are requesting. &lt;/span&gt;&lt;/p&gt;</helpText>
+            <isRequired>true</isRequired>
+            <validationRule>
+                <errorMessage>&lt;p&gt;Please use less than 500 characters&lt;/p&gt;</errorMessage>
+                <formulaExpression>IF(LEN({!Data_Details}) &lt;= 500, true, false)</formulaExpression>
+            </validationRule>
+        </fields>
+        <fields>
+            <name>Use_Case</name>
+            <fieldText>Use Case</fieldText>
+            <fieldType>LargeTextArea</fieldType>
+            <helpText>&lt;p&gt;Tell us what business use case this helps solve.&lt;/p&gt;</helpText>
+            <isRequired>false</isRequired>
+            <validationRule>
+                <errorMessage>&lt;p&gt;Please use less than 500 characters&lt;/p&gt;</errorMessage>
+                <formulaExpression>IF(LEN({!Use_Case}) &lt;= 500, true, false)</formulaExpression>
+            </validationRule>
+        </fields>
+        <fields>
+            <name>End_Users</name>
+            <fieldText>End Users</fieldText>
+            <fieldType>LargeTextArea</fieldType>
+            <helpText>&lt;p&gt;Who will be using this dashboard?&lt;/p&gt;</helpText>
+            <isRequired>false</isRequired>
+            <validationRule>
+                <errorMessage>&lt;p&gt;Please use less than 500 characters&lt;/p&gt;</errorMessage>
+                <formulaExpression>IF(LEN({!End_Users}) &lt;= 500, true, false)</formulaExpression>
+            </validationRule>
+        </fields>
+        <fields>
+            <name>Current_Solution</name>
+            <fieldText>Current Solution</fieldText>
+            <fieldType>LargeTextArea</fieldType>
+            <helpText>&lt;p&gt;What do you use currently to address this use case?&lt;/p&gt;</helpText>
+            <isRequired>false</isRequired>
+            <validationRule>
+                <errorMessage>&lt;p&gt;Please use less than 500 characters&lt;/p&gt;</errorMessage>
+                <formulaExpression>IF(LEN({!Current_Solution}) &lt;= 500, true, false)</formulaExpression>
+            </validationRule>
+        </fields>
+        <fields>
+            <name>dashboard_priority_picklist</name>
+            <choiceReferences>prioritylevel</choiceReferences>
+            <dataType>String</dataType>
+            <fieldText>Priority</fieldText>
+            <fieldType>DropdownBox</fieldType>
+            <isRequired>true</isRequired>
+        </fields>
+        <showFooter>true</showFooter>
+        <showHeader>true</showHeader>
+    </screens>
+    <screens>
+        <name>Showpad_request_details</name>
+        <label>Showpad request details</label>
+        <locationX>706</locationX>
+        <locationY>596</locationY>
+        <allowBack>true</allowBack>
+        <allowFinish>true</allowFinish>
+        <allowPause>true</allowPause>
+        <connector>
+            <targetReference>create_showpad_request</targetReference>
+        </connector>
+        <fields>
+            <name>showpad_help_text</name>
+            <fieldText>&lt;p style=&quot;text-align: center;&quot;&gt;&lt;b style=&quot;font-size: 14px; color: rgb(62, 62, 60); background-color: rgb(255, 255, 255);&quot;&gt;This request will be reviewed during the next CAB. &lt;/b&gt;&lt;/p&gt;&lt;p style=&quot;text-align: center;&quot;&gt;&lt;b style=&quot;font-size: 14px; color: rgb(62, 62, 60); background-color: rgb(255, 255, 255);&quot;&gt;After clicking next, this window will auto-refresh and your request will show to the left. &lt;/b&gt;&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+        </fields>
+        <fields>
+            <name>Existing_Dashboard_Name</name>
+            <dataType>String</dataType>
+            <fieldText>Existing Dashboard Name</fieldText>
+            <fieldType>InputField</fieldType>
+            <helpText>&lt;p&gt;&lt;span style=&quot;background-color: rgb(255, 255, 255); color: rgb(62, 62, 60);&quot;&gt;Give a brief description of whatt you are requesting. &lt;/span&gt;&lt;/p&gt;</helpText>
+            <isRequired>true</isRequired>
+        </fields>
+        <fields>
+            <name>Existing_Dashboard_URL</name>
+            <dataType>String</dataType>
+            <fieldText>Existing Dashboard URL</fieldText>
+            <fieldType>InputField</fieldType>
+            <isRequired>false</isRequired>
+        </fields>
+        <fields>
+            <name>Desired_Changes</name>
+            <fieldText>Desired Changes</fieldText>
+            <fieldType>LargeTextArea</fieldType>
+            <helpText>&lt;p&gt;&lt;span style=&quot;color: rgb(62, 62, 60); background-color: rgb(255, 255, 255);&quot;&gt;Give a detailed description of what you are requesting. &lt;/span&gt;&lt;/p&gt;</helpText>
+            <isRequired>true</isRequired>
+            <validationRule>
+                <errorMessage>&lt;p&gt;Please use less than 500 characters &lt;/p&gt;</errorMessage>
+                <formulaExpression>IF(LEN({!Desired_Changes}) &lt;= 500, true, false)</formulaExpression>
+            </validationRule>
+        </fields>
+        <fields>
+            <name>existing_dashboard_priority</name>
+            <choiceReferences>prioritylevel</choiceReferences>
+            <dataType>String</dataType>
+            <fieldText>Priority</fieldText>
+            <fieldType>DropdownBox</fieldType>
+            <isRequired>true</isRequired>
+        </fields>
+        <showFooter>true</showFooter>
+        <showHeader>true</showHeader>
+    </screens>
+    <start>
+        <locationX>30</locationX>
+        <locationY>153</locationY>
+        <connector>
+            <targetReference>How_can_we_help</targetReference>
+        </connector>
+    </start>
+    <status>Active</status>
+    <variables>
+        <name>DashboardSuggestion</name>
+        <dataType>Picklist</dataType>
+        <isCollection>false</isCollection>
+        <isInput>true</isInput>
+        <isOutput>true</isOutput>
+    </variables>
+</Flow>

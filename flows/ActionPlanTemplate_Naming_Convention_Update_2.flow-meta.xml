@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Flow xmlns="http://soap.sforce.com/2006/04/metadata">
+    <apiVersion>62.0</apiVersion>
+    <areMetricsLoggedToDataCloud>false</areMetricsLoggedToDataCloud>
+    <description>Migrated from the: ActionPlanTemplate - Naming Convention Update workflow rule
+Workflow rule description: &quot;</description>
+    <environments>Default</environments>
+    <formulas>
+        <name>Update_NameFormula</name>
+        <dataType>String</dataType>
+        <expression>IF($Record.RecordType.DeveloperName = &quot;Strategy&quot;,
+(&quot;Strategy&quot; &amp; &quot; &quot; &amp; TEXT($Record.ActionPlanType__c) &amp; &quot; Template&quot; &amp; &quot;: &quot; &amp; TEXT($Record.StrategyStartDate__c) &amp; &quot;:&quot; &amp; TEXT($Record.StrategyEndDateFormula__c)),
+IF($Record.RecordType.DeveloperName = &quot;AccountPlan&quot;,
+($Record.AccountId__r.Name &amp; &quot; - Plan: &quot; &amp; TEXT($Record.RequestedStartDate__c) &amp; &quot;:&quot; &amp; TEXT($Record.RequestedEndDate__c)),
+IF($Record.RecordType.DeveloperName = &quot;ResetActivityProcess&quot;,
+($Record.AccountId__r.Name &amp; &quot; - Reset: &quot; &amp; TEXT($Record.RequestedStartDate__c) &amp; &quot;:&quot; &amp; TEXT($Record.RequestedEndDate__c)),
+IF($Record.RecordType.DeveloperName = &quot;PromotionalActivityProcess&quot;,
+($Record.AccountId__r.Name &amp; &quot; - Promo: &quot; &amp; TEXT($Record.RequestedStartDate__c) &amp; &quot;:&quot; &amp; TEXT($Record.RequestedEndDate__c)),&quot;&quot;)
+)))</expression>
+    </formulas>
+    <label>ActionPlanTemplate - Naming Convention Update_2</label>
+    <migratedFromWorkflowRuleName>ActionPlanTemplate - Naming Convention Update</migratedFromWorkflowRuleName>
+    <processMetadataValues>
+        <name>BuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>CanvasMode</name>
+        <value>
+            <stringValue>AUTO_LAYOUT_CANVAS</stringValue>
+        </value>
+    </processMetadataValues>
+    <processType>AutoLaunchedFlow</processType>
+    <recordUpdates>
+        <name>mainUpdate</name>
+        <label>mainUpdate</label>
+        <locationX>176</locationX>
+        <locationY>323</locationY>
+        <inputAssignments>
+            <field>Name</field>
+            <value>
+                <elementReference>Update_NameFormula</elementReference>
+            </value>
+        </inputAssignments>
+        <inputReference>$Record</inputReference>
+    </recordUpdates>
+    <start>
+        <locationX>50</locationX>
+        <locationY>0</locationY>
+        <connector>
+            <targetReference>mainUpdate</targetReference>
+        </connector>
+        <filterLogic>(1 OR 2 OR 3)</filterLogic>
+        <filters>
+            <field>ActionPlanType__c</field>
+            <operator>EqualTo</operator>
+            <value>
+                <stringValue>Account Plan</stringValue>
+            </value>
+        </filters>
+        <filters>
+            <field>ActionPlanType__c</field>
+            <operator>EqualTo</operator>
+            <value>
+                <stringValue>Promotional Activity Process</stringValue>
+            </value>
+        </filters>
+        <filters>
+            <field>ActionPlanType__c</field>
+            <operator>EqualTo</operator>
+            <value>
+                <stringValue>Reset Activity Process</stringValue>
+            </value>
+        </filters>
+        <object>ActionPlanTemplate__c</object>
+        <recordTriggerType>CreateAndUpdate</recordTriggerType>
+        <triggerType>RecordAfterSave</triggerType>
+    </start>
+    <status>Active</status>
+</Flow>

@@ -1,0 +1,349 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Flow xmlns="http://soap.sforce.com/2006/04/metadata">
+    <actionCalls>
+        <description>Submit the Case For Approval. This will lock the case</description>
+        <name>Case_Submit_For_Approval</name>
+        <label>Case - Submit For Approval</label>
+        <locationX>1298</locationX>
+        <locationY>623</locationY>
+        <actionName>submit</actionName>
+        <actionType>submit</actionType>
+        <inputParameters>
+            <name>objectId</name>
+            <value>
+                <elementReference>itemCase.Id</elementReference>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>submitterId</name>
+            <value>
+                <elementReference>userID</elementReference>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>processDefinitionNameOrId</name>
+            <value>
+                <stringValue>04a39000000L2gx</stringValue>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>skipEntryCriteria</name>
+            <value>
+                <booleanValue>true</booleanValue>
+            </value>
+        </inputParameters>
+        <nameSegment>submit</nameSegment>
+    </actionCalls>
+    <apiVersion>49.0</apiVersion>
+    <areMetricsLoggedToDataCloud>false</areMetricsLoggedToDataCloud>
+    <assignments>
+        <description>Assign Queue ID to Case</description>
+        <name>Assign_Queue_ID_to_Case</name>
+        <label>Assign Queue ID to Case</label>
+        <locationX>1286</locationX>
+        <locationY>48</locationY>
+        <assignmentItems>
+            <assignToReference>itemCase.OwnerId</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>closedCaseQueueID</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Update_Case</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <description>Assign to the US Closed Cases Queue, if there is no matching Queue for the Closed Case</description>
+        <name>Assign_to_US_Closed_Cases_Queue</name>
+        <label>Assign to US Closed Cases Queue</label>
+        <locationX>1049</locationX>
+        <locationY>257</locationY>
+        <assignmentItems>
+            <assignToReference>itemCase.OwnerId</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>00G39000005cnE5</stringValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Update_Case</targetReference>
+        </connector>
+    </assignments>
+    <decisions>
+        <description>Only  continue if Case records belong to CS Record Types: 
+App Troubleshooting
+Ecommerce Account
+General Inquiry
+Product Troubleshooting &amp; Warranty Fulfillment
+Health Experience</description>
+        <name>Check_If_CS_Record_Type</name>
+        <label>Check If CS Record Type</label>
+        <locationX>471</locationX>
+        <locationY>41</locationY>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>CS_Record_Type</name>
+            <conditionLogic>or</conditionLogic>
+            <conditions>
+                <leftValueReference>itemCase.RecordTypeId</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>0121O000000AYNXQA4</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>itemCase.RecordTypeId</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>01239000000UXufAAG</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>itemCase.RecordTypeId</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>01239000000UXugAAG</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>itemCase.RecordTypeId</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>01239000000UXukAAG</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>itemCase.RecordTypeId</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>01239000000YSfTAAW</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Get_Queue_Name_From_Metadata</targetReference>
+            </connector>
+            <label>CS Record Type</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <name>Closed_Queue_ID_is_Not_Null</name>
+        <label>Closed Queue ID is Not Null</label>
+        <locationX>1040</locationX>
+        <locationY>47</locationY>
+        <defaultConnector>
+            <targetReference>Assign_to_US_Closed_Cases_Queue</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Queue ID is Null</defaultConnectorLabel>
+        <rules>
+            <name>Queue_ID_is_not_null</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>closedCaseQueueID</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Assign_Queue_ID_to_Case</targetReference>
+            </connector>
+            <label>Queue ID is not null</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <description>If the Case Owner is  &apos;JUUL Auto-Replace&apos;, then don&apos;t update the Case Owner. The Case Owner should remain as &apos;JUUL Auto-Replace&apos;</description>
+        <name>Owner_is_JUUL_Auto_Replace</name>
+        <label>Owner is JUUL Auto-Replace</label>
+        <locationX>163</locationX>
+        <locationY>280</locationY>
+        <defaultConnector>
+            <targetReference>Check_If_CS_Record_Type</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>JUUL_Auto_Replace</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>itemCase.OwnerId</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>00G390000050BrWEAU</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Case_Submit_For_Approval</targetReference>
+            </connector>
+            <label>JUUL Auto-Replace</label>
+        </rules>
+    </decisions>
+    <formulas>
+        <name>userID</name>
+        <dataType>String</dataType>
+        <expression>{!$User.Id}</expression>
+    </formulas>
+    <interviewLabel>Closed Case - Closed Queue Flow {!$Flow.CurrentDateTime}</interviewLabel>
+    <label>Closed Case - Closed Queue Flow</label>
+    <processMetadataValues>
+        <name>BuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>OriginBuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processType>AutoLaunchedFlow</processType>
+    <recordLookups>
+        <description>Get the Closed Case</description>
+        <name>Get_Current_Closed_Case</name>
+        <label>Get Current Closed Case</label>
+        <locationX>169</locationX>
+        <locationY>50</locationY>
+        <assignNullValuesIfNoRecordsFound>true</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>Owner_is_JUUL_Auto_Replace</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>Id</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>recordId</elementReference>
+            </value>
+        </filters>
+        <object>Case</object>
+        <outputReference>itemCase</outputReference>
+        <queriedFields>Id</queriedFields>
+        <queriedFields>Market__c</queriedFields>
+        <queriedFields>RecordTypeId</queriedFields>
+        <queriedFields>OwnerId</queriedFields>
+    </recordLookups>
+    <recordLookups>
+        <description>Use the Market to retrieve the Closed Queue Name from &apos;CS Country Config &apos;  Metadata</description>
+        <name>Get_Queue_Name_From_Metadata</name>
+        <label>Get Queue Name From Metadata</label>
+        <locationX>725</locationX>
+        <locationY>44</locationY>
+        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>Get_the_Queue_ID</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>Market__c</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>itemCase.Market__c</elementReference>
+            </value>
+        </filters>
+        <object>CS_Country_Config__mdt</object>
+        <outputAssignments>
+            <assignToReference>closedCaseQueueName</assignToReference>
+            <field>Closed_Case_Queue_Name__c</field>
+        </outputAssignments>
+    </recordLookups>
+    <recordLookups>
+        <description>Get the Queue ID</description>
+        <name>Get_the_Queue_ID</name>
+        <label>Get the Queue ID</label>
+        <locationX>878</locationX>
+        <locationY>44</locationY>
+        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>Closed_Queue_ID_is_Not_Null</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>DeveloperName</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>closedCaseQueueName</elementReference>
+            </value>
+        </filters>
+        <filters>
+            <field>Type</field>
+            <operator>EqualTo</operator>
+            <value>
+                <stringValue>Queue</stringValue>
+            </value>
+        </filters>
+        <object>Group</object>
+        <outputAssignments>
+            <assignToReference>closedCaseQueueID</assignToReference>
+            <field>Id</field>
+        </outputAssignments>
+    </recordLookups>
+    <recordUpdates>
+        <description>Update Case</description>
+        <name>Update_Case</name>
+        <label>Update Case</label>
+        <locationX>1289</locationX>
+        <locationY>261</locationY>
+        <connector>
+            <targetReference>Case_Submit_For_Approval</targetReference>
+        </connector>
+        <inputReference>itemCase</inputReference>
+    </recordUpdates>
+    <start>
+        <locationX>50</locationX>
+        <locationY>50</locationY>
+        <connector>
+            <targetReference>Get_Current_Closed_Case</targetReference>
+        </connector>
+    </start>
+    <status>Active</status>
+    <variables>
+        <description>Variable to store the Queue ID</description>
+        <name>closedCaseQueueID</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>true</isInput>
+        <isOutput>false</isOutput>
+    </variables>
+    <variables>
+        <description>Variable to store the Name of the Closed Case Queue Name from the Metadata</description>
+        <name>closedCaseQueueName</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>true</isInput>
+        <isOutput>false</isOutput>
+    </variables>
+    <variables>
+        <description>Each Case element being looped through iteration</description>
+        <name>itemCase</name>
+        <dataType>SObject</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+        <objectType>Case</objectType>
+    </variables>
+    <variables>
+        <description>List of Cases to Update</description>
+        <name>listCasesUpdate</name>
+        <dataType>SObject</dataType>
+        <isCollection>true</isCollection>
+        <isInput>true</isInput>
+        <isOutput>false</isOutput>
+        <objectType>Case</objectType>
+    </variables>
+    <variables>
+        <description>List of the Closed Cases</description>
+        <name>listClosedCases</name>
+        <dataType>SObject</dataType>
+        <isCollection>true</isCollection>
+        <isInput>true</isInput>
+        <isOutput>false</isOutput>
+        <objectType>Case</objectType>
+    </variables>
+    <variables>
+        <name>recordId</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>true</isInput>
+        <isOutput>false</isOutput>
+    </variables>
+</Flow>

@@ -1,0 +1,326 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Flow xmlns="http://soap.sforce.com/2006/04/metadata" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+    <apiVersion>49.0</apiVersion>
+    <areMetricsLoggedToDataCloud>false</areMetricsLoggedToDataCloud>
+    <decisions>
+        <name>Drop_Chat_Type</name>
+        <label>Drop Chat Type</label>
+        <locationX>345</locationX>
+        <locationY>262</locationY>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>Before_Interaction_Health_Experience</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>varRecordTypeDeveloperName</leftValueReference>
+                <operator>Contains</operator>
+                <rightValue>
+                    <stringValue>Health</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>Dropped_Chat2</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Before Interaction started</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>After_Interaction2</targetReference>
+            </connector>
+            <label>Before Interaction Health Experience</label>
+        </rules>
+        <rules>
+            <name>Before_Interaction</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>Dropped_Chat2</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Before Interaction started</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>varRecordTypeDeveloperName</leftValueReference>
+                <operator>NotEqualTo</operator>
+                <rightValue>
+                    <stringValue>Health_Experience</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Before_Interaction2</targetReference>
+            </connector>
+            <label>Before Interaction</label>
+        </rules>
+        <rules>
+            <name>After_Interaction</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>Dropped_Chat2</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>During Interaction</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>After_Interaction2</targetReference>
+            </connector>
+            <label>After Interaction</label>
+        </rules>
+    </decisions>
+    <description>Customer service cases drop from either chats or telephone calls. Integrated update to Topic Issue Action. Include variance for Health to prevent closing case if they choose Before Contact. It now just updates the field for &quot;dropped contact after an interaction.&quot;</description>
+    <dynamicChoiceSets>
+        <name>DroppedChat</name>
+        <dataType>Picklist</dataType>
+        <displayField xsi:nil="true"/>
+        <object xsi:nil="true"/>
+        <picklistField>Dropped__c</picklistField>
+        <picklistObject>Case</picklistObject>
+    </dynamicChoiceSets>
+    <formulas>
+        <description>Second line break</description>
+        <name>LineBreak2</name>
+        <dataType>String</dataType>
+        <expression>SUBSTITUTE({!Linebreak},&apos;~&apos;,&apos;&apos;)</expression>
+    </formulas>
+    <interviewLabel>Drop Chat Flow {!$Flow.CurrentDateTime}</interviewLabel>
+    <label>Drop Contact Flow</label>
+    <processMetadataValues>
+        <name>BuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>OriginBuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processType>Flow</processType>
+    <recordLookups>
+        <description>Get Case Comments then append with updated case status</description>
+        <name>GetCaseComments</name>
+        <label>GetCaseComments</label>
+        <locationX>286</locationX>
+        <locationY>54</locationY>
+        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>getQueueDeveloperName</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>Id</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>recordId</elementReference>
+            </value>
+        </filters>
+        <object>Case</object>
+        <outputAssignments>
+            <assignToReference>CaseCommentBeforeInteraction</assignToReference>
+            <field>Last_Case_Comment__c</field>
+        </outputAssignments>
+        <outputAssignments>
+            <assignToReference>varRecordTypeId</assignToReference>
+            <field>RecordTypeId</field>
+        </outputAssignments>
+    </recordLookups>
+    <recordLookups>
+        <name>getQueueDeveloperName</name>
+        <label>getQueueDeveloperName</label>
+        <locationX>447</locationX>
+        <locationY>55</locationY>
+        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>Drop_Chat_Type</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>Id</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>varRecordTypeId</elementReference>
+            </value>
+        </filters>
+        <object>RecordType</object>
+        <outputAssignments>
+            <assignToReference>varRecordTypeDeveloperName</assignToReference>
+            <field>DeveloperName</field>
+        </outputAssignments>
+    </recordLookups>
+    <recordUpdates>
+        <name>After_Interaction2</name>
+        <label>After Interaction</label>
+        <locationX>633</locationX>
+        <locationY>446</locationY>
+        <connector>
+            <targetReference>End_of_Drop_Chat_Flow</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>Id</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>recordId</elementReference>
+            </value>
+        </filters>
+        <inputAssignments>
+            <field>Dropped__c</field>
+            <value>
+                <stringValue>During interaction</stringValue>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Last_Case_Comment__c</field>
+            <value>
+                <stringValue>Dropped Contact after interaction. {!LineBreak2} {!CaseCommentBeforeInteraction}</stringValue>
+            </value>
+        </inputAssignments>
+        <object>Case</object>
+    </recordUpdates>
+    <recordUpdates>
+        <name>Before_Interaction2</name>
+        <label>Before Interaction</label>
+        <locationX>51</locationX>
+        <locationY>464</locationY>
+        <connector>
+            <targetReference>End_of_Drop_Chat_Flow</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>Id</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>recordId</elementReference>
+            </value>
+        </filters>
+        <inputAssignments>
+            <field>Action__c</field>
+            <value>
+                <stringValue>Cannot Follow Up</stringValue>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Dropped__c</field>
+            <value>
+                <stringValue>Before Interaction started</stringValue>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Issue__c</field>
+            <value>
+                <stringValue>No Conversation Initiated</stringValue>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Last_Case_Comment__c</field>
+            <value>
+                <stringValue>Dropped Contact before interaction - case closed as a duplicate. {!LineBreak2} {!CaseCommentBeforeInteraction}</stringValue>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Status</field>
+            <value>
+                <stringValue>Closed as Duplicate</stringValue>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Topic__c</field>
+            <value>
+                <stringValue>Dropped Contact</stringValue>
+            </value>
+        </inputAssignments>
+        <object>Case</object>
+    </recordUpdates>
+    <screens>
+        <name>Dropped_Chat</name>
+        <label>Dropped Contact</label>
+        <locationX>140</locationX>
+        <locationY>56</locationY>
+        <allowBack>false</allowBack>
+        <allowFinish>true</allowFinish>
+        <allowPause>false</allowPause>
+        <connector>
+            <targetReference>GetCaseComments</targetReference>
+        </connector>
+        <fields>
+            <name>Dropped_Chat2</name>
+            <choiceReferences>DroppedChat</choiceReferences>
+            <dataType>String</dataType>
+            <fieldText>Dropped Contact</fieldText>
+            <fieldType>DropdownBox</fieldType>
+            <isRequired>true</isRequired>
+        </fields>
+        <showFooter>true</showFooter>
+        <showHeader>false</showHeader>
+    </screens>
+    <screens>
+        <name>End_of_Drop_Chat_Flow</name>
+        <label>End of Drop Chat Flow</label>
+        <locationX>359</locationX>
+        <locationY>671</locationY>
+        <allowBack>false</allowBack>
+        <allowFinish>true</allowFinish>
+        <allowPause>false</allowPause>
+        <fields>
+            <name>Case_drop_finished</name>
+            <fieldText>&lt;p&gt;&lt;b style=&quot;color: rgb(21, 169, 81);&quot;&gt;Dropped Contact on Case Updated&lt;/b&gt;&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+        </fields>
+        <showFooter>true</showFooter>
+        <showHeader>true</showHeader>
+    </screens>
+    <start>
+        <locationX>50</locationX>
+        <locationY>50</locationY>
+        <connector>
+            <targetReference>Dropped_Chat</targetReference>
+        </connector>
+    </start>
+    <status>Active</status>
+    <textTemplates>
+        <description>Line break</description>
+        <name>Linebreak</name>
+        <isViewedAsPlainText>false</isViewedAsPlainText>
+        <text>~
+~</text>
+    </textTemplates>
+    <variables>
+        <description>Dropped Contact after interaction - case closed as solved</description>
+        <name>CaseCommentAfterInteraction</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>true</isInput>
+        <isOutput>true</isOutput>
+    </variables>
+    <variables>
+        <description>Dropped Contact before interaction - case closed as a duplicate.</description>
+        <name>CaseCommentBeforeInteraction</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>true</isInput>
+        <isOutput>true</isOutput>
+    </variables>
+    <variables>
+        <name>recordId</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>true</isInput>
+        <isOutput>true</isOutput>
+    </variables>
+    <variables>
+        <name>varRecordTypeDeveloperName</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>true</isInput>
+        <isOutput>true</isOutput>
+    </variables>
+    <variables>
+        <name>varRecordTypeId</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>true</isInput>
+        <isOutput>false</isOutput>
+    </variables>
+</Flow>

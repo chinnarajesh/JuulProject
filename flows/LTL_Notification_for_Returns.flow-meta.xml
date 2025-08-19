@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Flow xmlns="http://soap.sforce.com/2006/04/metadata">
+    <actionCalls>
+        <name>Notification_for_arranging_LTL</name>
+        <label>Case.Notification_for_arranging_LTL</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <actionName>Case.Notification_for_arranging_LTL</actionName>
+        <actionType>emailAlert</actionType>
+        <flowTransactionModel>CurrentTransaction</flowTransactionModel>
+        <inputParameters>
+            <name>SObjectRowId</name>
+            <value>
+                <elementReference>$Record.Id</elementReference>
+            </value>
+        </inputParameters>
+        <nameSegment>Case.Notification_for_arranging_LTL</nameSegment>
+    </actionCalls>
+    <apiVersion>63.0</apiVersion>
+    <areMetricsLoggedToDataCloud>false</areMetricsLoggedToDataCloud>
+    <description>Migrated from the: LTL Notification for Returns workflow rule
+Workflow rule description: B2B RMA Standard Distributors - Notification for arranging LTL&quot;</description>
+    <label>LTL Notification for Returns</label>
+    <migratedFromWorkflowRuleName>LTL Notification for Returns</migratedFromWorkflowRuleName>
+    <processMetadataValues>
+        <name>CanvasMode</name>
+        <value>
+            <stringValue>AUTO_LAYOUT_CANVAS</stringValue>
+        </value>
+    </processMetadataValues>
+    <processType>AutoLaunchedFlow</processType>
+    <start>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <connector>
+            <targetReference>Notification_for_arranging_LTL</targetReference>
+        </connector>
+        <doesRequireRecordChangedToMeetCriteria>true</doesRequireRecordChangedToMeetCriteria>
+        <filterFormula>IF({!$Setup.Bypass_Workflow_Rules__c.Case_Workflow_Rules__c} = TRUE,FALSE, AND(    {!$Record.RecordType.DeveloperName} = &apos;B2B RMA&apos;,    ISPICKVAL({!$Record.Status}, &quot;Approved&quot;),    ISPICKVAL( {!$Record.Account_Type__c}, &quot;Standard Distributor&quot;),    {!$Record.Total_Return_Units__c}  &gt;= 16   ) )</filterFormula>
+        <object>Case</object>
+        <recordTriggerType>CreateAndUpdate</recordTriggerType>
+        <triggerType>RecordAfterSave</triggerType>
+    </start>
+    <status>Active</status>
+</Flow>

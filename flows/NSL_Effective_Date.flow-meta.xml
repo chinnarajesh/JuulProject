@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Flow xmlns="http://soap.sforce.com/2006/04/metadata">
+    <actionCalls>
+        <name>NSL_Effective_Date_Alert</name>
+        <label>salesOrder__c.NSL_Effective_Date_Alert</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <actionName>salesOrder__c.NSL_Effective_Date_Alert</actionName>
+        <actionType>emailAlert</actionType>
+        <flowTransactionModel>CurrentTransaction</flowTransactionModel>
+        <inputParameters>
+            <name>SObjectRowId</name>
+            <value>
+                <elementReference>$Record.Id</elementReference>
+            </value>
+        </inputParameters>
+        <nameSegment>salesOrder__c.NSL_Effective_Date_Alert</nameSegment>
+    </actionCalls>
+    <apiVersion>63.0</apiVersion>
+    <areMetricsLoggedToDataCloud>false</areMetricsLoggedToDataCloud>
+    <description>Migrated from the: NSL Effective Date workflow rule
+Workflow rule description: &quot;</description>
+    <label>NSL Effective Date</label>
+    <migratedFromWorkflowRuleName>NSL Effective Date</migratedFromWorkflowRuleName>
+    <processMetadataValues>
+        <name>CanvasMode</name>
+        <value>
+            <stringValue>AUTO_LAYOUT_CANVAS</stringValue>
+        </value>
+    </processMetadataValues>
+    <processType>AutoLaunchedFlow</processType>
+    <start>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <connector>
+            <targetReference>NSL_Effective_Date_Alert</targetReference>
+        </connector>
+        <filterFormula>AND(  NOT(ISBLANK( {!$Record.Customer__c})),  NOT(ISBLANK( {!$Record.Customer__r.NSL_Effective_Date__c})),   {!$Record.Order_Date__c} &gt; {!$Record.Customer__r.NSL_Effective_Date__c} )</filterFormula>
+        <object>salesOrder__c</object>
+        <recordTriggerType>Create</recordTriggerType>
+        <triggerType>RecordAfterSave</triggerType>
+    </start>
+    <status>Active</status>
+</Flow>

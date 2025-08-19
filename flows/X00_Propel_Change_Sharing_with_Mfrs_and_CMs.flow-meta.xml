@@ -1,0 +1,870 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Flow xmlns="http://soap.sforce.com/2006/04/metadata">
+    <actionCalls>
+        <name>eventContextErrorEmail</name>
+        <label>Context Error Email</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <actionName>emailSimple</actionName>
+        <actionType>emailSimple</actionType>
+        <flowTransactionModel>CurrentTransaction</flowTransactionModel>
+        <inputParameters>
+            <name>emailSubject</name>
+            <value>
+                <stringValue>Salesforce 00 - Propel Change Sharing with Mfrs and CMs process didn&apos;t start: No matching records found</stringValue>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>emailBody</name>
+            <value>
+                <elementReference>noRecordsFoundTextTemplate</elementReference>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>emailAddresses</name>
+            <value>
+                <stringValue>juturi.rajesh@jaxconsult.com</stringValue>
+            </value>
+        </inputParameters>
+        <nameSegment>emailSimple</nameSegment>
+    </actionCalls>
+    <actionCalls>
+        <name>eventContextMoreEmail</name>
+        <label>Context Error Email</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <actionName>emailSimple</actionName>
+        <actionType>emailSimple</actionType>
+        <flowTransactionModel>CurrentTransaction</flowTransactionModel>
+        <inputParameters>
+            <name>emailSubject</name>
+            <value>
+                <stringValue>Salesforce 00 - Propel Change Sharing with Mfrs and CMs process didn&apos;t start: Multiple matching records found</stringValue>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>emailBody</name>
+            <value>
+                <elementReference>multipleRecordsFoundTextTemplate</elementReference>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>emailAddresses</name>
+            <value>
+                <stringValue>juturi.rajesh@jaxconsult.com</stringValue>
+            </value>
+        </inputParameters>
+        <nameSegment>emailSimple</nameSegment>
+    </actionCalls>
+    <actionCalls>
+        <processMetadataValues>
+            <name>apexSelection</name>
+            <value>
+                <stringValue>Sharing Rule Action</stringValue>
+            </value>
+        </processMetadataValues>
+        <name>myRule_1_A1</name>
+        <label>Share Change with Mfrs and CMs</label>
+        <locationX>100</locationX>
+        <locationY>200</locationY>
+        <actionName>PDLM__SharingRuleAction</actionName>
+        <actionType>apex</actionType>
+        <connector>
+            <targetReference>myRule_1_A2</targetReference>
+        </connector>
+        <flowTransactionModel>CurrentTransaction</flowTransactionModel>
+        <inputParameters>
+            <processMetadataValues>
+                <name>dataType</name>
+                <value>
+                    <stringValue>String</stringValue>
+                </value>
+            </processMetadataValues>
+            <processMetadataValues>
+                <name>isRequired</name>
+                <value>
+                    <booleanValue>true</booleanValue>
+                </value>
+            </processMetadataValues>
+            <processMetadataValues>
+                <name>leftHandSideLabel</name>
+                <value>
+                    <stringValue>Share Reason</stringValue>
+                </value>
+            </processMetadataValues>
+            <processMetadataValues>
+                <name>maxOccurs</name>
+                <value>
+                    <numberValue>0.0</numberValue>
+                </value>
+            </processMetadataValues>
+            <processMetadataValues>
+                <name>objectType</name>
+                <value>
+                    <stringValue></stringValue>
+                </value>
+            </processMetadataValues>
+            <processMetadataValues>
+                <name>rightHandSideType</name>
+                <value>
+                    <stringValue>String</stringValue>
+                </value>
+            </processMetadataValues>
+            <name>reason</name>
+            <value>
+                <stringValue>Share Changes with Mfrs and CMs</stringValue>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <processMetadataValues>
+                <name>dataType</name>
+                <value>
+                    <stringValue>ID</stringValue>
+                </value>
+            </processMetadataValues>
+            <processMetadataValues>
+                <name>isRequired</name>
+                <value>
+                    <booleanValue>true</booleanValue>
+                </value>
+            </processMetadataValues>
+            <processMetadataValues>
+                <name>leftHandSideLabel</name>
+                <value>
+                    <stringValue>Record Id</stringValue>
+                </value>
+            </processMetadataValues>
+            <processMetadataValues>
+                <name>maxOccurs</name>
+                <value>
+                    <numberValue>0.0</numberValue>
+                </value>
+            </processMetadataValues>
+            <processMetadataValues>
+                <name>objectType</name>
+                <value>
+                    <stringValue></stringValue>
+                </value>
+            </processMetadataValues>
+            <processMetadataValues>
+                <name>rightHandSideType</name>
+                <value>
+                    <stringValue>Reference</stringValue>
+                </value>
+            </processMetadataValues>
+            <name>recordId</name>
+            <value>
+                <elementReference>myVariable_event_context.Id</elementReference>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <processMetadataValues>
+                <name>dataType</name>
+                <value>
+                    <stringValue>String</stringValue>
+                </value>
+            </processMetadataValues>
+            <processMetadataValues>
+                <name>isRequired</name>
+                <value>
+                    <booleanValue>true</booleanValue>
+                </value>
+            </processMetadataValues>
+            <processMetadataValues>
+                <name>leftHandSideLabel</name>
+                <value>
+                    <stringValue>Sharing Rule Name (DeveloperName)</stringValue>
+                </value>
+            </processMetadataValues>
+            <processMetadataValues>
+                <name>maxOccurs</name>
+                <value>
+                    <numberValue>0.0</numberValue>
+                </value>
+            </processMetadataValues>
+            <processMetadataValues>
+                <name>objectType</name>
+                <value>
+                    <stringValue></stringValue>
+                </value>
+            </processMetadataValues>
+            <processMetadataValues>
+                <name>rightHandSideType</name>
+                <value>
+                    <stringValue>Formula</stringValue>
+                </value>
+            </processMetadataValues>
+            <name>ruleName</name>
+            <value>
+                <elementReference>formula_2_myRule_1_A1_1547822292</elementReference>
+            </value>
+        </inputParameters>
+        <nameSegment>PDLM__SharingRuleAction</nameSegment>
+    </actionCalls>
+    <actionCalls>
+        <processMetadataValues>
+            <name>apexSelection</name>
+            <value>
+                <stringValue>PropelEmailAlertToSuppliers</stringValue>
+            </value>
+        </processMetadataValues>
+        <name>myRule_1_A2</name>
+        <label>Send Email</label>
+        <locationX>100</locationX>
+        <locationY>300</locationY>
+        <actionName>PropelEmailAlertToSuppliers</actionName>
+        <actionType>apex</actionType>
+        <flowTransactionModel>CurrentTransaction</flowTransactionModel>
+        <inputParameters>
+            <processMetadataValues>
+                <name>dataType</name>
+                <value>
+                    <stringValue>ID</stringValue>
+                </value>
+            </processMetadataValues>
+            <processMetadataValues>
+                <name>isRequired</name>
+                <value>
+                    <booleanValue>true</booleanValue>
+                </value>
+            </processMetadataValues>
+            <processMetadataValues>
+                <name>leftHandSideLabel</name>
+                <value>
+                    <stringValue>Change ID</stringValue>
+                </value>
+            </processMetadataValues>
+            <processMetadataValues>
+                <name>maxOccurs</name>
+                <value>
+                    <numberValue>0.0</numberValue>
+                </value>
+            </processMetadataValues>
+            <processMetadataValues>
+                <name>objectType</name>
+                <value>
+                    <stringValue></stringValue>
+                </value>
+            </processMetadataValues>
+            <processMetadataValues>
+                <name>rightHandSideType</name>
+                <value>
+                    <stringValue>Reference</stringValue>
+                </value>
+            </processMetadataValues>
+            <name>changeID</name>
+            <value>
+                <elementReference>myVariable_event_context.Id</elementReference>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <processMetadataValues>
+                <name>dataType</name>
+                <value>
+                    <stringValue>String</stringValue>
+                </value>
+            </processMetadataValues>
+            <processMetadataValues>
+                <name>isRequired</name>
+                <value>
+                    <booleanValue>true</booleanValue>
+                </value>
+            </processMetadataValues>
+            <processMetadataValues>
+                <name>leftHandSideLabel</name>
+                <value>
+                    <stringValue>Email Template API Name</stringValue>
+                </value>
+            </processMetadataValues>
+            <processMetadataValues>
+                <name>maxOccurs</name>
+                <value>
+                    <numberValue>0.0</numberValue>
+                </value>
+            </processMetadataValues>
+            <processMetadataValues>
+                <name>objectType</name>
+                <value>
+                    <stringValue></stringValue>
+                </value>
+            </processMetadataValues>
+            <processMetadataValues>
+                <name>rightHandSideType</name>
+                <value>
+                    <stringValue>String</stringValue>
+                </value>
+            </processMetadataValues>
+            <name>emailTemplate</name>
+            <value>
+                <stringValue>Change_Shared_with_Accessible_By_Group_s</stringValue>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <processMetadataValues>
+                <name>dataType</name>
+                <value>
+                    <stringValue>String</stringValue>
+                </value>
+            </processMetadataValues>
+            <processMetadataValues>
+                <name>isRequired</name>
+                <value>
+                    <booleanValue>true</booleanValue>
+                </value>
+            </processMetadataValues>
+            <processMetadataValues>
+                <name>leftHandSideLabel</name>
+                <value>
+                    <stringValue>Accessible By</stringValue>
+                </value>
+            </processMetadataValues>
+            <processMetadataValues>
+                <name>maxOccurs</name>
+                <value>
+                    <numberValue>0.0</numberValue>
+                </value>
+            </processMetadataValues>
+            <processMetadataValues>
+                <name>objectType</name>
+                <value>
+                    <stringValue></stringValue>
+                </value>
+            </processMetadataValues>
+            <processMetadataValues>
+                <name>rightHandSideType</name>
+                <value>
+                    <stringValue>Reference</stringValue>
+                </value>
+            </processMetadataValues>
+            <name>accessibleBy</name>
+            <value>
+                <elementReference>myVariable_event_context.Accessible_By__c</elementReference>
+            </value>
+        </inputParameters>
+        <nameSegment>PropelEmailAlertToSuppliers</nameSegment>
+    </actionCalls>
+    <actionCalls>
+        <processMetadataValues>
+            <name>apexSelection</name>
+            <value>
+                <stringValue>PropelEmailAlertToSuppliers</stringValue>
+            </value>
+        </processMetadataValues>
+        <name>myRule_4_A1</name>
+        <label>Send Email</label>
+        <locationX>400</locationX>
+        <locationY>200</locationY>
+        <actionName>PropelEmailAlertToSuppliers</actionName>
+        <actionType>apex</actionType>
+        <flowTransactionModel>CurrentTransaction</flowTransactionModel>
+        <inputParameters>
+            <processMetadataValues>
+                <name>dataType</name>
+                <value>
+                    <stringValue>ID</stringValue>
+                </value>
+            </processMetadataValues>
+            <processMetadataValues>
+                <name>isRequired</name>
+                <value>
+                    <booleanValue>true</booleanValue>
+                </value>
+            </processMetadataValues>
+            <processMetadataValues>
+                <name>leftHandSideLabel</name>
+                <value>
+                    <stringValue>Change ID</stringValue>
+                </value>
+            </processMetadataValues>
+            <processMetadataValues>
+                <name>maxOccurs</name>
+                <value>
+                    <numberValue>0.0</numberValue>
+                </value>
+            </processMetadataValues>
+            <processMetadataValues>
+                <name>objectType</name>
+                <value>
+                    <stringValue></stringValue>
+                </value>
+            </processMetadataValues>
+            <processMetadataValues>
+                <name>rightHandSideType</name>
+                <value>
+                    <stringValue>Reference</stringValue>
+                </value>
+            </processMetadataValues>
+            <name>changeID</name>
+            <value>
+                <elementReference>myVariable_event_context.Id</elementReference>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <processMetadataValues>
+                <name>dataType</name>
+                <value>
+                    <stringValue>String</stringValue>
+                </value>
+            </processMetadataValues>
+            <processMetadataValues>
+                <name>isRequired</name>
+                <value>
+                    <booleanValue>true</booleanValue>
+                </value>
+            </processMetadataValues>
+            <processMetadataValues>
+                <name>leftHandSideLabel</name>
+                <value>
+                    <stringValue>Email Template API Name</stringValue>
+                </value>
+            </processMetadataValues>
+            <processMetadataValues>
+                <name>maxOccurs</name>
+                <value>
+                    <numberValue>0.0</numberValue>
+                </value>
+            </processMetadataValues>
+            <processMetadataValues>
+                <name>objectType</name>
+                <value>
+                    <stringValue></stringValue>
+                </value>
+            </processMetadataValues>
+            <processMetadataValues>
+                <name>rightHandSideType</name>
+                <value>
+                    <stringValue>String</stringValue>
+                </value>
+            </processMetadataValues>
+            <name>emailTemplate</name>
+            <value>
+                <stringValue>Change_Approved_and_Notify_Accessible_By_Group_s</stringValue>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <processMetadataValues>
+                <name>dataType</name>
+                <value>
+                    <stringValue>String</stringValue>
+                </value>
+            </processMetadataValues>
+            <processMetadataValues>
+                <name>isRequired</name>
+                <value>
+                    <booleanValue>true</booleanValue>
+                </value>
+            </processMetadataValues>
+            <processMetadataValues>
+                <name>leftHandSideLabel</name>
+                <value>
+                    <stringValue>Accessible By</stringValue>
+                </value>
+            </processMetadataValues>
+            <processMetadataValues>
+                <name>maxOccurs</name>
+                <value>
+                    <numberValue>0.0</numberValue>
+                </value>
+            </processMetadataValues>
+            <processMetadataValues>
+                <name>objectType</name>
+                <value>
+                    <stringValue></stringValue>
+                </value>
+            </processMetadataValues>
+            <processMetadataValues>
+                <name>rightHandSideType</name>
+                <value>
+                    <stringValue>Reference</stringValue>
+                </value>
+            </processMetadataValues>
+            <name>accessibleBy</name>
+            <value>
+                <elementReference>myVariable_event_context.Accessible_By__c</elementReference>
+            </value>
+        </inputParameters>
+        <nameSegment>PropelEmailAlertToSuppliers</nameSegment>
+    </actionCalls>
+    <apiVersion>51.0</apiVersion>
+    <areMetricsLoggedToDataCloud>false</areMetricsLoggedToDataCloud>
+    <assignments>
+        <name>RecordCountAssignment</name>
+        <label>RecordCountAssignment</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <assignmentItems>
+            <assignToReference>myVariable_event_record_count</assignToReference>
+            <operator>Add</operator>
+            <value>
+                <numberValue>1.0</numberValue>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>myVariable_event_context</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>myVariable_event_current_record</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>eventContextCheckLoop</targetReference>
+        </connector>
+    </assignments>
+    <decisions>
+        <name>eventContextCheckDecision</name>
+        <label>ContextCheckDecision</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <defaultConnector>
+            <targetReference>myDecision</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>default</defaultConnectorLabel>
+        <rules>
+            <name>eventContextCheckRule</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>myVariable_event_record_count</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <numberValue>0.0</numberValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>eventContextErrorEmail</targetReference>
+            </connector>
+            <label>Context Check Decision - Is Zero</label>
+        </rules>
+        <rules>
+            <name>eventContextGtOneCheckRule</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>myVariable_event_record_count</leftValueReference>
+                <operator>GreaterThan</operator>
+                <rightValue>
+                    <numberValue>1.0</numberValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>eventContextMoreEmail</targetReference>
+            </connector>
+            <label>Context Check Decision - Greater than One</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <processMetadataValues>
+            <name>index</name>
+            <value>
+                <numberValue>0.0</numberValue>
+            </value>
+        </processMetadataValues>
+        <name>myDecision</name>
+        <label>myDecision</label>
+        <locationX>50</locationX>
+        <locationY>0</locationY>
+        <defaultConnector>
+            <targetReference>myDecision3</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>default</defaultConnectorLabel>
+        <rules>
+            <name>myRule_1</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>formula_myRule_1</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>myRule_1_A1</targetReference>
+            </connector>
+            <label>Check Criteria</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <processMetadataValues>
+            <name>index</name>
+            <value>
+                <numberValue>1.0</numberValue>
+            </value>
+        </processMetadataValues>
+        <name>myDecision3</name>
+        <label>myDecision3</label>
+        <locationX>50</locationX>
+        <locationY>0</locationY>
+        <defaultConnectorLabel>default</defaultConnectorLabel>
+        <rules>
+            <name>myRule_4</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>formula_myRule_4</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>myRule_4_A1</targetReference>
+            </connector>
+            <label>Qual in Approved?</label>
+        </rules>
+    </decisions>
+    <description>Share XCOs, QUALs and DEVs with Email Alerts</description>
+    <formulas>
+        <processMetadataValues>
+            <name>originalFormula</name>
+            <value>
+                <stringValue>$CustomMetadata.PDLM__SharingRule__mdt.Share_Changes_with_CMs.DeveloperName </stringValue>
+            </value>
+        </processMetadataValues>
+        <name>formula_2_myRule_1_A1_1547822292</name>
+        <dataType>String</dataType>
+        <expression>{!$CustomMetadata.PDLM__SharingRule__mdt.Share_Changes_with_CMs.DeveloperName}</expression>
+    </formulas>
+    <formulas>
+        <processMetadataValues>
+            <name>originalFormula</name>
+            <value>
+                <stringValue>OR(
+AND(
+CONTAINS([PDLM__Change__c].PDLM__Category__r.Name , &quot;XCO&quot;),
+[PDLM__Change_Event__e].PDLM__Is_Approved__c = TRUE,
+NOT ISBLANK([PDLM__Change__c].Accessible_By__c)
+),
+AND(
+CONTAINS([PDLM__Change__c].PDLM__Category__r.Name , &quot;DEV&quot;),
+[PDLM__Change_Event__e].PDLM__Is_Update__c  = TRUE,
+[PDLM__Change__c].Change_Status_Name__c = &quot;Active&quot;,
+NOT ISBLANK([PDLM__Change__c].Accessible_By__c)
+),
+AND(
+CONTAINS([PDLM__Change__c].PDLM__Category__r.Name , &quot;QUAL&quot;),
+[PDLM__Change_Event__e].PDLM__Is_Update__c  = TRUE,
+[PDLM__Change__c].Change_Status_Name__c = &quot;Qualification&quot;,
+NOT ISBLANK([PDLM__Change__c].Accessible_By__c)
+)
+)</stringValue>
+            </value>
+        </processMetadataValues>
+        <name>formula_myRule_1</name>
+        <dataType>Boolean</dataType>
+        <expression>OR(
+AND(
+CONTAINS({!myVariable_event_context.PDLM__Category__r.Name} , &quot;XCO&quot;),
+{!myVariable_myEvent.PDLM__Is_Approved__c} = TRUE,
+NOT ISBLANK({!myVariable_event_context.Accessible_By__c})
+),
+AND(
+CONTAINS({!myVariable_event_context.PDLM__Category__r.Name} , &quot;DEV&quot;),
+{!myVariable_myEvent.PDLM__Is_Update__c}  = TRUE,
+{!myVariable_event_context.Change_Status_Name__c} = &quot;Active&quot;,
+NOT ISBLANK({!myVariable_event_context.Accessible_By__c})
+),
+AND(
+CONTAINS({!myVariable_event_context.PDLM__Category__r.Name} , &quot;QUAL&quot;),
+{!myVariable_myEvent.PDLM__Is_Update__c}  = TRUE,
+{!myVariable_event_context.Change_Status_Name__c} = &quot;Qualification&quot;,
+NOT ISBLANK({!myVariable_event_context.Accessible_By__c})
+)
+)</expression>
+    </formulas>
+    <formulas>
+        <processMetadataValues>
+            <name>originalFormula</name>
+            <value>
+                <stringValue>AND(
+CONTAINS([PDLM__Change__c].PDLM__Category__r.Name , &quot;QUAL&quot;),
+[PDLM__Change_Event__e].PDLM__Is_Update__c  = TRUE,
+[PDLM__Change__c].Change_Status_Name__c = &quot;Approved&quot;,
+NOT ISBLANK([PDLM__Change__c].Accessible_By__c)
+)</stringValue>
+            </value>
+        </processMetadataValues>
+        <name>formula_myRule_4</name>
+        <dataType>Boolean</dataType>
+        <expression>AND(
+CONTAINS({!myVariable_event_context.PDLM__Category__r.Name} , &quot;QUAL&quot;),
+{!myVariable_myEvent.PDLM__Is_Update__c}  = TRUE,
+{!myVariable_event_context.Change_Status_Name__c} = &quot;Approved&quot;,
+NOT ISBLANK({!myVariable_event_context.Accessible_By__c})
+)</expression>
+    </formulas>
+    <formulas>
+        <name>OrganizationName</name>
+        <dataType>String</dataType>
+        <expression>{!$Organization.Name}</expression>
+    </formulas>
+    <interviewLabel>X00_Propel_Change_Sharing_with_Mfrs_and_CMs-3_InterviewLabel</interviewLabel>
+    <label>00 - Propel Change Sharing with Mfrs and CMs</label>
+    <loops>
+        <name>eventContextCheckLoop</name>
+        <label>ContextCheckLoop</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <assignNextValueToReference>myVariable_event_current_record</assignNextValueToReference>
+        <collectionReference>myVariable_event_context_collection</collectionReference>
+        <iterationOrder>Asc</iterationOrder>
+        <nextValueConnector>
+            <targetReference>RecordCountAssignment</targetReference>
+        </nextValueConnector>
+        <noMoreValuesConnector>
+            <targetReference>eventContextCheckDecision</targetReference>
+        </noMoreValuesConnector>
+    </loops>
+    <processMetadataValues>
+        <name>EventType</name>
+        <value>
+            <stringValue>PDLM__Change_Event__e</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>ObjectType</name>
+        <value>
+            <stringValue>PDLM__Change__c</stringValue>
+        </value>
+    </processMetadataValues>
+    <processType>CustomEvent</processType>
+    <recordLookups>
+        <name>myEventContextRecordLookup</name>
+        <label>myEventContextRecordLookup</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>eventContextCheckLoop</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <processMetadataValues>
+                <name>implicit</name>
+                <value>
+                    <booleanValue>false</booleanValue>
+                </value>
+            </processMetadataValues>
+            <processMetadataValues>
+                <name>inputDataType</name>
+                <value>
+                    <stringValue>ID</stringValue>
+                </value>
+            </processMetadataValues>
+            <processMetadataValues>
+                <name>leftHandSideLabel</name>
+                <value>
+                    <stringValue>Record ID</stringValue>
+                </value>
+            </processMetadataValues>
+            <processMetadataValues>
+                <name>leftHandSideReferenceTo</name>
+                <value>
+                    <stringValue></stringValue>
+                </value>
+            </processMetadataValues>
+            <processMetadataValues>
+                <name>leftHandSideType</name>
+                <value>
+                    <stringValue>ID</stringValue>
+                </value>
+            </processMetadataValues>
+            <processMetadataValues>
+                <name>operatorDataType</name>
+                <value>
+                    <stringValue>String</stringValue>
+                </value>
+            </processMetadataValues>
+            <processMetadataValues>
+                <name>rightHandSideType</name>
+                <value>
+                    <stringValue>Event</stringValue>
+                </value>
+            </processMetadataValues>
+            <field>Id</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>myVariable_myEvent.PDLM__Record_Id__c</elementReference>
+            </value>
+        </filters>
+        <object>PDLM__Change__c</object>
+        <outputReference>myVariable_event_context_collection</outputReference>
+        <queriedFields>Change_Status_Name__c</queriedFields>
+        <queriedFields>Accessible_By__c</queriedFields>
+        <queriedFields>PDLM__Category__c</queriedFields>
+        <queriedFields>Id</queriedFields>
+    </recordLookups>
+    <startElementReference>myEventContextRecordLookup</startElementReference>
+    <status>Draft</status>
+    <textTemplates>
+        <description>text template for when multiple records are records found</description>
+        <name>multipleRecordsFoundTextTemplate</name>
+        <isViewedAsPlainText>false</isViewedAsPlainText>
+        <text>Hello {!OrganizationName} Admin, 
+
+The 00 - Propel Change Sharing with Mfrs and CMs process is configured to start when a Change Event platform event message occurs. A Change Event message occurred, but the process didn&apos;t start because multiple records in your org match the values specified in the process&apos;s Object node.
+
+Here are the values from the Change Event message.
+Record Id: {!myVariable_myEvent.PDLM__Record_Id__c}
+
+To fix this issue, adjust the matching filters in the process&apos;s Object node.
+
+Thank you, 
+Salesforce Process Automation</text>
+    </textTemplates>
+    <textTemplates>
+        <description>text template for no records found</description>
+        <name>noRecordsFoundTextTemplate</name>
+        <isViewedAsPlainText>false</isViewedAsPlainText>
+        <text>Hello {!OrganizationName} Admin, 
+
+The 00 - Propel Change Sharing with Mfrs and CMs process is configured to start when a Change Event platform event message occurs. A Change Event message occurred, but the process didn&apos;t start because no records in your org match the values specified in the process&apos;s Object node.
+
+Here are the values from the Change Event message.
+Record Id: {!myVariable_myEvent.PDLM__Record_Id__c}
+
+To fix this issue, adjust the matching filters in the process&apos;s Object node.
+
+Thank you, 
+Salesforce Process Automation</text>
+    </textTemplates>
+    <variables>
+        <name>myVariable_event_context</name>
+        <dataType>SObject</dataType>
+        <isCollection>false</isCollection>
+        <isInput>true</isInput>
+        <isOutput>true</isOutput>
+        <objectType>PDLM__Change__c</objectType>
+    </variables>
+    <variables>
+        <name>myVariable_event_context_collection</name>
+        <dataType>SObject</dataType>
+        <isCollection>true</isCollection>
+        <isInput>true</isInput>
+        <isOutput>true</isOutput>
+        <objectType>PDLM__Change__c</objectType>
+    </variables>
+    <variables>
+        <name>myVariable_event_current_record</name>
+        <dataType>SObject</dataType>
+        <isCollection>false</isCollection>
+        <isInput>true</isInput>
+        <isOutput>true</isOutput>
+        <objectType>PDLM__Change__c</objectType>
+    </variables>
+    <variables>
+        <name>myVariable_event_record_count</name>
+        <dataType>Number</dataType>
+        <isCollection>false</isCollection>
+        <isInput>true</isInput>
+        <isOutput>true</isOutput>
+        <scale>2</scale>
+        <value>
+            <numberValue>0.0</numberValue>
+        </value>
+    </variables>
+    <variables>
+        <name>myVariable_myEvent</name>
+        <dataType>SObject</dataType>
+        <isCollection>false</isCollection>
+        <isInput>true</isInput>
+        <isOutput>false</isOutput>
+        <objectType>PDLM__Change_Event__e</objectType>
+    </variables>
+</Flow>

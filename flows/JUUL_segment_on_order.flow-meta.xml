@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Flow xmlns="http://soap.sforce.com/2006/04/metadata">
+    <apiVersion>63.0</apiVersion>
+    <areMetricsLoggedToDataCloud>false</areMetricsLoggedToDataCloud>
+    <decisions>
+        <name>if_account_s_juulsegment_is</name>
+        <label>if account&apos;s juulsegment is not null</label>
+        <locationX>182</locationX>
+        <locationY>323</locationY>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>not_equals_to_null</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>$Record.Customer__r.JUUL_Segment__pc</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>JUUL_order_segment</targetReference>
+            </connector>
+            <label>not equals to null</label>
+        </rules>
+    </decisions>
+    <description>Sets the &quot;JUUL segment when ordered&quot; field, only when created</description>
+    <environments>Default</environments>
+    <formulas>
+        <name>JUULordersegment</name>
+        <dataType>String</dataType>
+        <expression>TEXT({!$Record.Customer__r.vlocity_ins__PersonContactId__r.JUUL_Segment__c})</expression>
+    </formulas>
+    <interviewLabel>JUUL segment on order {!$Flow.CurrentDateTime}</interviewLabel>
+    <label>JUUL segment on order</label>
+    <processMetadataValues>
+        <name>BuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>CanvasMode</name>
+        <value>
+            <stringValue>AUTO_LAYOUT_CANVAS</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>OriginBuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processType>AutoLaunchedFlow</processType>
+    <recordUpdates>
+        <name>JUUL_order_segment</name>
+        <label>JUUL order segment</label>
+        <locationX>50</locationX>
+        <locationY>431</locationY>
+        <inputAssignments>
+            <field>JUUL_segment_when_ordered__c</field>
+            <value>
+                <elementReference>JUULordersegment</elementReference>
+            </value>
+        </inputAssignments>
+        <inputReference>$Record</inputReference>
+    </recordUpdates>
+    <start>
+        <locationX>56</locationX>
+        <locationY>0</locationY>
+        <connector>
+            <targetReference>if_account_s_juulsegment_is</targetReference>
+        </connector>
+        <object>salesOrder__c</object>
+        <recordTriggerType>Create</recordTriggerType>
+        <triggerType>RecordAfterSave</triggerType>
+    </start>
+    <status>Active</status>
+</Flow>

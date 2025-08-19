@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Flow xmlns="http://soap.sforce.com/2006/04/metadata">
+    <actionCalls>
+        <name>Notify_JUUL_Team_of_Upload</name>
+        <label>Sales_Data_Upload_Queue__c.Notify_JUUL_Team_of_Upload</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <actionName>Sales_Data_Upload_Queue__c.Notify_JUUL_Team_of_Upload</actionName>
+        <actionType>emailAlert</actionType>
+        <flowTransactionModel>CurrentTransaction</flowTransactionModel>
+        <inputParameters>
+            <name>SObjectRowId</name>
+            <value>
+                <elementReference>$Record.Id</elementReference>
+            </value>
+        </inputParameters>
+        <nameSegment>Sales_Data_Upload_Queue__c.Notify_JUUL_Team_of_Upload</nameSegment>
+    </actionCalls>
+    <apiVersion>63.0</apiVersion>
+    <areMetricsLoggedToDataCloud>false</areMetricsLoggedToDataCloud>
+    <description>Migrated from the: Notify on Upload Creation workflow rule
+Workflow rule description: &quot;</description>
+    <label>Notify on Upload Creation</label>
+    <migratedFromWorkflowRuleName>Notify on Upload Creation</migratedFromWorkflowRuleName>
+    <processMetadataValues>
+        <name>CanvasMode</name>
+        <value>
+            <stringValue>AUTO_LAYOUT_CANVAS</stringValue>
+        </value>
+    </processMetadataValues>
+    <processType>AutoLaunchedFlow</processType>
+    <start>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <connector>
+            <targetReference>Notify_JUUL_Team_of_Upload</targetReference>
+        </connector>
+        <doesRequireRecordChangedToMeetCriteria>true</doesRequireRecordChangedToMeetCriteria>
+        <filterFormula>NOT(ISBLANK({!$Record.Upload_Verification__c} ))</filterFormula>
+        <object>Sales_Data_Upload_Queue__c</object>
+        <recordTriggerType>CreateAndUpdate</recordTriggerType>
+        <triggerType>RecordAfterSave</triggerType>
+    </start>
+    <status>Active</status>
+</Flow>

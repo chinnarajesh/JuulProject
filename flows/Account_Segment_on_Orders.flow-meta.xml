@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Flow xmlns="http://soap.sforce.com/2006/04/metadata">
+    <apiVersion>63.0</apiVersion>
+    <areMetricsLoggedToDataCloud>false</areMetricsLoggedToDataCloud>
+    <description>Sets the Account Segment = &quot;Uncovered&quot; : when country US</description>
+    <environments>Default</environments>
+    <interviewLabel>Account Segment on Orders {!$Flow.CurrentDateTime}</interviewLabel>
+    <label>Account Segment on Orders</label>
+    <processMetadataValues>
+        <name>BuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>CanvasMode</name>
+        <value>
+            <stringValue>AUTO_LAYOUT_CANVAS</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>OriginBuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processType>AutoLaunchedFlow</processType>
+    <recordUpdates>
+        <name>Account_Segment</name>
+        <label>Account Segment</label>
+        <locationX>176</locationX>
+        <locationY>323</locationY>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>Id</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>$Record.Customer__c</elementReference>
+            </value>
+        </filters>
+        <inputAssignments>
+            <field>Account_Segment__c</field>
+            <value>
+                <stringValue>Uncovered</stringValue>
+            </value>
+        </inputAssignments>
+        <object>Account</object>
+    </recordUpdates>
+    <start>
+        <locationX>50</locationX>
+        <locationY>0</locationY>
+        <connector>
+            <targetReference>Account_Segment</targetReference>
+        </connector>
+        <filterFormula>IF({!$Setup.Bypass_Workflow_Rules__c.Account_Workflow_Rules__c} = TRUE,FALSE,
+AND({!$Record.Customer__r.ShippingCountry} = &quot;US&quot;,
+ISBLANK(TEXT({!$Record.Customer__r.Account_Segment__c})),
+NOT(ISPICKVAL({!$Record.Customer__r.Type},&quot;HQ&quot;)),
+AND(
+NOT(ISPICKVAL({!$Record.Customer__r.Status__c}, &quot;Suspended&quot;)),
+NOT(ISPICKVAL({!$Record.Customer__r.Status__c}, &quot;Blacklisted&quot;))
+),
+OR(
+{!$Record.Customer__r.RecordType.DeveloperName} = &quot;Regional_Chain_Retailer&quot;,
+{!$Record.Customer__r.RecordType.DeveloperName} = &quot;Independent_Retailer&quot;,
+{!$Record.Customer__r.RecordType.DeveloperName} = &quot;Chain_Retail&quot;
+)
+)
+)</filterFormula>
+        <object>salesOrder__c</object>
+        <recordTriggerType>CreateAndUpdate</recordTriggerType>
+        <triggerType>RecordAfterSave</triggerType>
+    </start>
+    <status>Active</status>
+</Flow>

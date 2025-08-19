@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Flow xmlns="http://soap.sforce.com/2006/04/metadata">
+    <apiVersion>63.0</apiVersion>
+    <areMetricsLoggedToDataCloud>false</areMetricsLoggedToDataCloud>
+    <environments>Default</environments>
+    <interviewLabel>Sales - Update Account to Active w/ First SO {!$Flow.CurrentDateTime}</interviewLabel>
+    <label>Sales - Update Account to Active w/ First SO</label>
+    <processMetadataValues>
+        <name>BuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>CanvasMode</name>
+        <value>
+            <stringValue>AUTO_LAYOUT_CANVAS</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>OriginBuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processType>AutoLaunchedFlow</processType>
+    <recordUpdates>
+        <name>Update_Account_Status_to_Active</name>
+        <label>Update Account Status to Active</label>
+        <locationX>176</locationX>
+        <locationY>323</locationY>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>Id</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>$Record.Customer__c</elementReference>
+            </value>
+        </filters>
+        <inputAssignments>
+            <field>Status__c</field>
+            <value>
+                <stringValue>Customer (Reporting)</stringValue>
+            </value>
+        </inputAssignments>
+        <object>Account</object>
+    </recordUpdates>
+    <start>
+        <locationX>50</locationX>
+        <locationY>0</locationY>
+        <connector>
+            <targetReference>Update_Account_Status_to_Active</targetReference>
+        </connector>
+        <filterFormula>AND( ISNEW(), OR( ISPICKVAL({!$Record.Customer__r.Status__c}, &quot;Awaiting Initial Order&quot;), ISPICKVAL({!$Record.Customer__r.Status__c}, &quot;Customer (Non-Reporting)&quot;), ISPICKVAL({!$Record.Customer__r.Status__c}, &quot;Prospect&quot;) ), OR( {!$Record.Customer__r.RecordType.DeveloperName} = &quot;Chain Retailer&quot;, /*Chain Retailer */ {!$Record.Customer__r.RecordType.DeveloperName} = &quot;Independent Retailer&quot;, /*Independent Retailer*/ {!$Record.Customer__r.RecordType.DeveloperName} = &quot;Regional Chain Retailer&quot; /* Regional Chain Retailer*/ ) )</filterFormula>
+        <object>salesOrder__c</object>
+        <recordTriggerType>CreateAndUpdate</recordTriggerType>
+        <triggerType>RecordAfterSave</triggerType>
+    </start>
+    <status>Active</status>
+</Flow>

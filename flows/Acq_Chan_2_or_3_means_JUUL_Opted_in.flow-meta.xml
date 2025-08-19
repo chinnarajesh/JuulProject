@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Flow xmlns="http://soap.sforce.com/2006/04/metadata">
+    <apiVersion>63.0</apiVersion>
+    <areMetricsLoggedToDataCloud>false</areMetricsLoggedToDataCloud>
+    <description>Migrated from the: Acq Chan 2 or 3 means JUUL Opted in workflow rule
+Workflow rule description: &quot;</description>
+    <label>Acq Chan 2 or 3 means JUUL Opted in</label>
+    <migratedFromWorkflowRuleName>Acq Chan 2 or 3 means JUUL Opted in</migratedFromWorkflowRuleName>
+    <processMetadataValues>
+        <name>CanvasMode</name>
+        <value>
+            <stringValue>AUTO_LAYOUT_CANVAS</stringValue>
+        </value>
+    </processMetadataValues>
+    <processType>AutoLaunchedFlow</processType>
+    <recordUpdates>
+        <name>mainUpdate</name>
+        <label>mainUpdate</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <inputAssignments>
+            <field>JUUL_Opted_in__pc</field>
+            <value>
+                <stringValue>Yes</stringValue>
+            </value>
+        </inputAssignments>
+        <inputReference>$Record</inputReference>
+    </recordUpdates>
+    <start>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <connector>
+            <targetReference>mainUpdate</targetReference>
+        </connector>
+        <filterLogic>1 OR 2</filterLogic>
+        <filters>
+            <field>JUUL_Acquisition_channel__pc</field>
+            <operator>EqualTo</operator>
+            <value>
+                <stringValue>2 - Sampling - in-store</stringValue>
+            </value>
+        </filters>
+        <filters>
+            <field>JUUL_Acquisition_channel__pc</field>
+            <operator>EqualTo</operator>
+            <value>
+                <stringValue>3 - Sampling - sponsored event</stringValue>
+            </value>
+        </filters>
+        <object>Account</object>
+        <recordTriggerType>Create</recordTriggerType>
+        <triggerType>RecordBeforeSave</triggerType>
+    </start>
+    <status>Active</status>
+</Flow>

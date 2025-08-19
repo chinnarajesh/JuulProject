@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Flow xmlns="http://soap.sforce.com/2006/04/metadata">
+    <actionCalls>
+        <name>Entering_Active_Extension_Active</name>
+        <label>PDLM__Change__c.Entering_Active_Extension_Active</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <actionName>PDLM__Change__c.Entering_Active_Extension_Active</actionName>
+        <actionType>emailAlert</actionType>
+        <flowTransactionModel>CurrentTransaction</flowTransactionModel>
+        <inputParameters>
+            <name>SObjectRowId</name>
+            <value>
+                <elementReference>$Record.Id</elementReference>
+            </value>
+        </inputParameters>
+        <nameSegment>PDLM__Change__c.Entering_Active_Extension_Active</nameSegment>
+    </actionCalls>
+    <apiVersion>63.0</apiVersion>
+    <areMetricsLoggedToDataCloud>false</areMetricsLoggedToDataCloud>
+    <description>Migrated from the: Propel Deviations - Entering Active/Extension Email workflow rule
+Workflow rule description: &quot;</description>
+    <label>Propel Deviations - Entering Active/Extension Email</label>
+    <migratedFromWorkflowRuleName>Propel Deviations - Entering Active/Extension Email</migratedFromWorkflowRuleName>
+    <processMetadataValues>
+        <name>CanvasMode</name>
+        <value>
+            <stringValue>AUTO_LAYOUT_CANVAS</stringValue>
+        </value>
+    </processMetadataValues>
+    <processType>AutoLaunchedFlow</processType>
+    <start>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <connector>
+            <targetReference>Entering_Active_Extension_Active</targetReference>
+        </connector>
+        <doesRequireRecordChangedToMeetCriteria>true</doesRequireRecordChangedToMeetCriteria>
+        <filterLogic>1 AND (2 OR 3)</filterLogic>
+        <filters>
+            <field>Name</field>
+            <operator>StartsWith</operator>
+            <value>
+                <stringValue>DEV</stringValue>
+            </value>
+        </filters>
+        <filters>
+            <field>Change_Status_Name__c</field>
+            <operator>EqualTo</operator>
+            <value>
+                <stringValue>Active</stringValue>
+            </value>
+        </filters>
+        <filters>
+            <field>Change_Status_Name__c</field>
+            <operator>EqualTo</operator>
+            <value>
+                <stringValue>Extension Active</stringValue>
+            </value>
+        </filters>
+        <object>PDLM__Change__c</object>
+        <recordTriggerType>CreateAndUpdate</recordTriggerType>
+        <triggerType>RecordAfterSave</triggerType>
+    </start>
+    <status>Active</status>
+</Flow>

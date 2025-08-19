@@ -1,0 +1,843 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Flow xmlns="http://soap.sforce.com/2006/04/metadata">
+    <apiVersion>49.0</apiVersion>
+    <areMetricsLoggedToDataCloud>false</areMetricsLoggedToDataCloud>
+    <assignments>
+        <name>Assign_Change_owner_and_adjust_task_name_0</name>
+        <label>Assign Change owner and adjust task name</label>
+        <locationX>1048</locationX>
+        <locationY>369</locationY>
+        <assignmentItems>
+            <assignToReference>TaskAssignee</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>Get_Change.CreatedById</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Create_quality_review_task</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Assign_Change_owner_and_adjust_task_name_0_0</name>
+        <label>Assign Change owner and adjust task name</label>
+        <locationX>1274</locationX>
+        <locationY>1033</locationY>
+        <assignmentItems>
+            <assignToReference>TaskAssignee</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>Get_Change.CreatedById</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Create_new_implementation_task_for</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Assign_Implementation_approver_to_task</name>
+        <label>Assign Implementation approver to task</label>
+        <locationX>1269</locationX>
+        <locationY>1182</locationY>
+        <assignmentItems>
+            <assignToReference>TaskAssignee</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>Get_account_s_implementation_approver.Implementation_Approver__r.Id</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Create_new_implementation_task_for</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Assign_QR_approver_to_task</name>
+        <label>Assign QR approver to task</label>
+        <locationX>1052</locationX>
+        <locationY>519</locationY>
+        <assignmentItems>
+            <assignToReference>TaskAssignee</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>Get_account_s_quality_review_approver.Quality_Review_Approver__r.Id</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Create_quality_review_task</targetReference>
+        </connector>
+    </assignments>
+    <decisions>
+        <name>Are_all_other_tasks_closed</name>
+        <label>Are all other tasks closed</label>
+        <locationX>946</locationX>
+        <locationY>919</locationY>
+        <defaultConnectorLabel>not finished yet</defaultConnectorLabel>
+        <rules>
+            <name>all_closed</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>AnyOpenTasks</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Get_Closed_phase_for_Change</targetReference>
+            </connector>
+            <label>all closed</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <name>Implementation_Completed_In_Progress_or_Rejected</name>
+        <label>Implementation Completed, In Progress, or Rejected</label>
+        <locationX>606</locationX>
+        <locationY>606</locationY>
+        <defaultConnectorLabel>Open or In Progress</defaultConnectorLabel>
+        <rules>
+            <name>Impl_Completed</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>Get_original_task.PDLM__Status__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Closed</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Get_account_s_quality_review_approver</targetReference>
+            </connector>
+            <label>Completed</label>
+        </rules>
+        <rules>
+            <name>Impl_Rejected</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>Get_original_task.PDLM__Status__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Rejected</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Change_status_to_Closed</targetReference>
+            </connector>
+            <label>Rejected</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <name>Implementation_or_Quality_Review</name>
+        <label>Implementation or Quality Review</label>
+        <locationX>606</locationX>
+        <locationY>820</locationY>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>Implementation</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>Get_original_task.Name</leftValueReference>
+                <operator>Contains</operator>
+                <rightValue>
+                    <stringValue>Implementation</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Implementation_Completed_In_Progress_or_Rejected</targetReference>
+            </connector>
+            <label>Implementation</label>
+        </rules>
+        <rules>
+            <name>Quality_Review</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>Get_original_task.Name</leftValueReference>
+                <operator>Contains</operator>
+                <rightValue>
+                    <stringValue>Quality Review</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Quality_Review_Completed_In_Progress_or_Rejected</targetReference>
+            </connector>
+            <label>Quality Review</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <name>Is_Implementation_approver_blank</name>
+        <label>Is Implementation approver blank?</label>
+        <locationX>1077</locationX>
+        <locationY>1104</locationY>
+        <defaultConnector>
+            <targetReference>Assign_Implementation_approver_to_task</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Implementation approver exists</defaultConnectorLabel>
+        <rules>
+            <name>Implementation_approver_blank</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>Get_account_s_implementation_approver.Implementation_Approver__r.Id</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Assign_Change_owner_and_adjust_task_name_0_0</targetReference>
+            </connector>
+            <label>Implementation approver blank</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <name>Is_QR_approver_blank</name>
+        <label>Is QR approver blank?</label>
+        <locationX>870</locationX>
+        <locationY>441</locationY>
+        <defaultConnector>
+            <targetReference>Assign_QR_approver_to_task</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>QR approver exists</defaultConnectorLabel>
+        <rules>
+            <name>QR_approver_blank</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>Get_account_s_quality_review_approver.Quality_Review_Approver__r.Id</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Assign_Change_owner_and_adjust_task_name_0</targetReference>
+            </connector>
+            <label>QR approver blank</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <name>Quality_Review_Completed_In_Progress_or_Rejected</name>
+        <label>Quality Review Completed, In Progress, or Rejected</label>
+        <locationX>605</locationX>
+        <locationY>1038</locationY>
+        <defaultConnectorLabel>Open</defaultConnectorLabel>
+        <rules>
+            <name>QR_Completed</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>Get_original_task.PDLM__Status__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Closed</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Check_for_other_open_tasks</targetReference>
+            </connector>
+            <label>Completed</label>
+        </rules>
+        <rules>
+            <name>QR_In_Progress</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>Get_original_task.PDLM__Status__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>In Progress</stringValue>
+                </rightValue>
+            </conditions>
+            <label>In Progress</label>
+        </rules>
+        <rules>
+            <name>QR_Rejected</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>Get_original_task.PDLM__Status__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Rejected</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Change_status_to_Closed_0</targetReference>
+            </connector>
+            <label>Rejected</label>
+        </rules>
+    </decisions>
+    <description>Updated 19NOV2024</description>
+    <environments>Default</environments>
+    <formulas>
+        <name>FormulaOfGroupNames</name>
+        <dataType>String</dataType>
+        <expression>(IF({!Get_Change.AFG_CHINA__c}, &quot;AFG (Suzhou, CN);&quot;, &quot;&quot;) )&amp; 
+(IF({!Get_Change.Flex_Sarvar_Hungary__c}, &quot;FLEX (Sarvar, HU);&quot;, &quot;&quot;) )&amp;
+(IF({!Get_Change.PEGATRON_SUZHOU__c}, &quot;Pegatron (Suzhou, CN);&quot;, &quot;&quot;) )&amp; 
+(IF({!Get_Change.PHILLIPS_MEDISIZE_CHINA__c}, &quot;Phillips Medisize (Suzhou, CN);&quot;, &quot;&quot;) )&amp;
+(IF({!Get_Change.PHILLIPS_MEDISIZE_US__c}, &quot;Phillips Medisize (Menomonie, WI, US);&quot;, &quot;&quot;) )&amp;
+(IF({!Get_Change.ATL_AMPEREX_TECHNOLOGY__c}, &quot;Amperex Tech Limited (Tsuen Wan, CN);&quot;, &quot;&quot;) )&amp;
+(IF({!Get_Change.GENHON__c}, &quot;Genhon (Suzhou, CN);&quot;, &quot;&quot;) )&amp;
+(IF({!Get_Change.HONDA_HOLDINGS__c}, &quot;Honda Holdings (Suzhou, CN);&quot;, &quot;&quot;) )&amp;
+(IF({!Get_Change.PMP_PIONEER_MATERIAL_PRECISION__c}, &quot;PMP (New Taipei City, TW);&quot;, &quot;&quot;) )&amp;
+(IF({!Get_Change.PSI_PRINTED_SPECIALTIES__c}, &quot;Printed Specialties Inc (Carrollton, US);&quot;, &quot;&quot;) )&amp; 
+(IF({!Get_Change.RR_DONNELLEY__c}, &quot;RR Donnelley (Durham, NC, US);&quot;, &quot;&quot;) )&amp;
+(IF({!Get_Change.RR_DONNELLEY_REY__c}, &quot;RR Donnelley (Reynosa, MX);&quot;, &quot;&quot;) )&amp;
+(IF({!Get_Change.DECI_NC_US__c}, &quot;DECI (Durham, NC, US);&quot;, &quot;&quot;) )&amp;
+(IF({!Get_Change.HuiZhou_Desay_Battery_Co_LTD__c}, &quot;Desay Battery Co HuiZhou CN;&quot;, &quot;&quot;) )&amp;
+(IF({!Get_Change.Luxshare_Dongguan_CN__c}, &quot;Luxshare (Dongguan, CN);&quot;, &quot;&quot;) )&amp;
+(IF({!Get_Change.Molex_Shanghai_CN__c}, &quot;Molex Shanghai CN;&quot;, &quot;&quot;) )&amp;
+(IF({!Get_Change.Opple_Suzhou_CN__c}, &quot;Opple (Suzhou, CN);&quot;, &quot;&quot;) )&amp;
+(IF({!Get_Change.Aphena_Pharma_Solution_Easton_MD_US__c}, &quot;Aphena Pharma Solution Easton MD US;&quot;, &quot;&quot;) )&amp;
+(IF({!Get_Change.Sunningdale_Tech_Suzhou_CN__c}, &quot;Sunningdale Tech (Suzhou, CN);&quot;, &quot;&quot;) )&amp;
+(IF({!Get_Change.Ulife_Suzhou_CN__c}, &quot;Ulife (Suzhou, CN);&quot;, &quot;&quot;) )&amp;
+(IF({!Get_Change.Vigon_Inc_East_Stroudsburg_PA_US__c}, &quot;Vigon Inc. East Stroudsburg PA US;&quot;, &quot;&quot;) )&amp;
+(IF({!Get_Change.Wuzhu_Shenzhen_CN__c}, &quot;Wuzhu (Shenzhen, CN);&quot;, &quot;&quot;) )&amp;
+(IF({!Get_Change.Flex_Columbia_US__c}, &quot;Flex (Columbia, SC, US);&quot;, &quot;&quot;) )&amp;
+(IF({!Get_Change.Phillips_Medisize_New_Richmond_US__c}, &quot;Phillips Medisize (New Richmond, WI, US);&quot;, &quot;&quot;) )&amp;
+(IF({!Get_Change.TBA3__c}, &quot;Phillips Medisize (St. Croix, WI, US);&quot;, &quot;&quot;) )&amp;
+(IF({!Get_Change.TBA4__c}, &quot;eLiquiTech (Eldersburg, MD, US);&quot;, &quot;&quot;) )&amp;
+(IF({!Get_Change.Shennan_Circuits_Co_Shenzhen_CN__c}, &quot;Shennan Circuits Co Shenzhen CN;&quot;, &quot;&quot;) )&amp;
+(IF({!Get_Change.Cre_Sound_Electronics_Jiangsu_CN__c}, &quot;Cre Sound Electronics Jiangsu CN;&quot;, &quot;&quot;) )&amp;
+(IF({!Get_Change.Blueway_Electronics_Co_Huizhou_CN__c}, &quot;Blueway Electronics Co Huizhou CN;&quot;, &quot;&quot;) )&amp;
+(IF({!Get_Change.Bosch_Farmington_Hills_MI_US__c}, &quot;Bosch Farmington Hills MI US;&quot;, &quot;&quot;) )&amp;
+(IF({!Get_Change.TongChuang_Strong_Mangnet_Ningbo_CN__c}, &quot;TongChuang Strong Magnet Ningbo;&quot;, &quot;&quot;) )&amp;(IF({!Get_Change.Dialog_Semiconductor_Kirchheim_DE__c}, &quot;Dialog Semiconductor Kirchheim DE;&quot;, &quot;&quot;) )&amp;
+(IF({!Get_Change.Infineon_Tech_Neubiberg_DE__c}, &quot;Infineon Tech Neubiberg DE;&quot;, &quot;&quot;) )&amp;
+(IF({!Get_Change.SKT_Electronic_Materials_Jiangsu_CN__c}, &quot;SKT Electronic Materials Jiangsu CN;&quot;, &quot;&quot;) )&amp;
+(IF({!Get_Change.Strong_Magnets_Co_Ningbo_CN__c}, &quot;Strong Magnets Co Ningbo CN;&quot;, &quot;&quot;) )&amp;
+(IF({!Get_Change.Fortunta_Shenzhen_CN__c}, &quot;Fortunta (Shenzhen, CN);&quot;, &quot;&quot;) )&amp;
+(IF({!Get_Change.Hengda_Wujiang_CN__c}, &quot;Hengda Wujiang CN;&quot;, &quot;&quot;) )&amp;
+(IF({!Get_Change.DiQiao_Seiko_Tech_Jiangsu_CN__c}, &quot;DiQiao Seiko Tech Jiangsu CN;&quot;, &quot;&quot;) )&amp;
+(IF({!Get_Change.Liyu_Spring_Co_Jiangsu_CN__c}, &quot;Liyu Spring Co Jiangsu CN;&quot;, &quot;&quot;) )&amp;
+(IF({!Get_Change.Multipower_Jiangsu_CN__c}, &quot;Multipower Jiangsu CN;&quot;, &quot;&quot;) )&amp;
+(IF({!Get_Change.Leoco_Wujiang_CN__c}, &quot;Leoco Wujiang CN;&quot;, &quot;&quot;) )&amp;
+(IF({!Get_Change.Globemaster_Tech_Guangdong_CN__c}, &quot;Globemaster Tech Guangdong CN;&quot;, &quot;&quot;) )&amp;(IF({!Get_Change.Fuhao_Electronic_Jiangsu_CN__c}, &quot;Fuhao Electronic Jiangsu CN;&quot;, &quot;&quot;) )&amp;
+(IF({!Get_Change.Precidip_Delemont_CH__c}, &quot;Precidip Delemont CH;&quot;, &quot;&quot;) )&amp;
+(IF({!Get_Change.NVT_Technology_Guangdong_CN__c}, &quot;NVT Technology Guangdong CN;&quot;, &quot;&quot;) )&amp;
+(IF({!Get_Change.RR_Donnelley_Milwaukee_WI_US__c}, &quot;RR Donnelley Milwaukee WI US;&quot;, &quot;&quot;) )</expression>
+    </formulas>
+    <formulas>
+        <name>GrabNextValue</name>
+        <dataType>String</dataType>
+        <expression>LEFT({!OriginalSelectedGroups}, (FIND(&quot;;&quot;, {!OriginalSelectedGroups}) -1))</expression>
+    </formulas>
+    <formulas>
+        <name>ImplementationTaskName</name>
+        <dataType>String</dataType>
+        <expression> {!Get_Change.Name} &amp; &quot; / &quot; &amp; {!Get_original_task.CM_Supplier_Manufacturer__c} &amp; &quot; / Implementation Task&quot;</expression>
+    </formulas>
+    <formulas>
+        <name>QualityReviewTaskName</name>
+        <dataType>String</dataType>
+        <expression>IF(ISBLANK({!Get_account_s_quality_review_approver.Quality_Review_Approver__r.Id}), (&quot;UNASSIGNED &quot;), (&quot;&quot;) ) &amp;{!Get_Change.Name} &amp; &quot; / &quot; &amp; {!Get_original_task.CM_Supplier_Manufacturer__c} &amp; &quot; / Quality Review Task&quot;</expression>
+    </formulas>
+    <formulas>
+        <name>RemainingValue</name>
+        <dataType>String</dataType>
+        <expression>RIGHT( {!OriginalSelectedGroups}, (LEN({!OriginalSelectedGroups}) - FIND(&quot;;&quot;, {!OriginalSelectedGroups}) ) )</expression>
+    </formulas>
+    <interviewLabel>XCO Task Manager {!$Flow.CurrentDateTime}</interviewLabel>
+    <label>XCO Task Manager</label>
+    <processMetadataValues>
+        <name>BuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>CanvasMode</name>
+        <value>
+            <stringValue>FREE_FORM_CANVAS</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>OriginBuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processType>AutoLaunchedFlow</processType>
+    <recordCreates>
+        <name>Create_new_implementation_task_for</name>
+        <label>Create new implementation task</label>
+        <locationX>1428</locationX>
+        <locationY>1102</locationY>
+        <inputAssignments>
+            <field>CM_Supplier_Manufacturer__c</field>
+            <value>
+                <elementReference>Get_original_task.CM_Supplier_Manufacturer__c</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Name</field>
+            <value>
+                <elementReference>ImplementationTaskName</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>PDLM__Assigned_To__c</field>
+            <value>
+                <elementReference>TaskAssignee</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>PDLM__Change_Phase__c</field>
+            <value>
+                <elementReference>Get_original_task.PDLM__Change_Phase__r.Id</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>PDLM__Change__c</field>
+            <value>
+                <elementReference>Get_Change.Id</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>PDLM__Project__c</field>
+            <value>
+                <elementReference>Get_original_task.PDLM__Project__r.Id</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>PDLM__Type__c</field>
+            <value>
+                <stringValue>Task</stringValue>
+            </value>
+        </inputAssignments>
+        <object>PDLM__Deliverable__c</object>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </recordCreates>
+    <recordCreates>
+        <name>Create_new_implementation_task_for_PLM</name>
+        <label>Create new implementation task for PLM</label>
+        <locationX>970</locationX>
+        <locationY>643</locationY>
+        <inputAssignments>
+            <field>CM_Supplier_Manufacturer__c</field>
+            <value>
+                <elementReference>Get_original_task.CM_Supplier_Manufacturer__c</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Name</field>
+            <value>
+                <elementReference>ImplementationTaskName</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>PDLM__Assigned_To__c</field>
+            <value>
+                <stringValue>0051O00000DlbduQAB</stringValue>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>PDLM__Change_Phase__c</field>
+            <value>
+                <elementReference>Get_original_task.PDLM__Change_Phase__r.Id</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>PDLM__Change__c</field>
+            <value>
+                <elementReference>Get_Change.Id</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>PDLM__Project__c</field>
+            <value>
+                <elementReference>Get_original_task.PDLM__Project__r.Id</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>PDLM__Type__c</field>
+            <value>
+                <stringValue>Task</stringValue>
+            </value>
+        </inputAssignments>
+        <object>PDLM__Deliverable__c</object>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </recordCreates>
+    <recordCreates>
+        <name>Create_quality_review_task</name>
+        <label>Create quality review task</label>
+        <locationX>1243</locationX>
+        <locationY>438</locationY>
+        <inputAssignments>
+            <field>CM_Supplier_Manufacturer__c</field>
+            <value>
+                <elementReference>Get_original_task.CM_Supplier_Manufacturer__c</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Name</field>
+            <value>
+                <elementReference>QualityReviewTaskName</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>PDLM__Assigned_To__c</field>
+            <value>
+                <elementReference>TaskAssignee</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>PDLM__Change_Phase__c</field>
+            <value>
+                <elementReference>Get_original_task.PDLM__Change_Phase__r.Id</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>PDLM__Change__c</field>
+            <value>
+                <elementReference>Get_Change.Id</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>PDLM__Project__c</field>
+            <value>
+                <elementReference>Get_original_task.PDLM__Project__r.Id</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>PDLM__Type__c</field>
+            <value>
+                <stringValue>Task</stringValue>
+            </value>
+        </inputAssignments>
+        <object>PDLM__Deliverable__c</object>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </recordCreates>
+    <recordLookups>
+        <name>Check_for_other_open_tasks</name>
+        <label>Check for other open tasks</label>
+        <locationX>823</locationX>
+        <locationY>917</locationY>
+        <assignNullValuesIfNoRecordsFound>true</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>Are_all_other_tasks_closed</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>PDLM__Change__c</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>Get_original_task.PDLM__Change__r.Id</elementReference>
+            </value>
+        </filters>
+        <filters>
+            <field>PDLM__Status__c</field>
+            <operator>NotEqualTo</operator>
+            <value>
+                <stringValue>Closed</stringValue>
+            </value>
+        </filters>
+        <object>PDLM__Deliverable__c</object>
+        <outputReference>AnyOpenTasks</outputReference>
+        <queriedFields>Id</queriedFields>
+    </recordLookups>
+    <recordLookups>
+        <name>Get_account_s_implementation_approver</name>
+        <label>Get account&apos;s implementation approver</label>
+        <locationX>940</locationX>
+        <locationY>1102</locationY>
+        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>Is_Implementation_approver_blank</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>Name</field>
+            <operator>Contains</operator>
+            <value>
+                <elementReference>Get_original_task.CM_Supplier_Manufacturer__c</elementReference>
+            </value>
+        </filters>
+        <getFirstRecordOnly>true</getFirstRecordOnly>
+        <object>Account</object>
+        <queriedFields>Id</queriedFields>
+        <queriedFields>Implementation_Approver__c</queriedFields>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </recordLookups>
+    <recordLookups>
+        <name>Get_account_s_quality_review_approver</name>
+        <label>Get account&apos;s quality review approver</label>
+        <locationX>729</locationX>
+        <locationY>439</locationY>
+        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>Is_QR_approver_blank</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>Name</field>
+            <operator>Contains</operator>
+            <value>
+                <elementReference>Get_original_task.CM_Supplier_Manufacturer__c</elementReference>
+            </value>
+        </filters>
+        <getFirstRecordOnly>true</getFirstRecordOnly>
+        <object>Account</object>
+        <queriedFields>Id</queriedFields>
+        <queriedFields>Quality_Review_Approver__c</queriedFields>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </recordLookups>
+    <recordLookups>
+        <name>Get_Change</name>
+        <label>Get Change</label>
+        <locationX>493</locationX>
+        <locationY>818</locationY>
+        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>Implementation_or_Quality_Review</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>Id</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>Get_original_task.PDLM__Change__r.Id</elementReference>
+            </value>
+        </filters>
+        <getFirstRecordOnly>true</getFirstRecordOnly>
+        <object>PDLM__Change__c</object>
+        <queriedFields>Id</queriedFields>
+        <queriedFields>AFG_CHINA__c</queriedFields>
+        <queriedFields>AFG_NC__c</queriedFields>
+        <queriedFields>DEFOND_CHINA__c</queriedFields>
+        <queriedFields>DEFOND_NA__c</queriedFields>
+        <queriedFields>FLEX_US__c</queriedFields>
+        <queriedFields>FLEX_GDL__c</queriedFields>
+        <queriedFields>Flex_Sarvar_Hungary__c</queriedFields>
+        <queriedFields>PEGATRON_SUZHOU__c</queriedFields>
+        <queriedFields>PHILLIPS_MEDISIZE_CHINA__c</queriedFields>
+        <queriedFields>PHILLIPS_MEDISIZE_US__c</queriedFields>
+        <queriedFields>ATL_AMPEREX_TECHNOLOGY__c</queriedFields>
+        <queriedFields>GENHON__c</queriedFields>
+        <queriedFields>HONDA_HOLDINGS__c</queriedFields>
+        <queriedFields>PMP_PIONEER_MATERIAL_PRECISION__c</queriedFields>
+        <queriedFields>PSI_PRINTED_SPECIALTIES__c</queriedFields>
+        <queriedFields>RR_DONNELLEY__c</queriedFields>
+        <queriedFields>RR_DONNELLEY_REY__c</queriedFields>
+        <queriedFields>DECI_NC_US__c</queriedFields>
+        <queriedFields>PDLM__Record_Tasks_Project__c</queriedFields>
+        <queriedFields>Name</queriedFields>
+        <queriedFields>Change_Status_Name__c</queriedFields>
+        <queriedFields>CreatedById</queriedFields>
+        <queriedFields>HuiZhou_Desay_Battery_Co_LTD__c</queriedFields>
+        <queriedFields>Luxshare_Dongguan_CN__c</queriedFields>
+        <queriedFields>Molex_Shanghai_CN__c</queriedFields>
+        <queriedFields>Opple_Suzhou_CN__c</queriedFields>
+        <queriedFields>Aphena_Pharma_Solution_Easton_MD_US__c</queriedFields>
+        <queriedFields>Sunningdale_Tech_Suzhou_CN__c</queriedFields>
+        <queriedFields>Ulife_Suzhou_CN__c</queriedFields>
+        <queriedFields>Vigon_Inc_East_Stroudsburg_PA_US__c</queriedFields>
+        <queriedFields>Wuzhu_Shenzhen_CN__c</queriedFields>
+        <queriedFields>Phillips_Medisize_New_Richmond_US__c</queriedFields>
+        <queriedFields>TBA3__c</queriedFields>
+        <queriedFields>Flex_Columbia_US__c</queriedFields>
+        <queriedFields>TBA4__c</queriedFields>
+        <queriedFields>Cre_Sound_Electronics_Jiangsu_CN__c</queriedFields>
+        <queriedFields>Shennan_Circuits_Co_Shenzhen_CN__c</queriedFields>
+        <queriedFields>Blueway_Electronics_Co_Huizhou_CN__c</queriedFields>
+        <queriedFields>Bosch_Farmington_Hills_MI_US__c</queriedFields>
+        <queriedFields>TongChuang_Strong_Mangnet_Ningbo_CN__c</queriedFields>
+        <queriedFields>Dialog_Semiconductor_Kirchheim_DE__c</queriedFields>
+        <queriedFields>Infineon_Tech_Neubiberg_DE__c</queriedFields>
+        <queriedFields>SKT_Electronic_Materials_Jiangsu_CN__c</queriedFields>
+        <queriedFields>Strong_Magnets_Co_Ningbo_CN__c</queriedFields>
+        <queriedFields>Fortunta_Shenzhen_CN__c</queriedFields>
+        <queriedFields>Hengda_Wujiang_CN__c</queriedFields>
+        <queriedFields>DiQiao_Seiko_Tech_Jiangsu_CN__c</queriedFields>
+        <queriedFields>Liyu_Spring_Co_Jiangsu_CN__c</queriedFields>
+        <queriedFields>Multipower_Jiangsu_CN__c</queriedFields>
+        <queriedFields>Leoco_Wujiang_CN__c</queriedFields>
+        <queriedFields>Globemaster_Tech_Guangdong_CN__c</queriedFields>
+        <queriedFields>Fuhao_Electronic_Jiangsu_CN__c</queriedFields>
+        <queriedFields>Precidip_Delemont_CH__c</queriedFields>
+        <queriedFields>NVT_Technology_Guangdong_CN__c</queriedFields>
+        <queriedFields>RR_Donnelley_Milwaukee_WI_US__c</queriedFields>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </recordLookups>
+    <recordLookups>
+        <name>Get_Closed_phase_for_Change</name>
+        <label>Get Closed phase for Change</label>
+        <locationX>1115</locationX>
+        <locationY>911</locationY>
+        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>Move_Change_to_Closed</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>Name</field>
+            <operator>EqualTo</operator>
+            <value>
+                <stringValue>Closed</stringValue>
+            </value>
+        </filters>
+        <filters>
+            <field>PDLM__Change_lk__c</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>Get_Change.Id</elementReference>
+            </value>
+        </filters>
+        <getFirstRecordOnly>true</getFirstRecordOnly>
+        <object>PDLM__Change_Phase__c</object>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </recordLookups>
+    <recordLookups>
+        <name>Get_original_task</name>
+        <label>Get original task</label>
+        <locationX>390</locationX>
+        <locationY>818</locationY>
+        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>Get_Change</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>Id</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>IncomingTaskID</elementReference>
+            </value>
+        </filters>
+        <getFirstRecordOnly>true</getFirstRecordOnly>
+        <object>PDLM__Deliverable__c</object>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </recordLookups>
+    <recordUpdates>
+        <description>Users can Reject at Implementation without affecting the XCO&apos;s progression, so it will show that they rejected the implementation but also close the task so the XCO can move forward</description>
+        <name>Change_status_to_Closed</name>
+        <label>Change status to Closed</label>
+        <locationX>821</locationX>
+        <locationY>643</locationY>
+        <connector>
+            <targetReference>Create_new_implementation_task_for_PLM</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>Id</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>Get_original_task.Id</elementReference>
+            </value>
+        </filters>
+        <inputAssignments>
+            <field>PDLM__Status__c</field>
+            <value>
+                <stringValue>Closed</stringValue>
+            </value>
+        </inputAssignments>
+        <object>PDLM__Deliverable__c</object>
+    </recordUpdates>
+    <recordUpdates>
+        <description>Users can Reject at Implementation without affecting the XCO&apos;s progression, so it will show that they rejected the implementation but also close the task so the XCO can move forward</description>
+        <name>Change_status_to_Closed_0</name>
+        <label>Change status to Closed</label>
+        <locationX>813</locationX>
+        <locationY>1102</locationY>
+        <connector>
+            <targetReference>Get_account_s_implementation_approver</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>Id</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>Get_original_task.Id</elementReference>
+            </value>
+        </filters>
+        <inputAssignments>
+            <field>PDLM__Status__c</field>
+            <value>
+                <stringValue>Closed</stringValue>
+            </value>
+        </inputAssignments>
+        <object>PDLM__Deliverable__c</object>
+    </recordUpdates>
+    <recordUpdates>
+        <name>Move_Change_to_Closed</name>
+        <label>Move Change to Closed</label>
+        <locationX>1252</locationX>
+        <locationY>911</locationY>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>Id</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>Get_Change.Id</elementReference>
+            </value>
+        </filters>
+        <inputAssignments>
+            <field>PDLM__Status_lk__c</field>
+            <value>
+                <elementReference>Get_Closed_phase_for_Change.Id</elementReference>
+            </value>
+        </inputAssignments>
+        <object>PDLM__Change__c</object>
+    </recordUpdates>
+    <start>
+        <locationX>14</locationX>
+        <locationY>799</locationY>
+        <connector>
+            <targetReference>Get_original_task</targetReference>
+        </connector>
+    </start>
+    <status>Active</status>
+    <variables>
+        <name>AnyOpenTasks</name>
+        <dataType>SObject</dataType>
+        <isCollection>true</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+        <objectType>PDLM__Deliverable__c</objectType>
+    </variables>
+    <variables>
+        <name>CollectionOfGroups</name>
+        <dataType>String</dataType>
+        <isCollection>true</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+    </variables>
+    <variables>
+        <name>CollectionofQRTasks</name>
+        <dataType>SObject</dataType>
+        <isCollection>true</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+        <objectType>PDLM__Deliverable__c</objectType>
+    </variables>
+    <variables>
+        <name>ExistingQRTask</name>
+        <dataType>SObject</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+        <objectType>PDLM__Deliverable__c</objectType>
+    </variables>
+    <variables>
+        <name>IncomingTaskID</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>true</isInput>
+        <isOutput>false</isOutput>
+    </variables>
+    <variables>
+        <name>OriginalSelectedGroups</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+    </variables>
+    <variables>
+        <name>TaskAssignee</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+    </variables>
+    <variables>
+        <name>ThisLoopGroup</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+    </variables>
+</Flow>
