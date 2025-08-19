@@ -1,0 +1,167 @@
+<template>
+            <div class="slds-grid slds-wrap slds-is-relative ">
+            <div style="position: fixed;z-index: 999999;top: 0;right: 0;">
+  <vlocity_ins-toast class="flexcard-toast-element" theme="slds" title="" message="" styletype=""> </vlocity_ins-toast>
+</div>
+            <div if:true={showLoader} class="slds-is-absolute vloc-loader_override" style="height: 100%; width: 100%; min-height:50px; background: transparent; z-index: 99;">
+  <div>
+   <vlocity_ins-spinner
+      variant="brand"
+      alternative-text="Loading content..."
+      size="medium"
+      theme="slds"
+      ></vlocity_ins-spinner>
+  </div>
+</div>
+            <template if:false={hasPermission}>
+              You don't have required permissions to view this card.
+            </template>
+            <template if:true={hasPermission}>
+              <template if:true={hasRecords}>
+                        <template for:each={_records} for:item="record" for:index="rindex">
+                            <vlocity_ins-flex-card-state if:true={record}  key={record._flex.uniqueKey} data-recordid={record.Id} record={record} data-statue="true"  data-index="0" data-rindex={rindex} class="cf-vlocity-state-0 cf-vlocity-state slds-size_12-of-12"  tracking-obj={_childCardTrackingObj} >
+      <div if:true={cardLoaded} class="slds-grid slds-wrap slds-card slds-p-around_x-small slds-m-bottom_x-small" style="">
+          <div data-style-id="state0element0" class="slds-col   slds-p-around_x-small slds-size_12-of-12 " data-rindex={rindex} style="" >
+    <vlocity_ins-block data-style-id="state0element0_child"  card={card}  record={record}  label="Block"  collapsible="false"  collapsed-by-default="false"  theme="slds"  ><div class="slds-grid slds-wrap">
+          <div data-style-id="state0element0block_element0" class="slds-col   slds-text-align_left slds-p-around_x-small  slds-size_12-of-12  " data-rindex={rindex} style="background-color:#1E00FF;      
+        color:#F7F4F4; " >
+    <vlocity_ins-block data-style-id="state0element0block_element0_child"  card={card}  record={record}  label="Block"  collapsible="false"  collapsed-by-default="false"  theme="slds"  ><div class="slds-grid slds-wrap">
+          <div data-style-id="state0element0block_element0block_element0" class="slds-col   slds-p-around_x-small slds-size_7-of-12  " data-rindex={rindex} style="" >
+    <vlocity_ins-block data-style-id="state0element0block_element0block_element0_child"  card={card}  record={record}  label="Block"  collapsible="false"  collapsed-by-default="false"  theme="slds"  ><div class="slds-grid slds-wrap">
+          <div data-style-id="state0element0block_element0block_element0block_element0" class="slds-col   slds-size_8-of-12  " data-rindex={rindex} style="" ><vlocity_ins-output-field data-style-id="state0element0block_element0block_element0block_element0_child"   card={card}  record={record}  placeholder="output"  type="text"  label=""  field-name="AccountName"  styles='\{"value":{"color":"","fontSize":"12mm","fontFamily":"Arial","textAlign":"left"},"label":{"color":"#F7F4F4","fontSize":"","fontFamily":"Arial","textAlign":"left"}}'  theme="slds"  ></vlocity_ins-output-field>
+      </div><div data-style-id="state0element0block_element0block_element0block_element1" class="slds-col   slds-size_8-of-12  " data-rindex={rindex} style="      
+         " ><vlocity_ins-output-field data-style-id="state0element0block_element0block_element0block_element1_child"   card={card}  record={record}  merge-field="%3Cdiv%3E%3Cspan%20style=%22font-family:%20sans-serif;%20font-size:%2014pt;%22%3E%7BShippingStreet%7D,%20%7BShippingCity%7D%3C/span%3E%3C/div%3E%0A%3Cdiv%3E%3Cspan%20style=%22font-family:%20sans-serif;%20font-size:%2014pt;%22%3E%7BShippingState%7D%20%7BShippingPostal%7D%20%7BShippingCountry%7D%3C/span%3E%3C/div%3E"  theme="slds"  ></vlocity_ins-output-field>
+      </div>
+        </div></vlocity_ins-block>
+    </div><div data-style-id="state0element0block_element0block_element1" class="slds-col   slds-p-around_x-small slds-size_5-of-12  " data-rindex={rindex} style="" >
+    <vlocity_ins-block data-style-id="state0element0block_element0block_element1_child"  card={card}  record={record}  label="Block"  collapsible="false"  collapsed-by-default="false"  theme="slds"  ><div class="slds-grid slds-wrap">
+          <div data-style-id="state0element0block_element0block_element1block_element0" class="slds-col  slds-text-align_right   slds-size_12-of-12  " data-rindex={rindex} style="      
+         " ><vlocity_ins-flex-action data-style-id="state0element0block_element0block_element1block_element0_child"  tracking-obj={_childCardTrackingObj}  class= "state0element0block_element0block_element1block_element0_child flexActionElement" 
+        data-action-element-class="state0element0block_element0block_element1block_element0_child" onexecuteaction={performAction} data-show-spinner="false"
+        data-element-label="block0block0block2action0"   state-obj={record}  card={card}  record={record}  label="Create Promo"  icon-name="custom:custom103"  action-list='\[{"stateAction":{"id":"flex-action-1649751952968","type":"OmniScript","openUrlIn":"New Tab/Window","layoutType":"lightning","omniType":{"Name":"clm/CreatePromo_AccountPage/English","Id":"aDU040000004CkvGAE","isLwcOs":true},"isLwcOS":true,"vForcewithNsPrefix":"vlocity_ins__OmniScriptUniversalPage"},"key":"1648500262541-ghlxkb51e","label":"Action","draggable":false,"isOpen":true,"actionIndex":0,"contextId":"\\{AccountId}"}]'  display-as-button="false"  button-variant="neutral"  hide-action-icon="false"  icon-only="false"  flyout-details='\{}'  styles='\{"label":{"textAlign":"right","fontSize":"4mm"}}'  theme="slds"  ></vlocity_ins-flex-action>
+      </div><div data-style-id="state0element0block_element0block_element1block_element1" class="slds-col    slds-size_12-of-12  " data-rindex={rindex} style="      
+         " ><vlocity_ins-flex-action data-style-id="state0element0block_element0block_element1block_element1_child"  tracking-obj={_childCardTrackingObj}  class= "state0element0block_element0block_element1block_element1_child flexActionElement" 
+        data-action-element-class="state0element0block_element0block_element1block_element1_child" onexecuteaction={performAction} data-show-spinner="false"
+        data-element-label="block0block0block2action1"   state-obj={record}  card={card}  record={record}  label="Action"  icon-name="standard-default"  action-list='\[{"stateAction":{"id":"test-action","type":"Custom","targetType":"Web Page","openUrlIn":"Current Window","Web Page":{"targetName":"/apex"}}}]'  styles='\{"label":{"textAlign":"right","fontSize":"4mm"}}'  icon-color="#24F1FF"  theme="slds"  ></vlocity_ins-flex-action>
+      </div><div data-style-id="state0element0block_element0block_element1block_element2" class="slds-col    slds-size_12-of-12  " data-rindex={rindex} style="      
+         " ><vlocity_ins-flex-action data-style-id="state0element0block_element0block_element1block_element2_child"  tracking-obj={_childCardTrackingObj}  class= "state0element0block_element0block_element1block_element2_child flexActionElement" 
+        data-action-element-class="state0element0block_element0block_element1block_element2_child" onexecuteaction={performAction} data-show-spinner="false"
+        data-element-label="block0block0block2action2"   state-obj={record}  card={card}  record={record}  label="Action"  icon-name="standard-default"  action-list='\[{"stateAction":{"id":"test-action","type":"Custom","targetType":"Web Page","openUrlIn":"Current Window","Web Page":{"targetName":"/apex"}}}]'  styles='\{"label":{"textAlign":"right","fontSize":"4mm"}}'  theme="slds"  ></vlocity_ins-flex-action>
+      </div><div data-style-id="state0element0block_element0block_element1block_element3" class="slds-col    slds-size_12-of-12  " data-rindex={rindex} style="      
+         " ><vlocity_ins-flex-action data-style-id="state0element0block_element0block_element1block_element3_child"  tracking-obj={_childCardTrackingObj}  class= "state0element0block_element0block_element1block_element3_child flexActionElement" 
+        data-action-element-class="state0element0block_element0block_element1block_element3_child" onexecuteaction={performAction} data-show-spinner="false"
+        data-element-label="block0block0block2action3"   state-obj={record}  card={card}  record={record}  label="Action"  icon-name="standard-default"  action-list='\[{"stateAction":{"id":"test-action","type":"Custom","targetType":"Web Page","openUrlIn":"Current Window","Web Page":{"targetName":"/apex"}}}]'  styles='\{"label":{"textAlign":"right","fontSize":"4mm"}}'  display-as-button="false"  theme="slds"  ></vlocity_ins-flex-action>
+      </div>
+        </div></vlocity_ins-block>
+    </div>
+        </div></vlocity_ins-block>
+    </div>
+        </div></vlocity_ins-block>
+    </div><div data-style-id="state0element1" class="slds-col   slds-p-around_x-small slds-size_12-of-12  " data-rindex={rindex} style="" >
+    <vlocity_ins-block data-style-id="state0element1_child"  card={card}  record={record}  label="Block"  collapsible="false"  collapsed-by-default="false"  theme="slds"  ><div class="slds-grid slds-wrap">
+          <div data-style-id="state0element1block_element0" class="slds-col   slds-border_top slds-p-around_medium slds-m-around_small  slds-size_12-of-12  " data-rindex={rindex} style=" background-image:url(https://juullabs--salesops.lightning.force.com/lightning/r/ContentDocument/0690400000132o8AAA/view);    border-top: #cccccc 1px solid; 
+         " >
+    <vlocity_ins-block data-style-id="state0element1block_element0_child"  card={card}  record={record}  label="Block"  collapsible="false"  collapsed-by-default="false"  theme="slds"  ><div class="slds-grid slds-wrap">
+          <div data-style-id="state0element1block_element0block_element0" class="slds-col   slds-size_6-of-12  " data-rindex={rindex} style="      
+         " ><vlocity_ins-output-field data-style-id="state0element1block_element0block_element0_child"   card={card}  record={record}  placeholder="output"  type="text"  label="Primary Buyer Name"  field-name="PrimaryContactName"  styles='\{"label":{"fontFamily":"Arial","fontSize":"5mm","color":"#000000","textAlign":"left","textDecoration":"Underline"},"value":{"fontFamily":"Arial","fontSize":"4mm","textAlign":"left","color":"#000000"}}'  theme="slds"  ></vlocity_ins-output-field>
+      </div><div data-style-id="state0element1block_element0block_element1" class="slds-col   slds-size_6-of-12  " data-rindex={rindex} style="      
+         " ><vlocity_ins-output-field data-style-id="state0element1block_element0block_element1_child"   card={card}  record={record}  placeholder="output"  type="text"  label="JLP Tier"  field-name="JLPTier"  styles='\{"label":{"fontFamily":"Arial","fontSize":"5mm","color":"#000000","textAlign":"left","textDecoration":"Underline"},"value":{"fontSize":"4mm","fontFamily":"Arial","textAlign":"left","color":"#000000"}}'  theme="slds"  ></vlocity_ins-output-field>
+      </div><div data-style-id="state0element1block_element0block_element2" class="slds-col   slds-size_6-of-12  " data-rindex={rindex} style="" ><vlocity_ins-output-field data-style-id="state0element1block_element0block_element2_child"   card={card}  record={record}  placeholder="output"  type="text"  label="Primary Buyer Phone"  field-name="PrimaryContactPhone"  styles='\{"label":{"fontFamily":"Arial","fontSize":"5mm","textAlign":"left","textDecoration":"Underline","color":"#000000"},"value":{"fontFamily":"Arial","fontSize":"4mm","textAlign":"left","color":"#000000"}}'  format="M/D/YYYY h:mm a"  mask="#,##0.###"  theme="slds"  ></vlocity_ins-output-field>
+      </div><div data-style-id="state0element1block_element0block_element3" class="slds-col   slds-size_6-of-12  " data-rindex={rindex} style="      
+         " ><vlocity_ins-output-field data-style-id="state0element1block_element0block_element3_child"   card={card}  record={record}  placeholder="output"  type="text"  label="JLP %"  field-name="JLP%"  styles='\{"value":{"fontFamily":"Arial","fontSize":"4mm","textAlign":"left","color":"#000000"},"label":{"fontSize":"5mm","fontFamily":"Arial","color":"#000000","textAlign":"left","textDecoration":"Underline"}}'  theme="slds"  ></vlocity_ins-output-field>
+      </div><div data-style-id="state0element1block_element0block_element4" class="slds-col   slds-size_6-of-12  " data-rindex={rindex} style="" ><vlocity_ins-output-field data-style-id="state0element1block_element0block_element4_child"   card={card}  record={record}  placeholder="output"  type="text"  label="Primary Buyer Email"  field-name=""  styles='\{"label":{"fontFamily":"Arial","fontSize":"5mm","textAlign":"left","textDecoration":"Underline","color":"#000000"},"value":{"fontFamily":"Arial","fontSize":"4mm","textAlign":"left","color":"#000000"}}'  theme="slds"  ></vlocity_ins-output-field>
+      </div><div data-style-id="state0element1block_element0block_element5" class="slds-col   slds-size_6-of-12  " data-rindex={rindex} style="      
+         " ><vlocity_ins-output-field data-style-id="state0element1block_element0block_element5_child"   card={card}  record={record}  placeholder="output"  type="text"  label="EAC Status"  field-name="EACStatus"  styles='\{"value":{"fontFamily":"Arial","fontSize":"4mm","textAlign":"left","color":"#000000"},"label":{"fontSize":"5mm","fontFamily":"Arial","color":"#000000","textAlign":"left","textDecoration":"Underline"}}'  theme="slds"  ></vlocity_ins-output-field>
+      </div><div data-style-id="state0element1block_element0block_element6" class="slds-col   slds-size_6-of-12  " data-rindex={rindex} style="      
+         " ><vlocity_ins-output-field data-style-id="state0element1block_element0block_element6_child"   card={card}  record={record}  placeholder="output"  type="text"  label="EAC Certification Pathway"  field-name="EACCertificationPathway"  styles='\{"value":{"fontFamily":"Arial","fontSize":"4mm","color":"#000000","textAlign":"left"},"label":{"fontSize":"5mm","fontFamily":"Arial","color":"#000000","textAlign":"left","textDecoration":"Underline"}}'  theme="slds"  ></vlocity_ins-output-field>
+      </div><div data-style-id="state0element1block_element0block_element7" class="slds-col   slds-size_6-of-12  " data-rindex={rindex} style="      
+         " ><vlocity_ins-output-field data-style-id="state0element1block_element0block_element7_child"   card={card}  record={record}  placeholder="output"  type="text"  label="Total Number of Doors"  field-name=""  styles='\{"value":{"fontFamily":"Arial","fontSize":"4mm","textDecoration":"","textAlign":"left","color":"#000000"},"label":{"fontSize":"5mm","fontFamily":"Arial","color":"#000000","textAlign":"left","textDecoration":"Underline"}}'  theme="slds"  ></vlocity_ins-output-field>
+      </div>
+        </div></vlocity_ins-block>
+    </div>
+        </div></vlocity_ins-block>
+    </div>
+        </div>
+      </vlocity_ins-flex-card-state>
+                        </template>
+                      </template>
+                      <template if:false={hasRecords}>
+                            <vlocity_ins-flex-card-state  record={record} data-statue="false"  data-index="0" data-rindex={rindex} class="cf-vlocity-state-0 cf-vlocity-state slds-size_12-of-12"  tracking-obj={_childCardTrackingObj} >
+      <div if:true={cardLoaded} class="slds-grid slds-wrap slds-card slds-p-around_x-small slds-m-bottom_x-small" style="">
+          <div data-style-id="state0element0" class="slds-col   slds-p-around_x-small slds-size_12-of-12 " data-rindex={rindex} style="" >
+    <vlocity_ins-block data-style-id="state0element0_child"  card={card}  record={record}  label="Block"  collapsible="false"  collapsed-by-default="false"  theme="slds"  ><div class="slds-grid slds-wrap">
+          <div data-style-id="state0element0block_element0" class="slds-col   slds-text-align_left slds-p-around_x-small  slds-size_12-of-12  " data-rindex={rindex} style="background-color:#1E00FF;      
+        color:#F7F4F4; " >
+    <vlocity_ins-block data-style-id="state0element0block_element0_child"  card={card}  record={record}  label="Block"  collapsible="false"  collapsed-by-default="false"  theme="slds"  ><div class="slds-grid slds-wrap">
+          <div data-style-id="state0element0block_element0block_element0" class="slds-col   slds-p-around_x-small slds-size_7-of-12  " data-rindex={rindex} style="" >
+    <vlocity_ins-block data-style-id="state0element0block_element0block_element0_child"  card={card}  record={record}  label="Block"  collapsible="false"  collapsed-by-default="false"  theme="slds"  ><div class="slds-grid slds-wrap">
+          <div data-style-id="state0element0block_element0block_element0block_element0" class="slds-col   slds-size_8-of-12  " data-rindex={rindex} style="" ><vlocity_ins-output-field data-style-id="state0element0block_element0block_element0block_element0_child"   card={card}  record={record}  placeholder="output"  type="text"  label=""  field-name="AccountName"  styles='\{"value":{"color":"","fontSize":"12mm","fontFamily":"Arial","textAlign":"left"},"label":{"color":"#F7F4F4","fontSize":"","fontFamily":"Arial","textAlign":"left"}}'  theme="slds"  ></vlocity_ins-output-field>
+      </div><div data-style-id="state0element0block_element0block_element0block_element1" class="slds-col   slds-size_8-of-12  " data-rindex={rindex} style="      
+         " ><vlocity_ins-output-field data-style-id="state0element0block_element0block_element0block_element1_child"   card={card}  record={record}  merge-field="%3Cdiv%3E%3Cspan%20style=%22font-family:%20sans-serif;%20font-size:%2014pt;%22%3E%7BShippingStreet%7D,%20%7BShippingCity%7D%3C/span%3E%3C/div%3E%0A%3Cdiv%3E%3Cspan%20style=%22font-family:%20sans-serif;%20font-size:%2014pt;%22%3E%7BShippingState%7D%20%7BShippingPostal%7D%20%7BShippingCountry%7D%3C/span%3E%3C/div%3E"  theme="slds"  ></vlocity_ins-output-field>
+      </div>
+        </div></vlocity_ins-block>
+    </div><div data-style-id="state0element0block_element0block_element1" class="slds-col   slds-p-around_x-small slds-size_5-of-12  " data-rindex={rindex} style="" >
+    <vlocity_ins-block data-style-id="state0element0block_element0block_element1_child"  card={card}  record={record}  label="Block"  collapsible="false"  collapsed-by-default="false"  theme="slds"  ><div class="slds-grid slds-wrap">
+          <div data-style-id="state0element0block_element0block_element1block_element0" class="slds-col  slds-text-align_right   slds-size_12-of-12  " data-rindex={rindex} style="      
+         " ><vlocity_ins-flex-action data-style-id="state0element0block_element0block_element1block_element0_child"  tracking-obj={_childCardTrackingObj}  class= "state0element0block_element0block_element1block_element0_child flexActionElement" 
+        data-action-element-class="state0element0block_element0block_element1block_element0_child" onexecuteaction={performAction} data-show-spinner="false"
+        data-element-label="block0block0block2action0"   state-obj={record}  card={card}  record={record}  label="Create Promo"  icon-name="custom:custom103"  action-list='\[{"stateAction":{"id":"flex-action-1649751952968","type":"OmniScript","openUrlIn":"New Tab/Window","layoutType":"lightning","omniType":{"Name":"clm/CreatePromo_AccountPage/English","Id":"aDU040000004CkvGAE","isLwcOs":true},"isLwcOS":true,"vForcewithNsPrefix":"vlocity_ins__OmniScriptUniversalPage"},"key":"1648500262541-ghlxkb51e","label":"Action","draggable":false,"isOpen":true,"actionIndex":0,"contextId":"\\{AccountId}"}]'  display-as-button="false"  button-variant="neutral"  hide-action-icon="false"  icon-only="false"  flyout-details='\{}'  styles='\{"label":{"textAlign":"right","fontSize":"4mm"}}'  theme="slds"  ></vlocity_ins-flex-action>
+      </div><div data-style-id="state0element0block_element0block_element1block_element1" class="slds-col    slds-size_12-of-12  " data-rindex={rindex} style="      
+         " ><vlocity_ins-flex-action data-style-id="state0element0block_element0block_element1block_element1_child"  tracking-obj={_childCardTrackingObj}  class= "state0element0block_element0block_element1block_element1_child flexActionElement" 
+        data-action-element-class="state0element0block_element0block_element1block_element1_child" onexecuteaction={performAction} data-show-spinner="false"
+        data-element-label="block0block0block2action1"   state-obj={record}  card={card}  record={record}  label="Action"  icon-name="standard-default"  action-list='\[{"stateAction":{"id":"test-action","type":"Custom","targetType":"Web Page","openUrlIn":"Current Window","Web Page":{"targetName":"/apex"}}}]'  styles='\{"label":{"textAlign":"right","fontSize":"4mm"}}'  icon-color="#24F1FF"  theme="slds"  ></vlocity_ins-flex-action>
+      </div><div data-style-id="state0element0block_element0block_element1block_element2" class="slds-col    slds-size_12-of-12  " data-rindex={rindex} style="      
+         " ><vlocity_ins-flex-action data-style-id="state0element0block_element0block_element1block_element2_child"  tracking-obj={_childCardTrackingObj}  class= "state0element0block_element0block_element1block_element2_child flexActionElement" 
+        data-action-element-class="state0element0block_element0block_element1block_element2_child" onexecuteaction={performAction} data-show-spinner="false"
+        data-element-label="block0block0block2action2"   state-obj={record}  card={card}  record={record}  label="Action"  icon-name="standard-default"  action-list='\[{"stateAction":{"id":"test-action","type":"Custom","targetType":"Web Page","openUrlIn":"Current Window","Web Page":{"targetName":"/apex"}}}]'  styles='\{"label":{"textAlign":"right","fontSize":"4mm"}}'  theme="slds"  ></vlocity_ins-flex-action>
+      </div><div data-style-id="state0element0block_element0block_element1block_element3" class="slds-col    slds-size_12-of-12  " data-rindex={rindex} style="      
+         " ><vlocity_ins-flex-action data-style-id="state0element0block_element0block_element1block_element3_child"  tracking-obj={_childCardTrackingObj}  class= "state0element0block_element0block_element1block_element3_child flexActionElement" 
+        data-action-element-class="state0element0block_element0block_element1block_element3_child" onexecuteaction={performAction} data-show-spinner="false"
+        data-element-label="block0block0block2action3"   state-obj={record}  card={card}  record={record}  label="Action"  icon-name="standard-default"  action-list='\[{"stateAction":{"id":"test-action","type":"Custom","targetType":"Web Page","openUrlIn":"Current Window","Web Page":{"targetName":"/apex"}}}]'  styles='\{"label":{"textAlign":"right","fontSize":"4mm"}}'  display-as-button="false"  theme="slds"  ></vlocity_ins-flex-action>
+      </div>
+        </div></vlocity_ins-block>
+    </div>
+        </div></vlocity_ins-block>
+    </div>
+        </div></vlocity_ins-block>
+    </div><div data-style-id="state0element1" class="slds-col   slds-p-around_x-small slds-size_12-of-12  " data-rindex={rindex} style="" >
+    <vlocity_ins-block data-style-id="state0element1_child"  card={card}  record={record}  label="Block"  collapsible="false"  collapsed-by-default="false"  theme="slds"  ><div class="slds-grid slds-wrap">
+          <div data-style-id="state0element1block_element0" class="slds-col   slds-border_top slds-p-around_medium slds-m-around_small  slds-size_12-of-12  " data-rindex={rindex} style=" background-image:url(https://juullabs--salesops.lightning.force.com/lightning/r/ContentDocument/0690400000132o8AAA/view);    border-top: #cccccc 1px solid; 
+         " >
+    <vlocity_ins-block data-style-id="state0element1block_element0_child"  card={card}  record={record}  label="Block"  collapsible="false"  collapsed-by-default="false"  theme="slds"  ><div class="slds-grid slds-wrap">
+          <div data-style-id="state0element1block_element0block_element0" class="slds-col   slds-size_6-of-12  " data-rindex={rindex} style="      
+         " ><vlocity_ins-output-field data-style-id="state0element1block_element0block_element0_child"   card={card}  record={record}  placeholder="output"  type="text"  label="Primary Buyer Name"  field-name="PrimaryContactName"  styles='\{"label":{"fontFamily":"Arial","fontSize":"5mm","color":"#000000","textAlign":"left","textDecoration":"Underline"},"value":{"fontFamily":"Arial","fontSize":"4mm","textAlign":"left","color":"#000000"}}'  theme="slds"  ></vlocity_ins-output-field>
+      </div><div data-style-id="state0element1block_element0block_element1" class="slds-col   slds-size_6-of-12  " data-rindex={rindex} style="      
+         " ><vlocity_ins-output-field data-style-id="state0element1block_element0block_element1_child"   card={card}  record={record}  placeholder="output"  type="text"  label="JLP Tier"  field-name="JLPTier"  styles='\{"label":{"fontFamily":"Arial","fontSize":"5mm","color":"#000000","textAlign":"left","textDecoration":"Underline"},"value":{"fontSize":"4mm","fontFamily":"Arial","textAlign":"left","color":"#000000"}}'  theme="slds"  ></vlocity_ins-output-field>
+      </div><div data-style-id="state0element1block_element0block_element2" class="slds-col   slds-size_6-of-12  " data-rindex={rindex} style="" ><vlocity_ins-output-field data-style-id="state0element1block_element0block_element2_child"   card={card}  record={record}  placeholder="output"  type="text"  label="Primary Buyer Phone"  field-name="PrimaryContactPhone"  styles='\{"label":{"fontFamily":"Arial","fontSize":"5mm","textAlign":"left","textDecoration":"Underline","color":"#000000"},"value":{"fontFamily":"Arial","fontSize":"4mm","textAlign":"left","color":"#000000"}}'  format="M/D/YYYY h:mm a"  mask="#,##0.###"  theme="slds"  ></vlocity_ins-output-field>
+      </div><div data-style-id="state0element1block_element0block_element3" class="slds-col   slds-size_6-of-12  " data-rindex={rindex} style="      
+         " ><vlocity_ins-output-field data-style-id="state0element1block_element0block_element3_child"   card={card}  record={record}  placeholder="output"  type="text"  label="JLP %"  field-name="JLP%"  styles='\{"value":{"fontFamily":"Arial","fontSize":"4mm","textAlign":"left","color":"#000000"},"label":{"fontSize":"5mm","fontFamily":"Arial","color":"#000000","textAlign":"left","textDecoration":"Underline"}}'  theme="slds"  ></vlocity_ins-output-field>
+      </div><div data-style-id="state0element1block_element0block_element4" class="slds-col   slds-size_6-of-12  " data-rindex={rindex} style="" ><vlocity_ins-output-field data-style-id="state0element1block_element0block_element4_child"   card={card}  record={record}  placeholder="output"  type="text"  label="Primary Buyer Email"  field-name=""  styles='\{"label":{"fontFamily":"Arial","fontSize":"5mm","textAlign":"left","textDecoration":"Underline","color":"#000000"},"value":{"fontFamily":"Arial","fontSize":"4mm","textAlign":"left","color":"#000000"}}'  theme="slds"  ></vlocity_ins-output-field>
+      </div><div data-style-id="state0element1block_element0block_element5" class="slds-col   slds-size_6-of-12  " data-rindex={rindex} style="      
+         " ><vlocity_ins-output-field data-style-id="state0element1block_element0block_element5_child"   card={card}  record={record}  placeholder="output"  type="text"  label="EAC Status"  field-name="EACStatus"  styles='\{"value":{"fontFamily":"Arial","fontSize":"4mm","textAlign":"left","color":"#000000"},"label":{"fontSize":"5mm","fontFamily":"Arial","color":"#000000","textAlign":"left","textDecoration":"Underline"}}'  theme="slds"  ></vlocity_ins-output-field>
+      </div><div data-style-id="state0element1block_element0block_element6" class="slds-col   slds-size_6-of-12  " data-rindex={rindex} style="      
+         " ><vlocity_ins-output-field data-style-id="state0element1block_element0block_element6_child"   card={card}  record={record}  placeholder="output"  type="text"  label="EAC Certification Pathway"  field-name="EACCertificationPathway"  styles='\{"value":{"fontFamily":"Arial","fontSize":"4mm","color":"#000000","textAlign":"left"},"label":{"fontSize":"5mm","fontFamily":"Arial","color":"#000000","textAlign":"left","textDecoration":"Underline"}}'  theme="slds"  ></vlocity_ins-output-field>
+      </div><div data-style-id="state0element1block_element0block_element7" class="slds-col   slds-size_6-of-12  " data-rindex={rindex} style="      
+         " ><vlocity_ins-output-field data-style-id="state0element1block_element0block_element7_child"   card={card}  record={record}  placeholder="output"  type="text"  label="Total Number of Doors"  field-name=""  styles='\{"value":{"fontFamily":"Arial","fontSize":"4mm","textDecoration":"","textAlign":"left","color":"#000000"},"label":{"fontSize":"5mm","fontFamily":"Arial","color":"#000000","textAlign":"left","textDecoration":"Underline"}}'  theme="slds"  ></vlocity_ins-output-field>
+      </div>
+        </div></vlocity_ins-block>
+    </div>
+        </div></vlocity_ins-block>
+    </div>
+        </div>
+      </vlocity_ins-flex-card-state>
+                      </template>
+            </template>
+            <template if:true={hasError}>
+            {error}
+            </template>
+            
+      <vlocity_ins-action action-wrapperclass="slds-hide" re-render-flyout class="action-trigger slds-col" onupdateos={updateOmniscript} onselectcards={updateSelectedCards} onsetvalue={updateAction} onfireactionevent={actionEvtHandler}>
+      
+      </vlocity_ins-action>
+  
+            <vlocity_ins-action class="execute-action" re-render-flyout action-wrapperclass="slds-hide" onupdateos={updateOmniscript} onselectcards={updateSelectedCards} onsetvalue={updateAction} onfireactionevent={actionEvtHandler}>
+            
+            </vlocity_ins-action>
+            </div>
+          </template>

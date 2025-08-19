@@ -1,0 +1,61 @@
+<template>
+            <div class="slds-grid slds-wrap slds-is-relative ">
+            <div style="position: fixed;z-index: 999999;top: 0;right: 0;">
+  <vlocity_ins-toast class="flexcard-toast-element" theme="slds" title="" message="" styletype=""> </vlocity_ins-toast>
+</div>
+            <div if:true={showLoader} class="slds-is-absolute vloc-loader_override" style="height: 100%; width: 100%; min-height:50px; background: transparent; z-index: 99;">
+  <div>
+   <vlocity_ins-spinner
+      variant="brand"
+      alternative-text="Loading content..."
+      size="medium"
+      theme="slds"
+      ></vlocity_ins-spinner>
+  </div>
+</div>
+            <template if:false={hasPermission}>
+              You don't have required permissions to view this card.
+            </template>
+            <template if:true={hasPermission}>
+              <template if:true={hasRecords}>
+                      <vlocity_ins-flex-card-state   data-statue="true"  data-index="0" data-rindex={rindex} class="cf-vlocity-state-0 cf-vlocity-state slds-size_12-of-12"  tracking-obj={_childCardTrackingObj} >
+      <div if:true={cardLoaded} class="slds-grid slds-wrap slds-card slds-p-around_x-small slds-m-bottom_x-small" style="">
+          <div data-style-id="state0element0" class="slds-col   slds-size_12-of-12 " data-rindex={rindex} style="" ><vlocity_ins-flex-datatable data-style-id="state0element0_child"   record={record}  card={card}  columns='\[]'  issearchavailable="false"  issortavailable="true"  records={records}  theme="slds"  ></vlocity_ins-flex-datatable>
+      </div><div data-style-id="state0element1" class="slds-col   slds-large-size_12-of-12 slds-medium-size_12-of-12 slds-small-size_12-of-12 slds-size_12-of-12  " data-rindex={rindex} style="      
+         " ><vlocity_ins-flex-datatable data-style-id="state0element1_child"   record={record}  card={card}  cell-level-edit="true"  columns='\[{"editable":"false","fieldName":"Retail Theatre","label":"Retail Theatre","searchable":false,"sortable":"false","type":"text","userSelectable":"false"},{"editable":"false","fieldName":"Account Name","label":"Account Name","searchable":false,"sortable":"false","type":"text"},{"editable":"false","fieldName":"Created By","label":"Created By","searchable":false,"sortable":"false","type":"text"},{"editable":"false","fieldName":"Created Date","format":"M/D/YYYY H:MM A","label":"Created Date","searchable":true,"sortable":true,"type":"datetime"}]'  group-order="asc"  issearchavailable="false"  issortavailable="true"  pagelimit="3"  records={records}  styles='\{"cellMargin":[],"cellPadding":[]}'  theme="slds"  ></vlocity_ins-flex-datatable>
+      </div><div data-style-id="state0element2" class="slds-col   slds-p-around_x-small slds-size_12-of-12 " data-rindex={rindex} style="" >
+    <vlocity_ins-block data-style-id="state0element2_child"  record={record}  card={card}  collapsed-by-default="false"  collapsible="false"  label="Block"  theme="slds"  ><div class="slds-grid slds-wrap">
+          
+        </div></vlocity_ins-block>
+    </div>
+        </div>
+      </vlocity_ins-flex-card-state>
+                </template>
+                <template if:false={hasRecords}>
+                      <vlocity_ins-flex-card-state   data-statue="false"  data-index="0" data-rindex={rindex} class="cf-vlocity-state-0 cf-vlocity-state slds-size_12-of-12"  tracking-obj={_childCardTrackingObj} >
+      <div if:true={cardLoaded} class="slds-grid slds-wrap slds-card slds-p-around_x-small slds-m-bottom_x-small" style="">
+          <div data-style-id="state0element0" class="slds-col   slds-size_12-of-12 " data-rindex={rindex} style="" ><vlocity_ins-flex-datatable data-style-id="state0element0_child"   record={record}  card={card}  columns='\[]'  issearchavailable="false"  issortavailable="true"  records={records}  theme="slds"  ></vlocity_ins-flex-datatable>
+      </div><div data-style-id="state0element1" class="slds-col   slds-large-size_12-of-12 slds-medium-size_12-of-12 slds-small-size_12-of-12 slds-size_12-of-12  " data-rindex={rindex} style="      
+         " ><vlocity_ins-flex-datatable data-style-id="state0element1_child"   record={record}  card={card}  cell-level-edit="true"  columns='\[{"editable":"false","fieldName":"Retail Theatre","label":"Retail Theatre","searchable":false,"sortable":"false","type":"text","userSelectable":"false"},{"editable":"false","fieldName":"Account Name","label":"Account Name","searchable":false,"sortable":"false","type":"text"},{"editable":"false","fieldName":"Created By","label":"Created By","searchable":false,"sortable":"false","type":"text"},{"editable":"false","fieldName":"Created Date","format":"M/D/YYYY H:MM A","label":"Created Date","searchable":true,"sortable":true,"type":"datetime"}]'  group-order="asc"  issearchavailable="false"  issortavailable="true"  pagelimit="3"  records={records}  styles='\{"cellMargin":[],"cellPadding":[]}'  theme="slds"  ></vlocity_ins-flex-datatable>
+      </div><div data-style-id="state0element2" class="slds-col   slds-p-around_x-small slds-size_12-of-12 " data-rindex={rindex} style="" >
+    <vlocity_ins-block data-style-id="state0element2_child"  record={record}  card={card}  collapsed-by-default="false"  collapsible="false"  label="Block"  theme="slds"  ><div class="slds-grid slds-wrap">
+          
+        </div></vlocity_ins-block>
+    </div>
+        </div>
+      </vlocity_ins-flex-card-state>
+                </template>
+            </template>
+            <template if:true={hasError}>
+            {error}
+            </template>
+            
+      <vlocity_ins-action action-wrapperclass="slds-hide" re-render-flyout class="action-trigger slds-col" onupdateos={updateOmniscript} onselectcards={updateSelectedCards} onsetvalue={updateAction} onfireactionevent={actionEvtHandler}>
+      
+      </vlocity_ins-action>
+  
+            <vlocity_ins-action class="execute-action" re-render-flyout action-wrapperclass="slds-hide" onupdateos={updateOmniscript} onselectcards={updateSelectedCards} onsetvalue={updateAction} onfireactionevent={actionEvtHandler}>
+            
+            </vlocity_ins-action>
+            </div>
+          </template>

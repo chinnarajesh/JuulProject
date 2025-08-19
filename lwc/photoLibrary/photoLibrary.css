@@ -1,0 +1,99 @@
+.sape{
+    width:28.7%;
+    position: relative;
+    right:16px;
+    margin-bottom: 10px;
+  }
+ .card-4{
+     padding-bottom: 40%;
+     background-color:white;
+ }
+ .filter_button{
+     position:relative;
+     bottom:35px;
+ }
+ .left_filter{
+     position:absolute;
+     left:57%;
+ }
+ .bgDiv{
+    display:block;
+    background-color:white;
+
+ }
+ .popup{
+     position:absolute;
+     top:1px;
+     right:18px;
+ }
+ 
+ 
+ .sape-2{
+     width:74.6%;
+     position: relative;
+     right:33px;
+    
+ }
+ 
+ 
+ .apply-1{
+     position:relative;
+    bottom:7px;
+    right:4%;
+ }
+ 
+ .B_1{
+     padding-left:-4px;
+ }
+ .save_2{
+     margin-top:5px;
+ }
+ .spacer{
+     width:5px;
+     height:auto;
+     display:inline-block;
+     
+   }
+ 
+  
+   .hideBtn{
+       position:relative;
+       right:4%;
+       top:3px;
+   }
+   .tabset_comboBOX{
+       width:100.5%;
+       position: relative;
+      right:10px;
+      
+   }
+
+   .tabset{
+    width:90%; 
+   }
+   .iconName{
+       position:relative;
+       left:16px;
+       top:30px;
+      
+   }
+ /* .iconName_1{
+    position:relative;
+    
+    right:10px;
+    top:30px;
+ } */
+
+ .iconName_2{
+    position:relative;
+    /* left:10px; */
+    top:30px;
+    right:5px;
+    
+  
+ }
+
+ .checkbox_icon_tag_1{
+     background-color: rgb(94, 93, 93);
+     border-radius: 5px;
+ }

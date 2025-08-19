@@ -1,0 +1,24 @@
+.nicotine-warning {
+    font-size: 1.88889rem;
+    line-height: 2.11111rem;
+    align-items: center;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    background-color: #000;
+    border: 10px solid #fff;
+    font-family: Arial;
+    min-height: 20vh;
+    padding: 20px;
+    text-align: center;
+    width: 100%;
+    z-index: 1010;
+}
+
+.white {
+    color: #fff;
+}
+
+.bold {
+    font-weight: 700;
+}

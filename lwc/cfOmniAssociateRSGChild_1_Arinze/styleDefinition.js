@@ -1,0 +1,3 @@
+let styleDefinition =
+      {"state0element0":[{"conditions":"default","styleObject":{"class":"slds-col    slds-size_12-of-12  ","style":"      \n         ","styleProperties":{}}},{"conditions":{"group":[{"field":"selected","hasMergeField":false,"id":"state-new-condition-0","operator":"==","type":"custom","value":"true"}],"id":"state-condition-object","isParent":true},"styleObject":{"class":"slds-col    slds-large-size_12-of-12 slds-medium-size_12-of-12 slds-small-size_12-of-12 slds-size_12-of-12  ","style":"background-color:#DDF4D8;      \n         ","styleProperties":{}}}]};
+  export default styleDefinition

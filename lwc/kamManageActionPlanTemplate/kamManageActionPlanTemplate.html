@@ -1,0 +1,931 @@
+<!--**********************************************************************/
+/* VERSION     AUTHOR                  DATE                           */
+/*     1.0     JUUL Developer       06-19-2020                     */
+/*     1.1     Shreya Raut          02-01-2021
+/* Class Name: KamAccountPlanning                       */
+/* Description: To display KAM Action Plan Template object */
+/**********************************************************************/-->
+<template>
+    <header class="slds-modal__header slds-size_1-of-1">
+        <h2 id="modal-heading-01" class="slds-text-heading_medium slds-hyphenate"> Manage Action Plan Templates</h2>
+
+    </header>
+
+    <template if:true={batchStatusBoolean}>
+        <lightning-card title="Progress Bar"><br />
+            <div style="margin-left: 2%; margin-right: 2%; ">
+                <lightning-progress-bar size="large" value={BatchPercentage}
+                    variant="circular"></lightning-progress-bar>
+            </div>
+            <div class="slds-text-align--center slds-text-title" style="color:forestgreen;">
+                Processing => {BatchPercentage}%
+            </div>
+        </lightning-card>
+    </template>
+
+
+    <div class="slds-modal__content slds-p-around_medium slds-size_1-of-1" id="modal-content-id-1">
+        <div class="slds-scrollable" style="height:calc(100vh - 350px)">
+            <template if:true={loading}>
+                <div class="loader">
+                    <lightning-spinner alternative-text="Loading"></lightning-spinner>
+                </div>
+            </template>
+
+            <template if:false={loading}>
+                <template if:false={blankRsGroups}>
+                    <template for:each={currentPageData} for:item="item" for:index="index">
+                        <div key={item.Id} class="planTemplate">
+                            <div class="rsgHeading">
+                                <lightning-input type="checkbox" class="template" disabled={item.readOnly}
+                                    checked={item.selected} label={item.name} value={item.Id}
+                                    onchange={handleRsgSelect}>
+                                </lightning-input>
+
+                                <lightning-button variant="Neutral" class="slds-button" id={item.Id}
+                                    label="Plan for Additional States" disabled={cascadeFlag} onclick={showSelectModal}>
+                                </lightning-button>
+
+                            </div>
+
+                            <template if:true={item.expanded}>
+                                <lightning-accordion allow-multiple-sections-open key={item.Id}
+                                    onsectiontoggle={handleSectionToggle} active-section-name="selectPlanogram">
+
+                                    <!-- <lightning-accordion-section name="selectPlanogram" label="Select Planogram">
+                                        <div class="slds-grid slds-gutters products_container">
+                                            <div class="slds-col slds-size_6-of-12">
+                                                <lightning-input type="text" disabled label="Current Planogram"
+                                                    value={item.currentplanogram} placeholder="No Planogram Found">
+                                                </lightning-input>
+                                            </div>
+                                            <template if:true={planogramVisible}>
+                                                <div class="slds-col slds-size_6-of-12">
+                                                    <lightning-combobox name="plannedPlanogram"
+                                                        label="Planned Planogram" disabled={item.readOnly}
+                                                        placeholder="Select Planned Planogram"
+                                                        options={item.selectedPlanogram}
+                                                        onchange={handleSelectPlanogram} required id={item.Id}
+                                                        value={item.plannedPlanogramId}
+                                                        message-when-value-missing="Please Select Planogram">
+                                                    </lightning-combobox>
+                                                </div>
+                                            </template>
+                                        </div>
+
+                                        <div class="slds-grid slds-gutters image_container">
+                                            <div class="slds-col slds-size_6-of-12">
+                                                <template if:true={item.currentPlanogramURL}>
+                                                    <img src={item.currentPlanogramURL} alt="Loading" width="360"
+                                                        height="280" class="image_viewer" />
+                                                </template>
+                                            </div>
+                                            <template if:true={planogramVisible}>
+                                                <div class="slds-col slds-size_6-of-12">
+                                                    <template if:true={item.plannedPlanogramURL}>
+                                                        <img src={item.plannedPlanogramURL} alt="Loading" width="360"
+                                                            height="280" class="image_viewer" />
+                                                    </template>
+                                                </div>
+                                            </template>
+                                        </div>
+                                    </lightning-accordion-section> -->
+
+                                    <template if:true={planogramVisible}>
+                                        <div class="standard_template">
+                                            <lightning-input type="checkbox" class="template" disabled={item.disablePOG}
+                                                label="Use Standard POG" id={item.Id} checked={item.standardPog}
+                                                onchange={handlePlanogramCheckboxChange}>
+                                            </lightning-input>
+                                        </div>
+                                    </template>
+
+                                    <!-- Section For Planogram Products -->
+                                    <template if:true={item.standardPog}>
+                                        <lightning-accordion-section name="selectPlanogramProducts"
+                                            label="View Planogram Products">
+                                            <table
+                                                class="slds-table slds-table_cell-buffer slds-table_bordered slds-table_col-bordered">
+                                                <thead>
+                                                    <tr class="slds-text-title_caps">
+                                                        <template lwc:if={CommercialStartegyBase}>
+                                                            <template for:each={productsColumns1} for:item="column">
+                                                                <th scope="col" key={column.fieldName}>
+                                                                    <div class="slds-truncate" title={column.label}>
+                                                                        {column.label}</div>
+                                                                    <div class="slds-resizable">
+                                                                    </div>
+                                                                </th>
+                                                            </template>
+                                                        </template>
+                                                        <template lwc:else>
+                                                            <template for:each={productsColumns2} for:item="column">
+                                                                <th scope="col" key={column.fieldName}>
+                                                                    <div class="slds-truncate" title={column.label}>
+                                                                        {column.label}</div>
+                                                                    <div class="slds-resizable">
+                                                                    </div>
+                                                                </th>
+                                                            </template>
+                                                        </template>
+
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <template for:each={item.planogramProducts} for:item="product">
+                                                        <tr key={product.Id}>
+                                                            <td data-label="Name">
+                                                                <div class="slds-truncate" title="Name">
+                                                                    {product.name}
+                                                                </div>
+                                                            </td>
+
+                                                            <!--<td data-label="Price Differentiator">
+                                                                <div class="slds-truncate" title="Price Differentiator">
+                                                                    <lightning-input type="number" key={product.Id}
+                                                                        id={item.Id} data-id={product.Id}
+                                                                        disabled={item.readOnly} name="differentiator"
+                                                                        label="differentiator"
+                                                                        value={product.differentiator}
+                                                                        variant="label-hidden" class="planogramProducts"
+                                                                        onchange={handleInputChange} step="0.01">
+                                                                    </lightning-input>
+                                                                </div>
+                                                            </td>-->
+                                                            <td data-label="Facings">
+                                                                <div class="slds-truncate" title="Facings">
+                                                                    <lightning-input type="number" key={product.Id}
+                                                                        disabled id={item.Id} data-id={product.Id}
+                                                                        name="quantity" label="quantity"
+                                                                        value={product.quantity} variant="label-hidden"
+                                                                        class="planogramProducts" min="0"
+                                                                        onchange={handleInputChange}>
+                                                                    </lightning-input>
+                                                                </div>
+                                                            </td>
+                                                            <td data-label="STD JUUL Funding">
+                                                                <div class="slds-truncate" title="STD JUUL Funding">
+                                                                    <lightning-input type="number" key={product.Id}
+                                                                        id={item.Id} data-id={product.Id}
+                                                                        disabled={item.readOnly} name="STDFunding"
+                                                                        label="STDFunding" value={product.STDFunding}
+                                                                        variant="label-hidden" class="planogramProducts"
+                                                                        onchange={handleInputChange} step="0.01">
+                                                                    </lightning-input>
+                                                                </div>
+                                                            </td>
+                                                            <td data-label="PTC Modifier">
+                                                                <div class="slds-truncate" title="PTC Modifier">
+                                                                    <lightning-input type="number" key={product.Id}
+                                                                        id={item.Id} data-id={product.Id}
+                                                                        disabled={item.readOnly} name="TaxFunding"
+                                                                        label="TaxFunding" value={product.TaxFunding}
+                                                                        variant="label-hidden" class="planogramProducts"
+                                                                        onchange={handleInputChange} step="0.01">
+                                                                    </lightning-input>
+                                                                </div>
+                                                            </td>
+                                                            <td data-label="Retailer Funding">
+                                                                <div class="slds-truncate" title="Retailer Funding">
+                                                                    <lightning-input type="number" key={product.Id}
+                                                                        id={item.Id} data-id={product.Id}
+                                                                        disabled={item.readOnly} name="RetailerFunding"
+                                                                        label="RetailerFunding"
+                                                                        value={product.RetailerFunding}
+                                                                        variant="label-hidden" class="planogramProducts"
+                                                                        onchange={handleInputChange} step="0.01">
+                                                                    </lightning-input>
+                                                                </div>
+                                                            </td>
+                                                            <!--<td data-label="Minimum MSRP">
+                                                                <div class="slds-truncate" title="Minimum MSRP">
+                                                                    <lightning-formatted-number
+                                                                        value={product.minimumMSRP}
+                                                                        format-style="currency" currency-code="USD">
+                                                                    </lightning-formatted-number>
+                                                                </div>
+                                                            </td>
+                                                            <td data-label="Maximum Expected MSRP">
+                                                                <div class="slds-truncate"
+                                                                    title="Maximum Expected MSRP">
+                                                                    <lightning-formatted-number
+                                                                        value={product.maximumExpectedMSRP}
+                                                                        format-style="currency" currency-code="USD">
+                                                                    </lightning-formatted-number>
+                                                                </div>
+                                                            </td>-->
+                                                            <!--<td data-label="List Price">
+                                                                <div class="slds-truncate" title="List Price">
+                                                                    <lightning-formatted-number
+                                                                        value={product.listPrice}
+                                                                        format-style="currency" currency-code="USD">
+                                                                    </lightning-formatted-number>
+
+                                                                </div>
+                                                            </td>-->
+                                                            <td data-label="State Based Price">
+                                                                <div class="slds-truncate" title="State Based Price">
+                                                                    <lightning-formatted-number
+                                                                        value={product.listPrice}
+                                                                        format-style="currency" currency-code="USD">
+                                                                    </lightning-formatted-number>
+
+                                                                </div>
+                                                            </td>
+                                                            <!--<td data-label="Planned Price">
+                                                                <div class="slds-truncate" title="Planned Price">
+                                                                    <lightning-formatted-number
+                                                                        value={product.plannedPrice}
+                                                                        format-style="currency" currency-code="USD">
+                                                                    </lightning-formatted-number>
+                                                                </div>
+                                                            </td>-->
+                                                            <td data-label="FinalPTC">
+                                                                <div class="slds-truncate" title="FinalPTC">
+                                                                    <lightning-formatted-number value={product.FinalPTC}
+                                                                        format-style="currency" currency-code="USD">
+                                                                    </lightning-formatted-number>
+                                                                </div>
+                                                            </td>
+                                                        </tr>
+                                                    </template>
+                                                </tbody>
+                                            </table>
+                                        </lightning-accordion-section>
+                                    </template>
+
+                                    <!-- Section For Additional Store Products -->
+                                    <template if:true={storeProductsVisible}>
+                                        <lightning-accordion-section name="selectAdditionalStoreProducts"
+                                            label="Select Additional Store Products">
+                                            <template if:true={item.products}>
+                                                <div class="slds-table--header-fixed_container">
+                                                    <div class="slds-scrollable_x">
+                                                        <table
+                                                            class="slds-table slds-table_cell-buffer slds-table_bordered slds-table_col-bordered">
+                                                            <thead>
+                                                                <tr class="slds-text-title_caps">
+                                                                    <th style="width:3.25rem;"
+                                                                        class="slds-text-align_right">
+                                                                        <lightning-input type="checkbox"
+                                                                            onchange={handleSelectDeselectAll}
+                                                                            class="products-" id={item.Id}
+                                                                            disabled={item.readOnly}>
+                                                                        </lightning-input>
+                                                                    </th>
+                                                                    <template lwc:if={CommercialStartegyBase}>
+                                                                        <template for:each={productsColumns1}
+                                                                            for:item="column">
+                                                                            <th scope="col" key={column.fieldName}>
+
+                                                                                <div class="slds-truncate slds-is-resizable"
+                                                                                    title={column.label}>
+
+                                                                                    {column.label}
+                                                                                </div>
+
+                                                                            </th>
+                                                                        </template>
+                                                                    </template>
+                                                                    <template lwc:else>
+                                                                        <template for:each={productsColumns2}
+                                                                            for:item="column">
+                                                                            <th scope="col" key={column.fieldName}>
+
+                                                                                <div class="slds-truncate slds-is-resizable"
+                                                                                    title={column.label}>
+
+                                                                                    {column.label}
+                                                                                </div>
+
+                                                                            </th>
+                                                                        </template>
+                                                                    </template>
+                                                                </tr>
+                                                            </thead>
+                                                            <tbody>
+                                                                <template for:each={item.products} for:item="product">
+                                                                    <tr key={product.Id}>
+                                                                        <th scope="row" data-label="Name">
+                                                                            <lightning-input type="checkbox"
+                                                                                checked={product.selected}
+                                                                                value={product.Id} id={item.Id}
+                                                                                class="products-"
+                                                                                onchange={handleValuesSelect}
+                                                                                disabled={item.readOnly}>
+                                                                            </lightning-input>
+                                                                        </th>
+                                                                        <td data-label="Name">
+                                                                            <div class="slds-truncate" title="Name">
+                                                                                {product.name}
+                                                                            </div>
+                                                                        </td>
+
+                                                                        <!-- <td data-label="Price Differentiator">
+                                                                            <div class="slds-truncate"
+                                                                                title="Price Differentiator">
+                                                                                <lightning-input type="number"
+                                                                                    disabled={item.readOnly}
+                                                                                    key={product.Id} id={item.Id}
+                                                                                    data-id={product.Id}
+                                                                                    name="differentiator"
+                                                                                    label="differentiator"
+                                                                                    value={product.differentiator}
+                                                                                    variant="label-hidden"
+                                                                                    class="products"
+                                                                                    onchange={handleInputChange}
+                                                                                    step="0.01">
+                                                                                </lightning-input>
+                                                                            </div>
+                                                                        </td>-->
+                                                                        <td data-label="Facings">
+                                                                            <div class="slds-truncate" title="Facings">
+                                                                                <lightning-input type="number"
+                                                                                    key={product.Id}
+                                                                                    disabled={item.readOnly}
+                                                                                    id={item.Id} data-id={product.Id}
+                                                                                    name="quantity" label="quantity"
+                                                                                    value={product.quantity}
+                                                                                    variant="label-hidden"
+                                                                                    class="products" min="0"
+                                                                                    onchange={handleInputChange}>
+                                                                                </lightning-input>
+                                                                            </div>
+                                                                        </td>
+
+                                                                        <!--<td data-label="Minimum MSRP">
+                                                                            <div class="slds-truncate"
+                                                                                title="Minimum MSRP">
+                                                                                <lightning-formatted-number
+                                                                                    value={product.minimumMSRP}
+                                                                                    format-style="currency"
+                                                                                    currency-code="USD">
+                                                                                </lightning-formatted-number>
+                                                                            </div>
+                                                                        </td>
+                                                                        <td data-label="Max Expected MSRP">
+                                                                            <div class="slds-truncate"
+                                                                                title="Max Expected MSRP">
+                                                                                <lightning-formatted-number
+                                                                                    value={product.maximumExpectedMSRP}
+                                                                                    format-style="currency"
+                                                                                    currency-code="USD">
+                                                                                </lightning-formatted-number>
+                                                                            </div>
+                                                                        </td>-->
+                                                                        <td data-label="STD JUUL Funding">
+                                                                            <div class="slds-truncate"
+                                                                                title="STD JUUL Funding">
+
+                                                                                <lightning-input type="number"
+                                                                                    disabled={item.readOnly}
+                                                                                    key={product.Id} id={item.Id}
+                                                                                    data-id={product.Id}
+                                                                                    name="STDFunding" label="STDFunding"
+                                                                                    value={product.STDFunding}
+                                                                                    variant="label-hidden"
+                                                                                    class="products"
+                                                                                    onchange={handleInputChange}
+                                                                                    step="0.01">
+                                                                                </lightning-input>
+                                                                            </div>
+                                                                        </td>
+                                                                        <td data-label="PTC Modifier">
+                                                                            <div class="slds-truncate"
+                                                                                title="PTC Modifier">
+                                                                                <lightning-input type="number"
+                                                                                    key={product.Id} id={item.Id}
+                                                                                    data-id={product.Id}
+                                                                                    disabled={item.readOnly}
+                                                                                    name="TaxFunding" label="TaxFunding"
+                                                                                    value={product.TaxFunding}
+                                                                                    variant="label-hidden"
+                                                                                    class="products"
+                                                                                    onchange={handleInputChange}
+                                                                                    step="0.01">
+                                                                                </lightning-input>
+                                                                            </div>
+                                                                        </td>
+                                                                        <td data-label="Retailer Funding">
+                                                                            <div class="slds-truncate"
+                                                                                title="Retailer Funding">
+                                                                                <lightning-input type="number"
+                                                                                    key={product.Id} id={item.Id}
+                                                                                    data-id={product.Id}
+                                                                                    disabled={item.readOnly}
+                                                                                    name="RetailerFunding"
+                                                                                    label="RetailerFunding"
+                                                                                    value={product.RetailerFunding}
+                                                                                    variant="label-hidden"
+                                                                                    class="products"
+                                                                                    onchange={handleInputChange}
+                                                                                    step="0.01">
+                                                                                </lightning-input>
+                                                                            </div>
+                                                                        </td>
+                                                                        <td data-label="State Based Price">
+                                                                            <div class="slds-truncate"
+                                                                                title="State Based Price">
+                                                                                <lightning-formatted-number
+                                                                                    value={product.listPrice}
+                                                                                    format-style="currency"
+                                                                                    currency-code="USD">
+                                                                                </lightning-formatted-number>
+
+                                                                            </div>
+                                                                        </td>
+                                                                        <!--<td data-label="List Price">
+                                                                            <div class="slds-truncate"
+                                                                                title="List Price">
+                                                                                <lightning-formatted-number
+                                                                                    value={product.listPrice}
+                                                                                    format-style="currency"
+                                                                                    currency-code="USD">
+                                                                                </lightning-formatted-number>
+
+                                                                            </div>
+                                                                        </td>-->
+                                                                        <!--<td data-label="Planned Price">
+                                                                            <div class="slds-truncate"
+                                                                                title="Planned Price">
+                                                                                <lightning-formatted-number
+                                                                                    value={product.plannedPrice}
+                                                                                    format-style="currency"
+                                                                                    currency-code="USD">
+                                                                                </lightning-formatted-number>
+                                                                            </div>
+                                                                        </td>-->
+                                                                        <td data-label="FinalPTC">
+
+                                                                            <div class="slds-truncate" title="FinalPTC">
+
+                                                                                <lightning-formatted-number
+                                                                                    value={product.FinalPTC}
+                                                                                    format-style="currency"
+                                                                                    currency-code="USD">
+                                                                                </lightning-formatted-number>
+                                                                            </div>
+                                                                        </td>
+
+
+                                                                    </tr>
+                                                                </template>
+                                                            </tbody>
+                                                        </table>
+                                                    </div>
+                                                </div>
+                                            </template>
+                                        </lightning-accordion-section>
+                                    </template>
+
+                                    <!-- Section For Activity Items -->
+                                    <lightning-accordion-section name="selectActivityItems"
+                                        label="Select Commercial Activity Items">
+                                        <template if:true={item.commercialActivityItems}>
+                                            <div class="slds-table--header-fixed_container">
+                                                <div class="slds-scrollable_x">
+                                                    <table
+                                                        class="slds-table slds-table_cell-buffer slds-table_bordered slds-table_col-bordered">
+                                                        <thead>
+                                                            <tr class="slds-text-title_caps">
+                                                                <th style="width:3.25rem;"
+                                                                    class="slds-text-align_right">
+                                                                    <!--Removed for ticket SFDC - 0000004464-->
+                                                                    <lightning-input type="checkbox"
+                                                                        class="commercialActivityItems-"
+                                                                        onchange={handleSelectDeselectAll} id={item.Id}
+                                                                        disabled={item.readOnly}>
+                                                                    </lightning-input>
+                                                                </th>
+                                                                <template lwc:if={CommercialStartegyBase}>
+                                                                    <template for:each={commercialActivityColumns1}
+                                                                    for:item="column">
+                                                                    <th scope="col" key={column.fieldName}>
+
+                                                                        <div class="slds-truncate1"
+                                                                            title={column.label}>
+                                                                            {column.label}</div>
+
+
+                                                                    </th>
+                                                                </template>
+                                                                </template>
+                                                                <template lwc:else>
+                                                                    <template for:each={commercialActivityColumns2}
+                                                                    for:item="column">
+                                                                    <th scope="col" key={column.fieldName}>
+
+                                                                        <div class="slds-truncate1"
+                                                                            title={column.label}>
+                                                                            {column.label}</div>
+
+
+                                                                    </th>
+                                                                </template>
+                                                                </template>
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody>
+                                                            <template for:each={item.commercialActivityItems}
+                                                                for:item="product">
+                                                                <tr key={product.Id}>
+                                                                    <th scope="row" data-label="Name">
+                                                                        <lightning-input type="checkbox"
+                                                                            checked={product.selected}
+                                                                            value={product.Id} id={item.Id}
+                                                                            class="commercialActivityItems-"
+                                                                            onchange={handleValuesSelect}
+                                                                            disabled={item.readOnly}>
+                                                                        </lightning-input>
+                                                                    </th>
+                                                                    <td data-label="Name">
+                                                                        <div class="slds-truncate" title="Name">
+                                                                            {product.name}
+                                                                        </div>
+                                                                    </td>
+                                                                    <td data-label="Product Type">
+                                                                        <div class="slds-truncate" title="Product Type">
+                                                                            {product.productType}
+                                                                        </div>
+                                                                    </td>
+                                                                    <!-- commented by jyoti for Product bundle -->
+                                                                    <!--Added by Shreya for SFDC - 0000004228 -->
+                                                                    <!-- <td data-label="Product Bundle">
+                                                                        <div class="slds-truncate" title="Product Bundle">
+                                                                            {product.ProductBundle}
+                                                                        </div>
+                                                                    </td>
+                                                                    <td data-label="ProductDescription">
+                                                                        <div class="slds-truncate" title="ProductDescription">
+                                                                            {product.ProductDescription}
+                                                                        </div>
+                                                                    </td> -->
+                                                                    <!--End SFDC - 0000004228  -->
+                                                                    <!-- end commented by jyoti -->
+                                                                    <!--<td data-label="Price Differentiator">
+                                                                        <div class="slds-truncate"
+                                                                            title="Price Differentiator">
+                                                                            <lightning-input type="number"
+                                                                                disabled={product.differentiatorDisabled}
+                                                                                key={product.Id} id={item.Id}
+                                                                                class="commercialActivityItems"
+                                                                                data-id={product.Id}
+                                                                                name="differentiator"
+                                                                                label="differentiator"
+                                                                                value={product.differentiator}
+                                                                                variant="label-hidden"
+                                                                                onchange={handleInputChange}
+                                                                                step="0.01">
+                                                                            </lightning-input>
+                                                                        </div>
+                                                                    </td>-->
+                                                                    <td data-label="Facings/Quantity">
+                                                                        <div class="slds-truncate"
+                                                                            title="Facings/Quantity">
+                                                                            <lightning-input type="number"
+                                                                                key={product.Id}
+                                                                                disabled={product.quantityDisabled}
+                                                                                id={item.Id} data-id={product.Id}
+                                                                                name="quantity"
+                                                                                class="commercialActivityItems"
+                                                                                label="quantity"
+                                                                                value={product.quantity}
+                                                                                variant="label-hidden" min="0"
+                                                                                onchange={handleInputChange}>
+                                                                            </lightning-input>
+                                                                        </div>
+                                                                    </td>
+
+                                                                    <!--<td data-label="Minimum MSRP">
+                                                                        <div class="slds-truncate" title="Minimum MSRP">
+                                                                            <lightning-formatted-number
+                                                                                value={product.minimumMSRP}
+                                                                                format-style="currency"
+                                                                                currency-code="USD">
+                                                                            </lightning-formatted-number>
+                                                                        </div>
+                                                                    </td>
+                                                                    <td data-label="Max Expected MSRP">
+                                                                        <div class="slds-truncate"
+                                                                            title="Max Expected MSRP">
+                                                                            <lightning-formatted-number
+                                                                                value={product.maximumExpectedMSRP}
+                                                                                format-style="currency"
+                                                                                currency-code="USD">
+                                                                            </lightning-formatted-number>
+                                                                        </div>
+                                                                    </td>-->
+                                                                    <td data-label="STD JUUL Funding">
+                                                                        <div class="slds-truncate"
+                                                                            title="STD JUUL Funding">
+                                                                            <lightning-input type="number"
+                                                                                disabled={product.STDFundingDisabledNew}
+                                                                                key={product.Id} id={item.Id}
+                                                                                class="commercialActivityItems"
+                                                                                data-id={product.Id} name="STDFunding"
+                                                                                label="STDFunding"
+                                                                                value={product.STDFunding}
+                                                                                variant="label-hidden"
+                                                                                onchange={handleInputChange}
+                                                                                step="0.01">
+                                                                            </lightning-input>
+                                                                        </div>
+                                                                    </td>
+                                                                    <td data-label="PTC Modifier">
+                                                                        <div class="slds-truncate" title="PTC Modifier">
+                                                                            <lightning-input type="number"
+                                                                                disabled={product.PTCModifierDisabledNew}
+                                                                                key={product.Id} id={item.Id}
+                                                                                data-id={product.Id} name="TaxFunding"
+                                                                                label="TaxFunding"
+                                                                                value={product.TaxFunding}
+                                                                                variant="label-hidden"
+                                                                                class="commercialActivityItems"
+                                                                                onchange={handleInputChange}
+                                                                                step="0.01">
+                                                                            </lightning-input>
+                                                                        </div>
+                                                                    </td>
+                                                                    <td data-label="Retailer Funding">
+                                                                        <div class="slds-truncate"
+                                                                            title="Retailer Funding">
+                                                                            <lightning-input type="number"
+                                                                                disabled={product.STDFundingDisabledNew}
+                                                                                key={product.Id} id={item.Id}
+                                                                                data-id={product.Id}
+                                                                                name="RetailerFunding"
+                                                                                label="RetailerFunding"
+                                                                                value={product.RetailerFunding}
+                                                                                variant="label-hidden"
+                                                                                class="commercialActivityItems"
+                                                                                onchange={handleInputChange}
+                                                                                step="0.01">
+                                                                            </lightning-input>
+                                                                        </div>
+                                                                    </td>
+                                                                    <td data-label="State Based Price">
+                                                                        <div class="slds-truncate"
+                                                                            title="State Based Price">
+                                                                            <template
+                                                                                lwc:if={product.STDFundingDisabledNew}>
+                                                                                <lightning-input type="number"
+                                                                                    formatter="currency" disabled
+                                                                                    key={product.Id} id={item.Id}
+                                                                                    data-id={product.Id}
+                                                                                    name="StateBasedPrice"
+                                                                                    label="StateBasedPrice"
+                                                                                    value={product.listPrice}
+                                                                                    variant="label-hidden"
+                                                                                    class="commercialActivityItems"
+                                                                                    step="0.01">
+                                                                                </lightning-input>
+                                                                            </template>
+                                                                            <template lwc:else>
+                                                                                <lightning-formatted-number
+                                                                                    disabled={product.STDFundingDisabledNew}
+                                                                                    value={product.listPrice}
+                                                                                    format-style="currency"
+                                                                                    currency-code="USD">
+                                                                                </lightning-formatted-number>
+                                                                            </template>
+
+                                                                        </div>
+                                                                    </td>
+                                                                    <!--<td data-label="List Price/Cost">
+                                                                        <div class="slds-truncate"
+                                                                            title="List Price/Cost">
+                                                                            <lightning-formatted-number
+                                                                                value={product.listPrice}
+                                                                                format-style="currency"
+                                                                                currency-code="USD">
+                                                                            </lightning-formatted-number>
+
+                                                                        </div>
+                                                                    </td>-->
+                                                                    <!--<td data-label="Planned Price/Cost">
+                                                                        <div class="slds-truncate"
+                                                                            title="Planned Price/Cost">
+                                                                            <lightning-formatted-number
+                                                                                value={product.plannedPrice}
+                                                                                format-style="currency"
+                                                                                currency-code="USD">
+                                                                            </lightning-formatted-number>
+                                                                        </div>
+                                                                    </td>-->
+                                                                    <td data-label="FinalPTC">
+                                                                        <div class="slds-truncate" title="FinalPTC">
+                                                                            <template
+                                                                                lwc:if={product.STDFundingDisabled}>
+                                                                                <lightning-input type="number"
+                                                                                    formatter="currency" disabled
+                                                                                    key={product.Id} id={item.Id}
+                                                                                    data-id={product.Id} name="FinalPTC"
+                                                                                    label="FinalPTC"
+                                                                                    value={product.FinalPTC}
+                                                                                    variant="label-hidden"
+                                                                                    class="commercialActivityItems"
+                                                                                    step="0.01">
+                                                                                </lightning-input>
+                                                                            </template>
+                                                                            <template lwc:else>
+                                                                                <lightning-formatted-number
+                                                                                    disabled={product.STDFundingDisabled}
+                                                                                    value={product.FinalPTC}
+                                                                                    format-style="currency"
+                                                                                    currency-code="USD">
+                                                                                </lightning-formatted-number>
+                                                                            </template>
+                                                                        </div>
+                                                                    </td>
+
+                                                                </tr>
+                                                            </template>
+                                                        </tbody>
+                                                    </table>
+                                                </div>
+                                            </div>
+                                        </template>
+                                    </lightning-accordion-section>
+
+                                    <!-- Section For Mission Tasks -->
+                                    <!-- <lightning-accordion-section name="selectMissionTasks" label="Select Mission Tasks">
+                                        <template if:true={item.items}>
+                                            <div class="slds-table--header-fixed_container">
+                                                <div class="slds-scrollable_x">
+                                                    <table
+                                                        class="slds-table slds-table_cell-buffer slds-table_bordered slds-table_col-bordered">
+                                                        <thead>
+                                                            <tr class="slds-text-title_caps">
+                                                                <th style="width:3.25rem;"
+                                                                    class="slds-text-align_right">
+                                                                    <lightning-input type="checkbox" class="items-"
+                                                                        onchange={handleSelectDeselectAll} id={item.Id}
+                                                                        disabled={item.readOnly} >
+                                                                    </lightning-input>
+                                                                </th>
+                                                                <template for:each={columns} for:item="column">
+                                                                    <th scope="col" key={column.fieldName}>
+                                                                        <div class="slds-truncate" title={column.label}>
+                                                                            {column.label}</div>
+                                                                        <div class="slds-resizable">
+                                                                        </div>
+                                                                    </th>
+                                                                </template>
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody>
+                                                            <template for:each={item.items} for:item="product">
+                                                                <tr key={product.Id}>
+                                                                    <th scope="row" data-label="Name">
+                                                                        <lightning-input type="checkbox"
+                                                                            checked={product.selected}
+                                                                            value={product.Id} id={item.Id}
+                                                                            class="items-" onchange={handleValuesSelect}
+                                                                            disabled={item.readOnly}>
+                                                                        </lightning-input>
+                                                                    </th>
+                                                                    <td data-label="Name">
+                                                                        <div class="slds-truncate" title="Name">
+                                                                            {product.name}
+                                                                        </div>
+                                                                    </td>
+                                                                    <td data-label="Subject">
+                                                                        <div class="slds-truncate" title="Subject">
+                                                                            {product.subject}
+                                                                        </div>
+                                                                    </td>
+                                                                    <td data-label="Priority">
+                                                                        <div class="slds-truncate" title="Priority">
+                                                                            {product.priority}
+                                                                        </div>
+                                                                    </td>
+                                                                </tr>
+                                                            </template>
+                                                        </tbody>
+                                                    </table>
+                                                </div>
+                                            </div>
+                                        </template>
+                                    </lightning-accordion-section> -->
+                                </lightning-accordion>
+                            </template>
+                            <template if:true={planogramProductsLoading}>
+                                <div class="planogramLoader">
+                                    <lightning-spinner alternative-text="Loading"></lightning-spinner>
+                                </div>
+                            </template>
+                        </div>
+                        <div key={item.Id} class="border_bottom">
+                        </div>
+                    </template>
+                </template>
+                <template if:true={blankRsGroups}>
+                    <div class="planTemplate">
+                        <p> No Associative States Found</p>
+                    </div>
+                </template>
+            </template>
+        </div>
+        <!-- <div style="text-align:center; padding-top: 16px">
+            <c-kam-pagination-navigator onprevious={onPrev} onnext={onNext} loading={loading}
+                disable-next-button={disableNextButton} disable-previous-button={disablePreviousButton}>
+            </c-kam-pagination-navigator>
+        </div> -->
+    </div>
+
+    <footer class="slds-modal__footer slds-size_1-of-1 manage_footer">
+        <div class="slds-grid slds-gutters">
+            <template if:true={saveInProgress}>
+                <div class="loader">
+                    <lightning-spinner alternative-text="Loading"></lightning-spinner>
+                </div>
+            </template>
+
+            <div class="slds-col">
+                <template if:false={cascadeToDoorDisable}>
+                    <template if:false={saveInProgress}>
+                        <lightning-button variant="Brand" class="slds-button" label="Cascade Mission to Doors"
+                            disabled={cascadeFlag} onclick={cascadeToDoor}>
+                        </lightning-button>
+                    </template>
+                </template>
+            </div>
+            <!--Added by Shreya for ticket SFDC - 0000004197 -->
+            <div class="slds-col">
+                <template if:true={PlanButton}>
+                    <template if:false={saveInProgress}>
+                        <lightning-button variant="Brand" class="slds-button" label="Committed to Forecast"
+                            disabled={ISLFlag} onclick={handleCascadeToDoorClick}>
+                        </lightning-button>
+                    </template>
+                </template>
+            </div>
+            <div class="slds-col">
+                <template if:true={OverrideField}>
+                    <template if:false={PlanButton}>
+                        <lightning-button variant="Brand" class="slds-button" label="Override Products"
+                            onclick={handleOverrideProduct}>
+                        </lightning-button>
+                    </template>
+                </template>
+            </div>
+            <!--end for ticket SFDC - 0000004197-->
+            <!--Added by Shreya for ticket SFDC - 0000004466 -->
+            <div class="slds-col">
+                <template if:false={OverrideField}>
+
+                    <template if:true={Executionstatus}>
+                        <template if:false={saveInProgress}>
+                            <template if:true={CascadeChanges}>
+                                <template if:false={APTChanges}>
+                                    <lightning-button variant="Brand" class="slds-align_absolute-center"
+                                        label="Cascade Changes" onclick={handleCascadeChangesClick}>
+                                    </lightning-button>
+                                </template>
+                            </template>
+                        </template>
+                    </template>
+                </template>
+            </div>
+            <!--end for ticket SFDC - 0000004466 -->
+            <div class="slds-col">
+                <template if:false={saveInProgress}>
+                    <lightning-button variant="Neutral" class="slds-button" label="Cancel" onclick={closeModal}>
+                    </lightning-button>
+
+                    <lightning-button variant="Brand" class="slds-button" label="Save" onclick={handleSave}
+                        disabled={disableSave}>
+                    </lightning-button>
+                </template>
+            </div>
+        </div>
+    </footer>
+
+    <template if:true={showPopup}>
+        <c-kam-common-alert message={message} onyes={CascadeProductsToDoor}
+            oncancel={handlePopupCancel}></c-kam-common-alert>
+        <div class="slds-backdrop slds-backdrop_open backdrop_container"></div>
+    </template>
+
+    <template if:true={CascadeChangesWarning}>
+        <c-kam-common-alert message={CascadeChangesWarningMsg} onyes={CascadeISLandMissionChanges}
+            oncancel={handlePopupCancel}></c-kam-common-alert>
+        <div class="slds-backdrop slds-backdrop_open backdrop_container"></div>
+    </template>
+
+    <template if:true={showSelectRsgPopup}>
+        <!-- <c-kam-select-retail-groups groups={RSGroups} selected-group-id={selectedButtonRSGId}
+            apply-in-progress={applyInProgress} onapplyrsgitems={applyItems} oncancel={handlePopupCancel}>
+        </c-kam-select-retail-groups> -->
+
+        <c-kam-select-state-groups groups={RSGroups} selected-group-id={selectedButtonRSGId}
+            apply-in-progress={applyInProgress} onapplyrsgitems={applyItems} oncancel={handlePopupCancel}>
+        </c-kam-select-state-groups>
+
+        <!-- <c-k-a-m-associate-states recordid={recordId}  onapplyrsgitems={applyItems} oncancel={handlePopupCancel}>
+            </c-k-a-m-associate-states> -->
+
+
+        <div class="slds-backdrop slds-backdrop_open backdrop_container"></div>
+    </template>
+</template>

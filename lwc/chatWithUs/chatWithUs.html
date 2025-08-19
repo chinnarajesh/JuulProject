@@ -1,0 +1,126 @@
+<template>
+    <div class="slds-grid slds-grid_vertical slds-grid_vertical-align-center">
+        <div class="slds-col">
+                <span>
+                     <lightning-button
+                             variant="brand" class="slds-m-around_medium"
+                             onclick={handleClick} disabled={chatDisabled} label={label.chatWithUs}></lightning-button>
+                </span>
+        </div>
+
+        <template if:true={ireland}>
+            <div class="slds-col slds-m-around_small">
+                <span>{label.MF9to5}</span>
+            </div>
+        </template>
+
+        <template if:true={indonesia}>
+            <div class="slds-col slds-m-around_small">
+                <span>{label.MF8to5}</span>
+            </div>
+        </template>
+
+        <template if:true={spain}>
+            <div class="slds-col slds-m-around_small">
+                <span>{label.MF9to5}</span>
+            </div>
+        </template>
+
+        <template if:true={canada}>
+            <div class="slds-col slds-m-around_small">
+                <span>{label.MonSat6to6}</span>
+            </div>
+        </template>
+
+        <template if:true={canadaFr}>
+            <div class="slds-col slds-m-around_small">
+                <span>{label.MonFri9to6}</span>
+            </div>
+        </template>
+
+        <template if:true={philippines}>
+            <div class="slds-col slds-m-around_small">
+                <span>{label.MF8to5}</span>
+            </div>
+        </template>
+
+        <template if:true={skorea}>
+            <div class="slds-col slds-m-around_small">
+                <span>{label.MF8to5}</span>
+            </div>
+        </template>
+
+        <template if:true={usa}>
+            <div class="slds-col slds-m-around_small">
+                <span>{label.MonSat6to6}</span>
+            </div>
+        </template>
+
+        <template if:true={uk}>
+            <div class="slds-col slds-m-around_small">
+                <span>{label.MF9to5}</span>
+            </div>
+        </template>
+
+        <template if:true={switzerland}>
+            <div class="slds-col slds-m-around_small">
+                <span>{label.MF9to5}</span>
+            </div>
+        </template>
+
+        <template if:true={ukraine}>
+            <div class="slds-col slds-m-around_small">
+                <span>{label.MF9to5}</span>
+            </div>
+        </template>
+
+        <template if:true={germany}>
+            <div class="slds-col slds-m-around_small">
+                <span>{label.MF9to5}</span>
+            </div>
+        </template>
+
+        <template if:true={poland}>
+            <div class="slds-col slds-m-around_small">
+                <span>{label.MF9to5}</span>
+            </div>
+        </template>
+
+        <template if:true={austria}>
+            <div class="slds-col slds-m-around_small">
+                <span>{label.MF9to5}</span>
+            </div>
+        </template>
+
+        <template if:true={belgium}>
+            <div class="slds-col slds-m-around_small">
+                <span>{label.MF9to5}</span>
+            </div>
+        </template>
+
+        <template if:true={france}>
+            <div class="slds-col slds-m-around_small">
+                <span>{label.MF9to5}</span>
+            </div>
+        </template>
+
+        <template if:true={china}>
+            <div class="slds-col slds-m-around_small">
+                <span>{label.MF8to5}</span>
+            </div>
+        </template>
+
+        <template if:true={czech}>
+            <div class="slds-col slds-m-around_small">
+                <span>{label.MF9to5}</span>
+            </div>
+        </template>
+
+        <template if:true={portugal}>
+            <div class="slds-col slds-m-around_small">
+                <span>{label.MF9to5}</span>
+            </div>
+        </template>
+
+    </div>
+</template>

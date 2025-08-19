@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<LightningComponentBundle xmlns="http://soap.sforce.com/2006/04/metadata">
+    <apiVersion>47.0</apiVersion>
+    <description>Contact Us</description>
+    <isExposed>true</isExposed>
+    <masterLabel>Contact Us</masterLabel>
+    <targets>
+        <target>lightningCommunity__Default</target>
+        <target>lightningCommunity__Page</target>
+        <target>lightning__FlowScreen</target>
+    </targets>
+    <targetConfigs>
+        <targetConfig targets="lightning__FlowScreen">
+            <property name="actionSelection" type="String" role="outputOnly"/>
+            <property name="callCenterOnline" type="Boolean" role="inputOnly"/>
+            <property name="emailVisible" type="Boolean" role="inputOnly"/>
+            <property name="phoneVisible" type="Boolean" role="inputOnly"/>
+            <property name="chatVisible" type="Boolean" role="inputOnly"/>
+            <property name="country" type="String" role="inputOnly"/>
+            <property name="language" type="String" role="inputOnly"/>
+            <property name="timestamp" type="DateTime" role="inputOnly"/>
+            <property name="issueType" type="String" role="inputOnly"/>
+        </targetConfig>
+    </targetConfigs>
+</LightningComponentBundle>

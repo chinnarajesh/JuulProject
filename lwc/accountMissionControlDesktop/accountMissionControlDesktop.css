@@ -1,0 +1,35 @@
+.Green{
+    background-color:#b6fba7;
+}
+.Yellow{
+    background-color:rgb(255, 255, 143)
+}
+.Red{
+    background-color:#f99b9b;
+}
+.Blue{
+    background-color:rgb(202, 238, 238);  
+}
+.content-table{
+    border-collapse: collapse;   
+    margin: 25px 0;
+    font-size: 0.9em;
+    min-width: 400px;
+    background-color: #ffff;
+}
+
+.slds-truncate {
+    padding-right:1px;
+    padding-left: 1px;
+    margin-left: 1px;
+    margin-right: 1px;
+    /*width: 80px; */
+    white-space: -moz-pre-wrap !important;  /* Mozilla, since 1999 */
+    white-space: -pre-wrap;      /* Opera 4-6 */
+    white-space: -o-pre-wrap;    /* Opera 7 */
+    white-space: pre-wrap;       /* css-3 */
+    word-wrap: normal;       /* Internet Explorer 5.5+ */
+    white-space: -webkit-pre-wrap; /* Newer versions of Chrome/Safari*/
+    word-break: normal;
+    
+}

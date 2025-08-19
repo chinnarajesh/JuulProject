@@ -1,0 +1,23 @@
+<template>
+    <div class="slds-grid slds-grid_vertical slds-grid_vertical-align-center">
+        <div class="slds-col slds-m-around_large">
+            <span>
+                <c-email-us if:true={emailVisible} onemailselect={handleEmailSelect}></c-email-us>
+            </span>
+        </div>
+
+        <div class="slds-col slds-m-around_small">
+            <span>
+                <c-call-us if:true={phoneVisible} oncallselect={handleCallSelect}
+                           country={country} language={language} issue-type={issueType}></c-call-us>
+            </span>
+        </div>
+
+        <div class="slds-col slds-m-around_small">
+            <span>
+                <c-chat-with-us if:true={chatVisible} onchatselect={handleChatSelect}
+                                country={country} language={language} issue-type={issueType}></c-chat-with-us>
+            </span>
+        </div>
+    </div>
+</template>

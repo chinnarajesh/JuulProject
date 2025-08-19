@@ -1,0 +1,153 @@
+<template>
+
+  <!--Mobile-->
+  <template if:true={isMobile}>  
+    <div class="slds-form-element">  
+       <article class="slds-card">
+          <div class="slds-card__header slds-grid">
+            <header class="slds-media slds-media_center slds-has-flexi-truncate">
+              <div class="slds-media__body">
+                <h2 class="slds-card__header-title">
+                  <lightning-icon icon-name="standard:account" size= "small" alternative-text="Account Summary" title="product"></lightning-icon>
+                  <a href="#" class="slds-card__header-link slds-truncate" title="Accounts">&nbsp; &nbsp;<span><b>Account Summary</b></span></a>
+                </h2>  
+             <lightning-record-view-form
+                 record-id={recordId}
+                 object-api-name="Account">
+            
+                     <p class="slds-list_horizontal"><label for="Name"><b>Primary Distributer :</b></label>&nbsp;<lightning-output-field field-name="JUUL_Serviced_By__c" id="Namemobile" variant="Label-Hidden"></lightning-output-field></p>
+                     <p class="slds-list_horizontal"><label for="EQVolumeLast13week"><b>EQ Volume Last 13:</b> </label>&nbsp;<lightning-output-field field-name="Total_Quantity_Recent_13_Weeks__c" id="Last13weekmobile" variant="Label-Hidden" ></lightning-output-field></p>
+                     <p class="slds-list_horizontal"><label for="EQVolumePrev13week"><b>EQ Volume Previous 13:</b> </label>&nbsp;<lightning-output-field field-name="Total_Quantity_Prior_13_Weeks__c" id="Last13weekmobile1" variant="Label-Hidden" ></lightning-output-field></p>
+                     <p class="slds-list_horizontal"><label for="LastAuditDate"><b>Last Audit Date:</b></label>&nbsp;<lightning-output-field field-name="Date_of_Last_Audit__c" id="Last13weekmobile2" variant="Label-Hidden" ></lightning-output-field></p>
+                     <p class="slds-list_horizontal"><label for="FsacingLastAudit"><b>Facings last audit:</b></label>&nbsp;<lightning-output-field field-name="Facings_Last_Audit__c" id="Last13weekmobile3" variant="Label-Hidden" ></lightning-output-field></p>
+                     <p class="slds-list_horizontal"><label for="2pkprice"><b>2pk Price:</b></label>&nbsp;<lightning-output-field field-name="X2pk_Price_Last_Audit__c" id="Last13weekmobile4" variant="Label-Hidden" ></lightning-output-field></p>           
+                     <p class="slds-list_horizontal"><label for="4pkprice"><b>4pK Price:</b></label>&nbsp;<lightning-output-field field-name="X4pk_Price_Last_Audit__c" id="Last13weekmobile5" variant="Label-Hidden" ></lightning-output-field></p>
+                     <p class="slds-list_horizontal"><label for="Dkprice"><b>DK Price:</b></label>&nbsp;<lightning-output-field field-name="DK_Price_Last_Audit__c" id="Last13weekmobile6" variant="Label-Hidden" ></lightning-output-field></p>
+                     <p class="slds-list_horizontal"><label for="HeaderPresent"><b>Header present?:</b></label> &nbsp;<lightning-output-field field-name="Header_Present_Last_Audit__c" id="Last13weekmobile7" variant="Label-Hidden" ></lightning-output-field></p>
+                     <p class="slds-list_horizontal"><label for="ShelfPosition"><b>Shelf Position:</b></label> &nbsp;<lightning-output-field field-name="Shelf_Position_Last_Audit__c" id="Last13weekmobile8" variant="Label-Hidden" ></lightning-output-field></p>
+                    </lightning-record-view-form>
+     
+              </div>
+            </header>
+          </div>
+        </article>
+      </div>
+  </template>
+
+<!--Mobile End -->
+
+
+
+
+
+
+
+<template if:false={isMobile}>  
+    <div class="slds-form-element">
+      <div class="slds-card">    
+         <lightning-accordion class="Account Demo" allow-multiple-sections-open	onsectiontoggle={handleToggleSection}>         
+            <lightning-accordion-section name="Account Demo" label="Account Summary">           
+            <!--Lightning record edit form-->
+              <lightning-record-view-form
+               record-id={recordId}
+               object-api-name="Account">
+               <!--Primary Distributer section-->
+               <h2 style="font-size: large;background-color:rgb(243,242,242);border-radius: 5px; margin-left:5px">  Primary Distributer:</h2> 
+           <!--<h2 style="font-size:large;background-color:rgb(188, 196, 195)" >Primary Distributer: </h2>-->
+           <lightning-layout multiple-rows>
+            <lightning-layout-item size="12" 
+                 small-device-size="6"
+                 padding="around-small">
+                  <label for="Name">Primary Distributer :</label> &nbsp;&nbsp;
+                  <lightning-output-field field-name="JUUL_Serviced_By__c" id="Name" variant="Label-Hidden"></lightning-output-field>                
+               
+              </lightning-layout-item>
+              </lightning-layout>
+              <!--Volume  section-->
+              <h2 style="font-size: medium;background-color:rgb(243,242,242);border-radius: 5px;" >Volume: </h2>         
+              <div> 
+  
+                <lightning-layout multiple-rows>
+                  <lightning-layout-item size="12" 
+                       small-device-size="6"
+                       padding="around-small">
+                      <label for="Last13week">EQ Volume Last 13: </label> &nbsp;&nbsp;
+                         <lightning-output-field field-name="Total_Quantity_Recent_13_Weeks__c" id="Last13week" variant="Label-Hidden" ></lightning-output-field>
+                  </lightning-layout-item>          
+                  <lightning-layout-item size="12" 
+                  small-device-size="6"
+                  padding="around-small">              
+                    <label for="Prev13week">EQ Volume Previous 13: </label> &nbsp;&nbsp;
+                  <lightning-output-field field-name="Total_Quantity_Prior_13_Weeks__c" id="Prev13week" variant="Label-Hidden"  ></lightning-output-field>
+                </lightning-layout-item>          
+              </lightning-layout>
+  
+                </div>
+  
+             
+              <!--Last Audit Details section-->
+              <h2 style="font-size: medium;;background-color:rgb(243,242,242);border-radius: 5px;">Last Audit Details: </h2>
+              <div>
+                <lightning-layout multiple-rows>
+                  <lightning-layout-item size="12" 
+                       small-device-size="6"
+                       padding="around-small">                    
+                       <label for="LAD">Last Audit Date:</label> &nbsp;&nbsp;           
+                      <lightning-output-field field-name="Date_of_Last_Audit__c" id="LAD" variant="Label-Hidden"></lightning-output-field>
+                   </lightning-layout-item>          
+                    <lightning-layout-item size="12" 
+                         small-device-size="6"
+                         padding="around-small"> 
+                       <label for="FLA">Facings last audit : </label> &nbsp;&nbsp;
+                      <lightning-output-field field-name="Facings_Last_Audit__c" id="FLA" variant="Label-Hidden"></lightning-output-field>
+                     </lightning-layout-item>      
+              </lightning-layout>
+  
+                   
+                   
+              <lightning-layout multiple-rows>
+                    <lightning-layout-item size="12" 
+                         small-device-size="6"
+                         padding="around-small"> 
+                        <label for="2pk"> 2pk Price : </label> &nbsp;&nbsp;
+                        <lightning-output-field field-name="X2pk_Price_Last_Audit__c" id="2pk" variant="Label-Hidden"></lightning-output-field>
+                     </lightning-layout-item>      
+                     <lightning-layout-item size="12" 
+                         small-device-size="6"
+                         padding="around-small">
+                       <label for="4pk"> 4pK Price : </label> &nbsp;&nbsp;
+                        <lightning-output-field field-name="X4pk_Price_Last_Audit__c" id="4pk" variant="Label-Hidden"></lightning-output-field>
+                    </lightning-layout-item>
+              </lightning-layout>
+              
+              <lightning-layout multiple-rows>
+                <lightning-layout-item size="12" 
+                    small-device-size="6"
+                     padding="around-small">
+                  <label for="Dk"> DK Price : </label> &nbsp;&nbsp;
+                  <lightning-output-field field-name="DK_Price_Last_Audit__c" id="Dk" variant="Label-Hidden"></lightning-output-field>
+                </lightning-layout-item>
+              <lightning-layout-item size="12" 
+              small-device-size="6"
+              padding="around-small">
+                  <label for="HP"> Header present? : </label> &nbsp;&nbsp;
+                  <lightning-output-field field-name="Header_Present_Last_Audit__c" id="HP" variant="Label-Hidden"></lightning-output-field>
+                </lightning-layout-item>
+              </lightning-layout>
+  
+              <lightning-layout multiple-rows>
+              <lightning-layout-item size="12" 
+              small-device-size="6"
+              padding="around-small">
+                  <label for="SP"> Shelf Position: </label> &nbsp;&nbsp;
+                  <lightning-output-field field-name="Shelf_Position_Last_Audit__c" id="SP" variant="Label-Hidden"></lightning-output-field>
+                </lightning-layout-item>
+                </lightning-layout>
+              </div>
+           </lightning-record-view-form>
+           </lightning-accordion-section>
+         </lightning-accordion>
+      </div>
+    </div> 
+   </template> 
+  </template>

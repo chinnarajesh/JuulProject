@@ -1,0 +1,81 @@
+<template>
+            <div class="nds-grid nds-wrap nds-is-relative ">
+            <div style="position: fixed;z-index: 999999;top: 0;right: 0;">
+  <vlocity_ins-toast class="flexcard-toast-element" theme="nds" title="" message="" styletype=""> </vlocity_ins-toast>
+</div>
+            <div if:true={showLoader} class="nds-is-absolute vloc-loader_override" style="height: 100%; width: 100%; min-height:50px; background: transparent; z-index: 99;">
+  <div>
+   <vlocity_ins-spinner
+      variant="brand"
+      alternative-text="Loading content..."
+      size="small"
+      theme="nds"
+      ></vlocity_ins-spinner>
+  </div>
+</div>
+            <template if:false={hasPermission}>
+              You don't have required permissions to view this card.
+            </template>
+            <template if:true={hasPermission}>
+              <template if:true={hasRecords}>
+                        <template for:each={_records} for:item="record" for:index="rindex">
+                            <vlocity_ins-flex-card-state if:true={record}  key={record._flex.uniqueKey} data-recordid={record.Id} record={record} data-statue="true"  data-index="0" data-rindex={rindex} class="cf-vlocity-state-0 cf-vlocity-state nds-size_12-of-12 "  tracking-obj={_childCardTrackingObj} >
+      <div if:true={cardLoaded} class="nds-grid nds-wrap nds-card nds-m-around_none " style="      
+         ">
+          <div data-style-id="state0element0" class="nds-col    nds-size_12-of-12  " data-rindex={rindex} style="      
+         " >
+    <vlocity_ins-block data-style-id="state0element0_child"  record={record}  card={card}  collapsed-by-default="false"  collapsible="false"  label="Block"  theme="nds"  ><div class="nds-grid nds-wrap">
+          <div data-style-id="state0element0block_element0" class="nds-col  nds-p-vertical_large  nds-size_6-of-12  " data-rindex={rindex} style="      
+     height:65px;    " ><vlocity_ins-output-field data-style-id="state0element0block_element0_child"   record={record}  card={card}  field-name="Asset__c_Asset_Name"  placeholder="output"  type="text"  theme="nds"  ></vlocity_ins-output-field>
+      </div><div data-style-id="state0element0block_element1" class="nds-col   nds-size_5-of-12  " data-rindex={rindex} style="      
+         " ><vlocity_ins-base-input-element data-style-id="state0element0block_element1_child"   record={record}  card={card}  property-obj='\{"fieldBinding":"{Asset__c_Status}","label":" ","options":[{"group":"","id":0,"label":"Incorrect Size","value":"Incorrect Size"},{"group":"","id":1,"label":"Regulatory Restriction","value":"Regulatory Restriction"},{"group":"","id":2,"label":"Installed today","value":"Installed today"},{"group":"","id":3,"label":"Up on arrival","value":"Up on arrival"},{"group":"","id":4,"label":"Unable to install","value":"Unable to install"},{"group":"","id":5,"label":"Planned","value":"Planned"}],"type":"combobox","value":""}'  type="combobox"  theme="nds"  ></vlocity_ins-base-input-element>
+      </div><div data-style-id="state0element0block_element2" class="nds-col  nds-p-vertical_small  nds-size_1-of-12  " data-rindex={rindex} style="      
+         " ><vlocity_ins-flex-action data-style-id="state0element0block_element2_child"  tracking-obj={_childCardTrackingObj}  class= "state0element0block_element2_child flexActionElement" 
+        data-action-element-class="state0element0block_element2_child" onexecuteaction={performAction} data-show-spinner="false"
+        data-element-label="block2action4"   state-obj={record}  record={record}  card={card}  action-list='\[{"actionIndex":0,"draggable":true,"isOpen":true,"key":"1683256683399-hkwjey7dt","label":"Action","reRenderFlyout":true,"stateAction":{"channelName":"reloadcard","flyoutLwc":"update-store_-assets-english","flyoutParams":{"Ass_Id":"{Asset__c_Id}","Ass_Status":"{Asset__c_Status}","vlocEvents":"AGS_Store_Assets"},"flyoutType":"OmniScripts","hasExtraParams":true,"id":"flex-action-1684431871944","layoutType":"newport","openFlyoutIn":"Modal","openUrlIn":"Current Window","osName":"Update/Store_Assets/English","type":"Flyout"}}]'  button-variant="neutral"  display-as-button="true"  flyout-channel="reloadcard"  flyout-details='\{"openFlyoutIn":"Modal"}'  hide-action-icon="true"  icon-name="utility:multi_select_checkbox"  icon-only="false"  icon-size="x-small"  label="Save"  re-render-flyout="true"  theme="nds"  ><div slot="modalflyout" class="block2action4action0" ><vlocity_ins-custom-lwc-wrapper element-name="c-update-store_-assets-english" property='\{"prefill":"{\"omniscriptEmbeddedSource\":\"flyout\",\"Ass_Id\":\"{Asset__c_Id}\",\"Ass_Status\":\"{Asset__c_Status}\",\"vlocEvents\":\"AGS_Store_Assets\"}"}' records={records} record-id={recordId} record={record}  card={card}  action={modalAction.block2action4action0} >
+     <c-update-store_-assets-english   layout='newport'    ></c-update-store_-assets-english>
+    </vlocity_ins-custom-lwc-wrapper></div></vlocity_ins-flex-action>
+      </div>
+        </div></vlocity_ins-block>
+    </div>
+        </div>
+      </vlocity_ins-flex-card-state>
+                        </template>
+                      </template>
+                      <template if:false={hasRecords}>
+                            <vlocity_ins-flex-card-state  record={record} data-statue="false"  data-index="0" data-rindex={rindex} class="cf-vlocity-state-0 cf-vlocity-state nds-size_12-of-12 "  tracking-obj={_childCardTrackingObj} >
+      <div if:true={cardLoaded} class="nds-grid nds-wrap nds-card nds-m-around_none " style="      
+         ">
+          <div data-style-id="state0element0" class="nds-col    nds-size_12-of-12  " data-rindex={rindex} style="      
+         " >
+    <vlocity_ins-block data-style-id="state0element0_child"  record={record}  card={card}  collapsed-by-default="false"  collapsible="false"  label="Block"  theme="nds"  ><div class="nds-grid nds-wrap">
+          <div data-style-id="state0element0block_element0" class="nds-col  nds-p-vertical_large  nds-size_6-of-12  " data-rindex={rindex} style="      
+     height:65px;    " ><vlocity_ins-output-field data-style-id="state0element0block_element0_child"   record={record}  card={card}  field-name="Asset__c_Asset_Name"  placeholder="output"  type="text"  theme="nds"  ></vlocity_ins-output-field>
+      </div><div data-style-id="state0element0block_element1" class="nds-col   nds-size_5-of-12  " data-rindex={rindex} style="      
+         " ><vlocity_ins-base-input-element data-style-id="state0element0block_element1_child"   record={record}  card={card}  property-obj='\{"fieldBinding":"{Asset__c_Status}","label":" ","options":[{"group":"","id":0,"label":"Incorrect Size","value":"Incorrect Size"},{"group":"","id":1,"label":"Regulatory Restriction","value":"Regulatory Restriction"},{"group":"","id":2,"label":"Installed today","value":"Installed today"},{"group":"","id":3,"label":"Up on arrival","value":"Up on arrival"},{"group":"","id":4,"label":"Unable to install","value":"Unable to install"},{"group":"","id":5,"label":"Planned","value":"Planned"}],"type":"combobox","value":""}'  type="combobox"  theme="nds"  ></vlocity_ins-base-input-element>
+      </div><div data-style-id="state0element0block_element2" class="nds-col  nds-p-vertical_small  nds-size_1-of-12  " data-rindex={rindex} style="      
+         " ><vlocity_ins-flex-action data-style-id="state0element0block_element2_child"  tracking-obj={_childCardTrackingObj}  class= "state0element0block_element2_child flexActionElement" 
+        data-action-element-class="state0element0block_element2_child" onexecuteaction={performAction} data-show-spinner="false"
+        data-element-label="block2action4"   state-obj={record}  record={record}  card={card}  action-list='\[{"actionIndex":0,"draggable":true,"isOpen":true,"key":"1683256683399-hkwjey7dt","label":"Action","reRenderFlyout":true,"stateAction":{"channelName":"reloadcard","flyoutLwc":"update-store_-assets-english","flyoutParams":{"Ass_Id":"{Asset__c_Id}","Ass_Status":"{Asset__c_Status}","vlocEvents":"AGS_Store_Assets"},"flyoutType":"OmniScripts","hasExtraParams":true,"id":"flex-action-1684431871944","layoutType":"newport","openFlyoutIn":"Modal","openUrlIn":"Current Window","osName":"Update/Store_Assets/English","type":"Flyout"}}]'  button-variant="neutral"  display-as-button="true"  flyout-channel="reloadcard"  flyout-details='\{"openFlyoutIn":"Modal"}'  hide-action-icon="true"  icon-name="utility:multi_select_checkbox"  icon-only="false"  icon-size="x-small"  label="Save"  re-render-flyout="true"  theme="nds"  ><div slot="modalflyout" class="block2action4action0" ><vlocity_ins-custom-lwc-wrapper element-name="c-update-store_-assets-english" property='\{"prefill":"{\"omniscriptEmbeddedSource\":\"flyout\",\"Ass_Id\":\"{Asset__c_Id}\",\"Ass_Status\":\"{Asset__c_Status}\",\"vlocEvents\":\"AGS_Store_Assets\"}"}' records={records} record-id={recordId} record={record}  card={card}  action={modalAction.block2action4action0} >
+     <c-update-store_-assets-english   layout='newport'    ></c-update-store_-assets-english>
+    </vlocity_ins-custom-lwc-wrapper></div></vlocity_ins-flex-action>
+      </div>
+        </div></vlocity_ins-block>
+    </div>
+        </div>
+      </vlocity_ins-flex-card-state>
+                      </template>
+            </template>
+            <template if:true={hasError}>
+            {error}
+            </template>
+            
+      <vlocity_ins-action action-wrapperclass="slds-hide" re-render-flyout class="action-trigger slds-col" onupdateos={updateOmniscript} onselectcards={updateSelectedCards} onsetvalue={updateAction} onfireactionevent={actionEvtHandler}>
+      
+      </vlocity_ins-action>
+  
+            <vlocity_ins-action class="execute-action" re-render-flyout action-wrapperclass="slds-hide" onupdateos={updateOmniscript} onselectcards={updateSelectedCards} onsetvalue={updateAction} onfireactionevent={actionEvtHandler}>
+            
+            </vlocity_ins-action>
+            </div>
+          </template>

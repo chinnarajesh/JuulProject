@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<LightningComponentBundle xmlns="http://soap.sforce.com/2006/04/metadata">
+    <apiVersion>47.0</apiVersion>
+    <isExposed>true</isExposed>
+    <masterLabel>LWC - Screen Flow Navigation Buttons</masterLabel>
+    <description>Navigation Buttons - (Previous, Next, Submit)  to be used in Flows</description>
+    <targets>
+        <target>lightning__FlowScreen</target>
+    </targets>
+    <targetConfigs>
+        <targetConfig targets="lightning__FlowScreen">
+            <property name="nextButtonVisible" description="Set to True to display the Next Button" type="Boolean" role="inputOnly"/>
+            <property name="previousButtonVisible" description="Set to True to display the Previous Button" type="Boolean" role="inputOnly"/>
+            <property name="submitButtonVisible" description="Set to True to display the Submit Button" type="Boolean" role="inputOnly"/>
+        </targetConfig>
+    </targetConfigs>
+</LightningComponentBundle>

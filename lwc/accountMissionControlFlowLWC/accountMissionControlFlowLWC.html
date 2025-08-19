@@ -1,0 +1,947 @@
+<template>
+  <!-- For Mobile -->
+  <template if:true={isMobile}>
+    <!--Start First Page  -->
+    <template if:false={isView}>
+      <template for:each={Missions} for:item="missions">
+        <div key={missions.Id}>
+          <article class="slds-card">
+
+            <div class="slds-card__header slds-grid">
+              <header class="slds-media slds-media_center slds-has-flexi-truncate">
+                <div class="slds-media__body">
+                  <h2 class="slds-card__header-title">
+                    <lightning-icon class={missions.color} icon-name="standard:goals" size="small"
+                      alternative-text="product" title="product"></lightning-icon>
+
+                    <a href="#" class="slds-card__header-link slds-truncate"
+                      title="Accounts">&nbsp;&nbsp;<span><b>Active Missions</b></span></a>
+                  </h2>
+                  <p class="slds-var-m-bottom_xx-small">Status: {missions.status}</p>
+                  <p class="slds-var-m-bottom_xx-small">Start Date: {missions.StartDate}</p>
+                  <p class="slds-var-m-bottom_xx-small">End Date: {missions.EndDate}</p>
+                  <p class="slds-var-m-bottom_xx-small">Commercial Activity: {missions.CommercialActivity}</p>
+                  <p class="slds-var-m-bottom_xx-small">Record Type: {missions.RecordType}</p>
+                </div>
+                <div class="slds-no-flex">
+                  <button class="slds-button slds-button_neutral" name={missions.RecordType} value={missions.Id}
+                    onclick={handleValuesSelectMobile}>View</button>
+                </div>
+              </header>
+            </div>
+
+          </article>
+        </div>
+      </template>
+    </template>
+    <!--End First Page  -->
+
+
+    <!--Start Second Page  -->
+    <template if:true={isView}>
+      <template if:false={isViewMission}>
+        <!---Code Written : Subodh Shukla-->
+        <!---Date : 11/05/2021-->
+        <!---For Mission  data  -->
+        <div>
+          <template for:each={SDMissions1} for:item="missions1">
+            <div key={missions1.Id}>
+              <article class="slds-card">
+                <div class="slds-card__header slds-grid">
+                  <header class="slds-media slds-media_center slds-has-flexi-truncate">
+                    <div class="slds-media__body">
+                      <h2 class="slds-card__header-title">
+                        <lightning-icon icon-name="standard:goals" size="small" alternative-text="product"
+                          title="product"></lightning-icon>
+                        <a href="#" class="slds-card__header-link slds-truncate" title="Mission Task">&nbsp;
+                          &nbsp;<span><b>Selected Mission</b></span></a>
+                      </h2>
+                      <!-- <p class="slds-var-m-bottom_xx-small">Commercial Activity: {missions1.CommercialActivity}</p>
+                    <p class="slds-var-m-bottom_xx-small">Start Date: {missions1.missionStartDate}</p>
+                    <p class="slds-var-m-bottom_xx-small">End Date: {missions1.missionEndDate}</p>
+                    <p class="slds-var-m-bottom_xx-small">Status: {missions1.missionstatus}</p> -->
+                      <table style="width:100% !important;" class="slds-m-top_small">
+                        <tbody>
+                            <tr>
+                              <td style="width: 60%; word-wrap: break-word;"><strong>APT Owner</strong></td>
+                              <td style="word-wrap: break-word; padding-left: 8px;"><strong>Start Date</strong></td>
+                            </tr>
+                            <tr>
+                              <td style="width: 60%; word-wrap: break-word; padding-bottom: 3px;">
+                                <p>{missions1.APTOwner}</p> <!-- Assuming you have APT Owner data -->
+                              </td>
+                              <td style="word-wrap: break-word; padding-left: 8px; padding-bottom: 3px;">
+                                <p>{missions1.missionStartDate}</p>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td style="width: 60%; word-wrap: break-word;"><strong>Commercial Activity</strong></td>
+                              <td style="padding-left: 8px;"><strong>End Date</strong></td>
+                            </tr>
+                            <tr>
+                              <td style="width: 60%; word-wrap: break-word; padding-bottom: 3px;">
+                                <p>{missions1.CommercialActivity}</p>
+                              </td>
+                              <td style="word-wrap: break-word; padding-left: 8px; padding-bottom: 3px;">
+                                <p>{missions1.missionEndDate}</p>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td style="width: 60%;"><strong>Point of Sale Type</strong></td>
+                              <td style="padding-left: 8px;"></td> <!-- Empty cell for alignment -->
+                            </tr>
+                            <tr>
+                              <td style="width: 60%; word-wrap: break-word; padding-bottom: 3px;">
+                                {missions1.POSType}
+                              </td>
+                              <td style="word-wrap: break-word; padding-left: 8px; padding-bottom: 3px;">
+                                <!-- Empty cell for alignment -->
+                              </td>
+                            </tr>
+                        </tbody>
+                      </table>
+                      <!-- StoreProduct Table-->
+                      <table style="width:100% !important;" class="slds-m-top_small">
+                        <thead>
+                          <tr>
+                            <th style="width: 60%;">JUUL Product</th>
+                            <th style="padding-left:8px;display:flex;">
+                              <span>ED Pricing</span>
+                              <lightning-helptext  style="margin-top:-3px;margin-left:0px"
+                                content="Pricing based on offer. Ex. MB2 ED pricing is multiplied by 2"
+                              ></lightning-helptext>
+                            </th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          <template for:each={StoreProducts1} for:item="storePD">
+                            <tr key={storePD.id}>
+                              <td style="width: 60%;word-wrap: break-word;padding-bottom:3px;">
+                                <p>{storePD.ProductName}</p>
+                              </td>
+                              <td style="padding-left:8px;padding-bottom:3px;">
+                                <p>{storePD.FinalPTC}</p>
+                              </td>
+                            </tr>
+                          </template>
+                        </tbody>
+                      </table>
+                      <!-- Asset Table-->
+                      <table style="width:100% !important;" class="slds-m-top_small">
+                        <thead>
+                          <tr>
+                            <th style="width: 60% !important;">Trade Collateral</th>
+                            <th style="padding-left:8px;"> Status</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          <template for:each={Asset1} for:item="asset">
+                            <tr key={asset.id}>
+                              <td style="width: 60% !important;word-wrap: break-word;padding-bottom:3px;">
+                                <p>{asset.Name}</p>
+                              </td>
+                              <td style="word-wrap: break-word;padding-left:8px;padding-bottom:3px;">
+                                <p>{asset.Status}</p>
+                              </td>
+                            </tr>
+                          </template>
+                        </tbody>
+                      </table>
+                      <div>
+                        <template if:false={missions1.MissionCAB}>
+                          <div class="slds-var-m-bottom_x-small slds-p-top_small "><span style="display: flex;font-weight:500;">FET Box Link <lightning-helptext 
+                            style="margin-top:-3px;margin-right:-3px;margin-left:0px;" content="Box links are used for POS executional priorities only at the door"
+                          ></lightning-helptext> : </span>  <a target="_self"
+                              href={missions1.FETBoxLink} style="margin-left:2px;">{missions1.FETBoxLink}</a></div>
+                        </template>
+                        <template if:true={upsellOptions}>
+                          <div style="margin-top:15px;">
+                            <b style="top: -4px;position:relative;font-weight: 600;font-size: 14px;margin-left: 8px;">Can I execute JLI POS</b>
+                            <lightning-combobox name="POS" label="" value={missions1.POSRequirement}
+                            options={posOptions} onchange={handleChange} style="margin-top: -28px;" class="Req-Combo" required>
+                          </lightning-combobox>
+                          </div>
+                          <p style="color:red;font-weight:500px;font-size:13px;" class="slds-p-top_small">*Only mark Mission as "Executed" when both price and all expected POS is executed according to KAM Direction</p>
+                          <div>
+                            <b style="top: 2px;position: relative;font-weight: 600;font-size: 14px;margin-left:8px;">Status</b>
+                          <lightning-combobox name="Status" label="" value={missions1.missionstatus}
+                            options={slaOptions} class="status-combobox Req-Combo" onchange={handleChange} required style="margin-top: -23px;">
+                          </lightning-combobox>
+                          </div>
+                          <template if:true={commentField}>
+                            <div>
+                              <b style="top: 5px;position: relative;font-weight: 600;font-size: 14px;margin-left:8px;">Comments</b>
+                            <lightning-combobox name="Comments" label="" value={missions1.Comments}
+                              options={commentOptions} class="comments-combobox Req-Combo" onchange={handleChange} style="margin-top: -16px;" required>
+                            </lightning-combobox>
+                            </div>
+                          </template>
+                          <template if:true={additionalField}>
+                            <b style="top: 6px;position: relative;font-weight: 600;font-size: 14px;margin-left:8px;">Additional Comments</b>
+                            <lightning-textarea type="text" class="additional-combobox Req-Input" label="" name ="additional comment" value={missions1.additionalComment} onchange={handleChange} required style="margin-top: -15px;">
+                            </lightning-textarea>
+                          </template>
+
+                          <!--</div>
+                    <br>
+                    <lightning-button label={toggleSaveLabelMS} icon-name="utility:save" slot="actions"
+                      onclick={handleMissionSave}>
+                    </lightning-button>--><!--Commented by PG 30/06/2021-->
+                        </template>
+                      </div>
+                      <br>
+                      <template if:true={missions1.MissionCAB}>
+                        <b><strong>Account Manager Instructions</strong></b>
+                      <p>
+                        <lightning-formatted-rich-text
+                          value={missions1.InstructionDescription}></lightning-formatted-rich-text>
+                      </p>
+                      <div class="slds-var-m-bottom_x-small slds-p-top_small "><span style="display: flex;font-weight:500;">FET Box Link <lightning-helptext 
+                        style="margin-top:-3px;margin-right:-3px;margin-left:0px;" content="Box links are used for POS executional priorities only at the door"
+                      ></lightning-helptext> : </span>  <a target="_self"
+                          href={missions1.FETBoxLink} style="margin-left:2px;">{missions1.FETBoxLink}</a></div>
+                      </template>
+                      
+                    </div>
+                  </header>
+                </div>
+              </article>
+            </div>
+          </template>
+        </div>
+        <!---FOR STORE PRODUCT DATA -->
+        <div>
+          <template for:each={StoreProducts1} for:item="StrProduct">
+            <div key={StrProduct.id}>
+              <article class="slds-card">
+                <div class="slds-card__header slds-grid">
+                  <header class="slds-media slds-media_center slds-has-flexi-truncate">
+                    <div class="slds-media__body">
+                      <h2 class="slds-card__header-title">
+                        <span>
+                          <lightning-icon icon-name="standard:product" size="small" alternative-text="product"
+                            title="product"></lightning-icon>
+                        </span>&nbsp; &nbsp;
+                        <a href="#" class="slds-card__header-link slds-truncate" title="Store Product"></a>
+                        <span><b>Store Product</b></span>&nbsp; &nbsp;
+                        <!-- <span><lightning-button variant="Brand" class="slds-button" label="Save" onclick={handleSPSave}></lightning-button></span> -->
+                      </h2>
+                      <p class="slds-var-m-bottom_xx-small slds-m-top_small">Product Name:{StrProduct.ProductName} </p>
+                      <!-- <p class="slds-var-m-bottom_xx-small">Final PTC: {StrProduct.FinalPTC} </p> -->
+                      <p class="slds-var-m-bottom_xx-small">Planned PTC: {StrProduct.FinalPTC} </p>
+                      <lightning-input data-id={StrProduct.Id} label="Actual PTC (Pre Tax)" onchange={handlSPChange}
+                        value={StrProduct.ActualMSRP} class="slds-m-bottom_x-small Final-PTCIP">
+                      </lightning-input>
+                    </div>
+                  </header>
+                </div>
+              </article>
+            </div>
+          </template>
+          <!-- <template if:true={sp}>
+            <article class="slds-card">
+              <div class="slds-card__header slds-grid"> -->
+                <!-- <span><lightning-button variant="Brand" class="slds-button" label="Save" onclick={handleSPSave}></lightning-button></span> -->
+                <!--<lightning-button label={toggleSaveLabelSP} icon-name="utility:save" slot="actions" onclick={handleSPSave}>
+            </lightning-button>--><!--PG commented by 28/07/2021-->
+              <!-- </div>
+            </article>
+          </template> -->
+        </div>
+
+        <!---FOR ASSET DATA -->
+        <div>
+          <template for:each={Asset1} for:item="assets">
+            <div key={assets.id}>
+              <article class="slds-card">
+                <div class="slds-card__header slds-grid">
+                  <header class="slds-media slds-media_center slds-has-flexi-truncate">
+                    <div class="slds-media__body">
+                      <h2 class="slds-card__header-title">
+                        <span>
+                          <lightning-icon icon-name="custom:custom85" size="small" alternative-text="asset"
+                            title="asset">
+                          </lightning-icon>
+                        </span>&nbsp; &nbsp;
+                        <a href="#" class="slds-card__header-link slds-truncate" title="Asset"></a>&nbsp; &nbsp;
+                        <span><b>Assets</b></span>&nbsp; &nbsp;
+                        <!-- <span><lightning-button variant="Brand" class="slds-button" label="Save" onclick={handleAssetSave}></lightning-button></span></a> -->
+                      </h2>
+                      <p class="slds-var-m-bottom_xx-small slds-m-top_xx-small">Name: {assets.Name} </p>
+                      <p class="slds-var-m-bottom_xx-small">Quantity: {assets.Quantity} </p>
+                      <template if:true={AssetStatusValues}>
+                        <lightning-combobox data-id={assets.Id} name="Status" label="Status" value={assets.Status}
+                          options={AssetStatusValues} onchange={handleChangeAsset} class=" Req-Combo" required>
+                        </lightning-combobox>
+                      </template>
+                    </div>
+                  </header>
+                </div>
+              </article>
+            </div>
+          </template>
+          <!-- <template if:true={ast}>
+            <article class="slds-card">
+              <div class="slds-card__header slds-grid">
+                <span><lightning-button variant="Brand" class="slds-button" label="Save" onclick={handleAssetSave}></lightning-button></span> -->
+                <!-- <lightning-button label={toggleSaveLabelAST} icon-name="utility:save" slot="actions" onclick={handleAssetSave}>
+            </lightning-button> --><!--PG commented by 28/07/2021-->
+              <!-- </div>
+            </article>
+          </template> --> 
+        </div>
+
+        <!---FOR MISSION TASK DATA -->
+        <div>
+          <template if:true={MissionTask}>
+            <template for:each={MissionTask} for:item="MissionTask1">
+              <div key={MissionTask1.Id}>
+                <article class="slds-card">
+                  <div class="slds-card__header slds-grid">
+                    <header class="slds-media slds-media_center slds-has-flexi-truncate">
+                      <div class="slds-media__body">
+                        <h2 class="slds-card__header-title">
+                          <lightning-icon icon-name="standard:task2" size="small" alternative-text="product"
+                            title="product">
+                          </lightning-icon>
+                          <a href="#" class="slds-card__header-link slds-truncate" title="Mission Task">&nbsp;
+                            &nbsp;<span><b>Mission Task</b></span></a>
+                        </h2>
+                        <p class="slds-var-m-bottom_xx-small slds-m-top_small" value={MissionTask.Id}> Name: {MissionTask1.Name}</p>
+                        <p class="slds-var-m-bottom_xx-small" value={MissionTask.Id}> Status: {MissionTask1.Status}</p>
+                      </div>
+                    </header>
+                  </div>
+                </article>
+              </div>
+            </template>
+          </template>
+          
+        </div>
+       
+        <footer>
+          <!-- <lightning-card style="padding-top: 0px;">
+            
+            <lightning-button variant="Brand" class="slds-button" label="Close" onclick={navigateToViewAccountPage}></lightning-button> 
+            <lightning-button variant="Brand" class="slds-button" label="Back" onclick={navigateToViewAccountPage}></lightning-button>
+          </lightning-card> -->
+          <div class="slds-card slds-p-around_small" style="border-radius: 5px;">
+            <div class="slds-p-bottom_xx-small" style="margin-top:-5px;"><p style="color:red;font-weight:500px;font-size:13px;">Selecting “Save” will save all data entered thus far.</p></div>
+            <lightning-button variant="Brand" class="slds-button" value={accountId} name={accountId} label="Back"
+              onclick={navigateToComponent}></lightning-button>
+            <lightning-button variant="Brand" class="slds-button" label="Save" onclick={finalSave}></lightning-button>
+          </div>
+        </footer>
+      </template>
+      <!--End Second Page  -->
+    </template>
+
+    <!--Start Second Page  New Action Plan View Pooja-->
+    <template if:true={isViewMission}>
+      <div>
+        <template for:each={selMissionsAP} for:item="missions1">
+          <div key={missions1.Id}>
+            <article class="slds-card">
+              <div class="slds-card__header slds-grid">
+                <header class="slds-media slds-media_center slds-has-flexi-truncate">
+                  <div class="slds-media__body">
+                    <h2 class="slds-card__header-title">
+                      <lightning-icon icon-name="standard:goals" size="small" alternative-text="product"
+                        title="product"></lightning-icon>
+                      <a href="#" class="slds-card__header-link slds-truncate" title="Mission Task">&nbsp;
+                        &nbsp;<span><b>Selected Mission</b></span></a>
+                    </h2>
+                    <!-- Commented for JTP 440 <b>Executional Details</b>
+                  <p class="slds-var-m-bottom_xx-small">Sign Vendor Log?: {missions1.vendorLog}</p>
+                  <p class="slds-var-m-bottom_xx-small">Third Party Allowed?: {missions1.thirdPartyAllowed}</p>
+                  <b>Pricing/Presence</b>
+                  <p class="slds-var-m-bottom_xx-small">Allowed to Price Scan?: {missions1.allowedtoPriceScan}</p>
+                  <p class="slds-var-m-bottom_xx-small">If No Pricing, Use JUUL Pricing?: {missions1.noPricingUse}</p>
+                  <p class="slds-var-m-bottom_xx-small">If Price Doesn't Scan?: {missions1.ifPriceDoesntScan}</p>
+                  <b>Product</b>
+                  <p class="slds-var-m-bottom_xx-small">How to Fix Out of Stocks?: {missions1.fixOutOfStocks}</p>
+                  <p class="slds-var-m-bottom_xx-small">Can You Label Fixtures?: {missions1.labelFixtures}</p>
+                  <p class="slds-var-m-bottom_xx-small">Can You Provide Leave Behinds?: {missions1.provideLeadBehinds}</p>
+                 -->
+                    <b class="slds-m-top_xx-small">KAM Instructions</b>
+                    <p>
+                      <lightning-formatted-rich-text
+                        value={missions1.InstructionDescription}></lightning-formatted-rich-text>
+                    </p>
+                  </div>
+                </header>
+              </div>
+            </article>
+          </div>
+        </template>
+      </div>
+      <!---FOR STORE PRODUCT DATA -->
+      <div>
+        <template for:each={StoreProductAP} for:item="StrProduct">
+          <div key={StrProduct.id}>
+            <article class="slds-card">
+              <div class="slds-card__header slds-grid">
+                <header class="slds-media slds-media_center slds-has-flexi-truncate">
+                  <div class="slds-media__body">
+                    <h2 class="slds-card__header-title">
+                      <span>
+                        <lightning-icon icon-name="standard:product" size="small" alternative-text="product"
+                          title="product"></lightning-icon>
+                      </span>&nbsp; &nbsp;
+                      <a href="#" class="slds-card__header-link slds-truncate" title="Store Product"></a>
+                      <span><b>Store Products</b></span>&nbsp; &nbsp;
+                    </h2>
+                    <p class="slds-var-m-bottom_xx-small slds-m-top_xx-small">Product Name:{StrProduct.ProductName} </p>
+                    <p class="slds-var-m-bottom_xx-small">Planned PTC: {StrProduct.FinalPTC} </p>
+                    <!--<p class="slds-var-m-bottom_xx-small">Actual PTC: {StrProduct.ActualMSRP} </p>-->
+                  </div>
+                </header>
+              </div>
+            </article>
+          </div>
+        </template>
+      </div>
+
+      <!---FOR ASSET DATA -->
+      <div>
+        <template for:each={AssetAP} for:item="assets">
+          <div key={assets.id}>
+            <article class="slds-card">
+              <div class="slds-card__header slds-grid">
+                <header class="slds-media slds-media_center slds-has-flexi-truncate">
+                  <div class="slds-media__body">
+                    <h2 class="slds-card__header-title">
+                      <span>
+                        <lightning-icon icon-name="custom:custom85" size="small" alternative-text="asset" title="asset">
+                        </lightning-icon>
+                      </span>&nbsp; &nbsp;
+                      <a href="#" class="slds-card__header-link slds-truncate" title="Asset"></a>&nbsp; &nbsp;
+                      <span><b>Assets</b></span>&nbsp; &nbsp;
+                    </h2>
+                    <p class="slds-var-m-bottom_xx-small slds-m-top_xx-small">Name: {assets.Name} </p>
+                    <p class="slds-var-m-bottom_xx-small">Quantity: {assets.Quantity} </p>
+                    <!-- <p class="slds-var-m-bottom_xx-small">Status: {assets.Status} </p>-->
+                  </div>
+                </header>
+              </div>
+            </article>
+          </div>
+        </template>
+      </div>
+
+      <!---FOR MISSION TASK DATA -->
+      <div>
+        <template for:each={MissionTask} for:item="MissionTask1">
+          <div key={MissionTask1.Id}>
+            <article class="slds-card">
+              <div class="slds-card__header slds-grid">
+                <header class="slds-media slds-media_center slds-has-flexi-truncate">
+                  <div class="slds-media__body">
+                    <h2 class="slds-card__header-title">
+                      <lightning-icon icon-name="standard:task2" size="small" alternative-text="product"
+                        title="product">
+                      </lightning-icon>
+                      <a href="#" class="slds-card__header-link slds-truncate" title="Mission Task">&nbsp;
+                        &nbsp;<span><b>Mission Task</b></span></a>
+                    </h2>
+                    <p class="slds-var-m-bottom_xx-small slds-m-top_xx-small" value={MissionTask.Id}> Name: {MissionTask1.Name}</p>
+                    <p class="slds-var-m-bottom_xx-small" value={MissionTask.Id}> Status: {MissionTask1.Status}</p>
+                  </div>
+                </header>
+              </div>
+            </article>
+          </div>
+        </template>
+      </div>
+
+      <footer>
+        <lightning-card>
+          <lightning-button variant="Brand" class="slds-button" value={accountId} name={accountId} label="Back"
+            onclick={navigateToComponent}></lightning-button>
+          <!-- <lightning-button variant="Brand" class="slds-button" label="Close" onclick={navigateToViewAccountPage}></lightning-button> -->
+          <!--<lightning-button variant="Brand" class="slds-button" label="Back" onclick={navigateToViewAccountPage}></lightning-button>-->
+        </lightning-card>
+      </footer>
+    </template>
+    <!--End Second Page  New Action Plan View Pooja-->
+  </template>
+
+
+  <!-- For Desktop -->
+  <template if:false={isMobile}>
+
+    <header class="slds-modal__header slds-size_1-of-1">
+      <h1 id="modal-heading-01" class="slds-text-heading_medium slds-hyphenate">Mission Control</h1>
+    </header>
+
+    <div class="slds-scrollable" style="height:25rem;width:67rem">
+      <template if:false={relatedRecordsDisplay}>
+        <div class="slds-p-left_x-large slds-m-right_x-large slds-m-bottom_x-large slds-m-top_x-large">
+          <h1 class="slds-text-heading_medium slds-hyphenate"><b>Active Missions</b></h1><br>
+          <table
+            class="slds-table slds-table_cell-buffer slds-table_bordered slds-table_col-bordered slds-table slds-border_left slds-border_right">
+
+            <thead>
+              <tr class="slds-text-title_caps">
+                <template for:each={columns} for:item="column">
+                  <th scope="col" key={column.fieldName}>
+                    <div class="slds-truncate" title={column.label}>
+                      {column.label}</div>
+                  </th>
+                </template>
+              </tr>
+            </thead>
+            <tbody>
+              <template for:each={Missions} for:item="missions">
+                <tr key={missions.Id}>
+                  <td data-label="Name" style="width:10px">
+                    <!-- <input type="radio" name="Radiobutton" value={missions.Id} onchange={handleValuesSelect} >-->
+                    <input type="radio" name={missions.RecordType} value={missions.Id} onchange={handleValuesSelect}>
+                  </td>
+                  <td data-label="Name">
+                    <div class="slds-truncate" title="Status">
+                      {missions.status}
+                    </div>
+                  </td>
+                  <td data-label="Name">
+                    <div class="slds-truncate" title="Start Date">
+                      {missions.StartDate}
+                    </div>
+                  </td>
+                  <td data-label="Name">
+                    <div class="slds-truncate" title="Start Date">
+                      {missions.EndDate}
+                    </div>
+                  </td>
+                  <td data-label="Name">
+                    <div class="slds-truncate" title="Commercial Activity">
+                      {missions.CommercialActivity}
+                    </div>
+                  </td>
+                  <td data-label="Name">
+                    <div class="slds-truncate" title="Commercial Activity">
+                      {missions.RecordType}
+                    </div>
+                  </td>
+                </tr>
+              </template>
+            </tbody>
+          </table>
+        </div>
+      </template>
+
+      <template if:true={relatedRecordsDisplay}>
+        <template if:false={isViewMission}>
+          <div class="slds-p-left_x-large slds-m-right_x-large slds-m-bottom_x-large slds-m-top_x-large">
+            <table>
+              <tbody>
+                <template for:each={SDMissions1} for:item="missions1">
+
+                  <tr scope="col" key={missions1.Id}>
+                    <td>
+                      <div class="slds-truncate" title="Commercial Activity"><b>Commercial Activity:
+                        </b>{missions1.CommercialActivity}</div>
+                    </td>
+                  </tr>
+                  <tr scope="col" key={missions1.Id}>
+                    <td>
+                      <div class="slds-truncate" title="Start Date"><b>Start Date: </b>{missions1.missionStartDate}
+                      </div>
+                    </td>
+                  </tr>
+                  <tr scope="col" key={missions1.Id}>
+                    <td>
+                      <div class="slds-truncate" title="Start Date"><b>End Date: </b>{missions1.missionEndDate}</div>
+                    </td>
+                  </tr>
+                  <tr scope="col" key={missions1.Id}>
+                    <td>
+                      <div class="slds-truncate" title="Commercial Activity"><b>Mission Type:
+                        </b>{missions1.missiontype}
+                      </div>
+                    </td>
+                  </tr>
+
+                  <tr scope="col" key={missions1.Id}>
+                    <td>
+                      <div class="slds-truncate" title="Status"><b>Status: </b>{missions1.missionstatus}</div>
+                    </td>
+                  </tr>
+                  <tr scope="col" key={missions1.Id}>
+                    <template if:true={upsellOptions}>
+                      <td>
+                        <div>
+                          <lightning-combobox name="Type" label="Mission Type" value={missions1.missiontype}
+                            options={upsellOptions} onchange={handleUpsellChange} disabled>
+                          </lightning-combobox>
+                          <p>*Only mark Mission as "Executed" when both price and all expected POS is executed according
+                            to KAM Direction</p>
+                        </div>
+                        <template if:true={slaOptions}>
+                          <div>
+                            <lightning-combobox name="Status" label="Status" value={missions1.missionstatus}
+                              options={slaOptions} onchange={handleChange} required>
+                            </lightning-combobox>
+                          </div>
+                        </template>
+                        <!--<br>
+                      <lightning-button label={toggleSaveLabelMS} icon-name="utility:save" slot="actions"
+                        onclick={handleMissionSave}>
+                      </lightning-button>--><!--Commented by PG 30/06/2021-->
+                      </td>
+                    </template>
+
+                  </tr><br scope="col" key={missions1.Id} />
+
+                  <tr scope="col" key={missions1.Id}>
+                    <td>
+                      <b>
+                        <p>KAM Instructions:</p>
+                      </b>
+                      <div>
+                        <lightning-formatted-rich-text value={missions1.InstructionDescription}>
+                        </lightning-formatted-rich-text>
+                      </div>
+                    </td>
+                  </tr>
+                </template>
+              </tbody>
+            </table>
+          </div>
+        </template>
+
+        <template if:true={isViewMission}>
+          <div class="slds-p-left_x-large slds-m-right_x-large slds-m-bottom_x-large slds-m-top_x-large">
+            <table>
+              <tbody>
+                <template for:each={selMissionsAP} for:item="missions1">
+                  <!--Executional Details
+                <tr scope="col" key={missions1.Id}>
+                  <td>
+                    <div class="slds-truncate" title="Commercial Activity">Sign Vendor Log?: {missions1.vendorLog}</div>
+                  </td>
+                </tr>
+                <tr scope="col" key={missions1.Id}>
+                  <td>
+                    <div class="slds-truncate" title="Start Date">Third Party Allowed?: {missions1.thirdPartyAllowed}</div>
+                  </td>
+                </tr>
+                Pricing/Presence
+                <tr scope="col" key={missions1.Id}>
+                  <td>
+                    <div class="slds-truncate" title="Start Date">Allowed to Price Scan?: {missions1.allowedtoPriceScan}</div>
+                  </td>
+                </tr>
+                <tr scope="col" key={missions1.Id}>
+                  <td>
+                    <div class="slds-truncate" title="Start Date">If Price Doesn't Scan?: {missions1.ifPriceDoesntScan}</div>
+                  </td>
+                </tr>
+                <tr scope="col" key={missions1.Id}>
+                  <td>
+                    <div class="slds-truncate" title="Commercial Activity">If No Pricing, Use JUUL Pricing?: {missions1.noPricingUse}</div>
+                  </td>
+                </tr>
+                Product
+                <tr scope="col" key={missions1.Id}>
+                  <td>
+                    <div class="slds-truncate" title="Status">How to Fix Out of Stocks?: {missions1.fixOutOfStocks}</div>
+                  </td>
+                </tr>
+                <tr scope="col" key={missions1.Id}>
+                  <td>
+                    <div class="slds-truncate" title="Commercial Activity">Can You Label Fixtures?: {missions1.labelFixtures}</div>
+                  </td>
+                </tr>
+                <tr scope="col" key={missions1.Id}>
+                  <td>
+                    <div class="slds-truncate" title="Status">Can You Provide Leave Behinds?: {missions1.provideLeadBehinds}</div>
+                  </td>
+                </tr>-->
+                  <tr scope="col" key={missions1.Id}>
+                    <td>
+                      <b>
+                        <p>KAM Instructions:</p>
+                      </b>
+                      <div><lightning-formatted-rich-text
+                          value={missions1.InstructionDescription}></lightning-formatted-rich-text></div>
+                    </td>
+                  </tr>
+                </template>
+              </tbody>
+            </table>
+          </div>
+        </template>
+      </template>
+
+      <template if:true={relatedRecordsDisplay}>
+        <template if:false={isViewStoreProductAP}>
+          <div class="slds-p-left_x-large slds-m-right_x-large slds-m-bottom_x-large slds-m-top_x-large">
+            <span>
+              <lightning-icon icon-name="standard:product" size="small" alternative-text="product" title="product">
+              </lightning-icon>
+            </span>
+            <span>&nbsp;&nbsp;<b>Store Products</b></span><br><br>
+
+            <!-- <lightning-button label={toggleSaveLabelSP} icon-name="utility:save" slot="actions" onclick={handleSPSave}>
+          </lightning-button>
+          <lightning-button label="Cancel" icon-name="utility:cancel" slot="actions" onclick={handleCancel}>
+          </lightning-button><br><br>--><!--Commented by PG 28/07/2021-->
+
+            <table
+              class="slds-table slds-table_cell-buffer slds-table_bordered slds-table_col-bordered slds-table slds-border_left slds-border_right">
+              <thead>
+                <tr class="slds-text-title_caps">
+                  <template for:each={StoreProducts} for:item="StrProds">
+                    <th scope="col" key={StoreProducts.fieldName}>
+                      <div class="slds-truncate" title={StrProds.label}>
+                        {StrProds.label}
+                      </div>
+                    </th>
+                  </template>
+                </tr>
+              </thead>
+              <tbody>
+                <template for:each={StoreProducts1} for:item="StrProduct1">
+                  <tr key={StrProduct1.Id} class="slds-hint-parent" ondblclick={onDoubleClickEdit}>
+
+                    <td data-label="Name">
+                      <div class="slds-truncate" title="Product Name">
+                        {StrProduct1.ProductName}
+                      </div>
+                    </td>
+                    <td data-label="Name">
+                      <div class="slds-truncate" title="Planned PTC">
+                        {StrProduct1.FinalPTC}
+                      </div>
+                    </td>
+                    <td data-label="Name">
+                      <div class="slds-truncate" title="Actual PTC">
+                        <template if:false={isEdited}>
+                          <div class="slds-truncate" title="Actual PTC">
+                            {StrProduct1.ActualMSRP}
+                          </div>
+                        </template>
+
+                        <template if:true={isEdited}>
+                          <lightning-input data-id={StrProduct1.Id} name="input1" label="Actual PTC"
+                            value={StrProduct1.ActualMSRP} variant="label-hidden" onchange={handlSPChange}>
+                          </lightning-input>
+                        </template>
+                      </div>
+                    </td>
+                  </tr>
+                </template>
+              </tbody>
+            </table>
+          </div>
+        </template>
+
+
+        <template if:true={isViewStoreProductAP}>
+          <div class="slds-p-left_x-large slds-m-right_x-large slds-m-bottom_x-large slds-m-top_x-large">
+            <span>
+              <lightning-icon icon-name="standard:product" size="small" alternative-text="product" title="product">
+              </lightning-icon>
+            </span>
+            <span>&nbsp;&nbsp;<b>Store Products</b></span><br><br>
+            <table
+              class="slds-table slds-table_cell-buffer slds-table_bordered slds-table_col-bordered slds-table slds-border_left slds-border_right">
+              <thead>
+                <tr class="slds-text-title_caps">
+                  <template for:each={StoreProductsAccountPlan} for:item="StrProds">
+                    <th scope="col" key={StoreProductsAccountPlan.fieldName}>
+                      <div class="slds-truncate" title={StrProds.label}>
+                        {StrProds.label}
+                      </div>
+                    </th>
+                  </template>
+                </tr>
+              </thead>
+              <tbody>
+                <template for:each={StoreProductAP} for:item="StrProductAP">
+                  <tr key={StrProductAP.Id} class="slds-hint-parent">
+                    <td data-label="Name">
+                      <div class="slds-truncate" title="Product Name">
+                        {StrProductAP.ProductName}
+                      </div>
+                    </td>
+                    <td data-label="Name">
+                      <div class="slds-truncate" title="Planned PTC">
+                        {StrProductAP.FinalPTC}
+                      </div>
+                    </td>
+                    <!--<td data-label="Name">
+                    <div class="slds-truncate" title="Actual PTC">
+                      {StrProductAP.ActualMSRP}
+                    </div>
+                  </td>-->
+                  </tr>
+                </template>
+              </tbody>
+            </table>
+          </div>
+        </template>
+      </template>
+
+      <template if:true={relatedRecordsDisplay}>
+        <template if:false={isViewAssetsAP}>
+          <div class="slds-p-left_x-large slds-m-right_x-large slds-m-bottom_x-large slds-m-top_x-large">
+            <span>
+              <lightning-icon icon-name="custom:custom85" size="small" alternative-text="asset" title="asset">
+              </lightning-icon>
+            </span>
+            <span>&nbsp;&nbsp;<b>Assets</b></span><br><br>
+            <!--<lightning-button label={toggleSaveLabelAST} icon-name="utility:save" slot="actions" onclick={handleAssetSave}>
+          </lightning-button>
+          <lightning-button label="Cancel" icon-name="utility:cancel" slot="actions" onclick={handleCancel}>
+          </lightning-button><br><br>--><!--Commented by PG 28/07/2021-->
+
+            <table
+              class="slds-table slds-table_cell-buffer slds-table_bordered slds-table_col-bordered slds-table slds-border_left slds-border_right">
+              <thead>
+                <tr class="slds-text-title_caps">
+                  <template for:each={Assets} for:item="assets">
+                    <th scope="col" key={Assets.fieldName}>
+                      <div class="slds-truncate" title={assets.label}>
+                        {assets.label}</div>
+                    </th>
+                  </template>
+                </tr>
+              </thead>
+              <tbody>
+                <template for:each={Asset1} for:item="assets">
+                  <tr key={assets.Id} class="slds-hint-parent" ondblclick={onDoubleClickEdit}>
+
+                    <td data-label="Name">
+                      <div class="slds-truncate" title="Name">
+                        {assets.Name}
+                      </div>
+                    </td>
+                    <td data-label="Name">
+                      <div class="slds-truncate" title="Quantity">
+                        {assets.Quantity}
+                      </div>
+                    </td>
+                    <td data-label="Name">
+                      <template if:false={isEdited}>
+                        <div class="slds-truncate" title="Status">
+                          {assets.Status}
+                        </div>
+                      </template>
+                      <template if:true={isEdited}>
+                        <template if:true={AssetStatusValues}>
+                          <lightning-combobox data-id={assets.Id} name="Status" value={assets.Status}
+                            options={AssetStatusValues} onchange={handleChangeAsset}>
+                          </lightning-combobox>
+                        </template>
+                      </template>
+                    </td>
+                  </tr>
+                </template>
+              </tbody>
+            </table>
+          </div>
+        </template>
+
+        <template if:true={isViewAssetsAP}>
+          <div class="slds-p-left_x-large slds-m-right_x-large slds-m-bottom_x-large slds-m-top_x-large">
+            <span>
+              <lightning-icon icon-name="custom:custom85" size="small" alternative-text="asset" title="asset">
+              </lightning-icon>
+            </span>
+            <span>&nbsp;&nbsp;<b>Assets</b></span><br><br>
+
+            <table
+              class="slds-table slds-table_cell-buffer slds-table_bordered slds-table_col-bordered slds-table slds-border_left slds-border_right">
+              <thead>
+                <tr class="slds-text-title_caps">
+                  <template for:each={AssetsAcccountPlan} for:item="assets">
+                    <th scope="col" key={AssetsAcccountPlan.fieldName}>
+                      <div class="slds-truncate" title={assets.label}>
+                        {assets.label}</div>
+                    </th>
+                  </template>
+                </tr>
+              </thead>
+              <tbody>
+                <template for:each={AssetAP} for:item="assets">
+                  <tr key={assets.Id} class="slds-hint-parent">
+                    <td data-label="Name">
+                      <div class="slds-truncate" title="Name">
+                        {assets.Name}
+                      </div>
+                    </td>
+                    <td data-label="Name">
+                      <div class="slds-truncate" title="Quantity">
+                        {assets.Quantity}
+                      </div>
+                    </td>
+                    <!-- <td data-label="Name">
+                    <div class="slds-truncate" title="Status">
+                      {assets.Status}
+                    </div>
+                  </td>-->
+                  </tr>
+                </template>
+              </tbody>
+            </table>
+          </div>
+
+        </template>
+      </template>
+
+      <template if:true={relatedRecordsDisplay}>
+        <div class="slds-p-left_x-large slds-m-right_x-large slds-m-bottom_x-large slds-m-top_x-large">
+          <span>
+            <lightning-icon icon-name="standard:task2" size="small" alternative-text="task"
+              title="task"></lightning-icon>
+          </span>
+          <span>&nbsp;&nbsp;<b>Mission Tasks</b></span><br><br>
+
+          <table
+            class="slds-table slds-table_cell-buffer slds-table_bordered slds-table_col-bordered slds-table slds-border_left slds-border_right">
+
+            <thead>
+              <tr class="slds-text-title_caps">
+                <template for:each={columns1} for:item="column1">
+                  <th scope="col" key={columns1.fieldName}>
+                    <div class="slds-truncate" title={column1.label}>
+                      {column1.label}</div>
+                  </th>
+                </template>
+              </tr>
+            </thead>
+            <tbody>
+              <template for:each={MissionTask} for:item="MissionT">
+                <tr key={MissionT.Id}>
+                  <td data-label="Name">
+                    <div class="slds-truncate" title="Name">
+                      {MissionT.Name}
+                    </div>
+                  </td>
+                  <td data-label="Name">
+                    <div class="slds-truncate" title="Status">
+                      {MissionT.Status}
+                    </div>
+                  </td>
+                </tr>
+              </template>
+            </tbody>
+          </table>
+        </div>
+      </template>
+
+    </div>
+    <footer class="slds-modal__footer slds-size_1-of-1 manage_footer">
+      <div class="slds-col">
+        <template if:true={relatedRecordsDisplay}>
+          <lightning-button variant="Brand" class="slds-button" label="Back" onclick={fetchData}></lightning-button>
+          <lightning-button variant="Brand" class="slds-button" label="Close" onclick={Close}></lightning-button>
+          <lightning-button variant="Brand" class="slds-button" label="Save" onclick={finalSave}></lightning-button>
+        </template>
+      </div>
+    </footer>
+  </template>
+
+</template>

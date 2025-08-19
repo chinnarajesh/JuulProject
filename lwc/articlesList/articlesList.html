@@ -1,0 +1,14 @@
+<template>
+        <lightning-card title={label.mostViewedLabel}>
+        <div class="slds-m-around_small" onarticleselect={handleArticleSelect}>
+            <template if:true={articles}>
+                <template for:each={articles} for:item="article">
+                    <c-article-item
+                            key={article.Id}
+                            article={article}
+                    ></c-article-item>
+                </template>
+            </template>
+        </div>
+    </lightning-card>
+</template>

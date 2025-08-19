@@ -1,0 +1,749 @@
+<template>
+    <div class="slds-grid slds-gutters slds-p-around_medium slds-grid_align-spread">
+        <div class="slds-col slds-size_4-of-12 sape">
+            <div class="save-1">
+                <!--  <c-expandable-section id="1" label="My Filters">
+            <div class="slds-grid  slds-grid_align-end">
+                <lightning-button variant="brand" label="Apply" title="Apply Selected Saved Filter" onclick={appliedsavedfilter}
+                   ></lightning-button>
+                   <div class="spacer"></div>
+                <lightning-button variant="brand" label="Edit" title="Edit Selected Saved Filter" onclick={handleClick} >
+                </lightning-button>
+                <div class="spacer"></div>
+                <lightning-button variant="neutral" label="Refresh" title="Refresh Saved Filter Values" onclick={handleRefreshFilter} >
+                </lightning-button>
+            </div>
+            <div style="margin-left:4%;width:90%;">
+                <c-multi-pick-list-filter options={filterOption} showclearbutton='true' showfilterinput='true'
+                    showrefreshbutton='false' multiselect={isMultiSelectFilter} label={customLabel.savedFilterSubHeader}
+                    onitemselected={handleSavedFilterChange}></c-multi-pick-list-filter>
+            </div>
+    </c-expandable-section>
+-->
+                <c-expandable-section id="2" label="Audit">
+                    <div class="slds-grid slds-grid_align-end hideBtn">
+                        <div class="spacer"></div>
+                        <div class="lightning_button">
+                            <lightning-button variant="brand" label="Apply" title="Apply"
+                                onclick={handleFormSendFilter}></lightning-button>
+                        </div>
+                        <div class="spacer"></div>
+                        <!-- <lightning-button onclick={handleToggleSectionD} label={show}></lightning-button>-->
+                    </div>
+                    <!--
+        <div style="margin-left:4%;width:90%;">
+    <c-multi-pick-list-filter options={formOption} showclearbutton='true' showfilterinput='true'
+        showrefreshbutton='false' multiselect={isMultiSelectForm} label={customLabel.formSubHeader}
+        onitemselected={handleTemplateChange}></c-multi-pick-list-filter>
+   
+    <c-multi-pick-list-filter options={questionOption} showclearbutton='true' showfilterinput='true'
+        showrefreshbutton='false' multiselect={isMultiSelectForm} label={customLabel.formSubHeaderQuestion}
+        onitemselected={handleQuestionChange}></c-multi-pick-list-filter></div>
+    -->
+                    <div style="margin-left:4%;width:90.2%;">
+                        <lightning-input type="date" name="submittedDateFrom" value={myFormSubmittedDate}
+                            label="Audit Date (From)" onchange={handleFormDateFrom}></lightning-input>
+                    </div>
+                    <div style="margin-left:4%;width:90.2%;">
+                        <lightning-input type="date" name="submittedDateTo" value={myFormSubmittedDateTo}
+                            label="Audit Date (To)" onchange={handleFormDateTo}></lightning-input>
+                    </div>
+                </c-expandable-section>
+
+                <c-expandable-section id="3" label="All Filters">
+                    <lightning-card variant="Narrow" title={customLabel.filterSection} icon-name="utility:filterList">
+                        <div class="filter_button slds-grid slds-grid_align-end"
+                            style="position:relative;top:1px;right:4%;">
+
+                            <!--    <lightning-icon icon-name={checkIcon_button_tag_filter} alternative-text="Approved" onclick={handleCheckFilter} title={title_checkbox} size="x-small" class="checkbox_icon_tag_1"></lightning-icon> -->
+                            <!-- <lightning-input type="checkbox" field-level-help ="Consider Form Section" name="input1" onclick={handleCheckFilter}></lightning-input> -->
+                            <div class="spacer"></div>
+                            <div class="lightning_button">
+                                <lightning-button variant="brand" label="Apply" title="Apply Filters"
+                                    onclick={handlesenddata}></lightning-button>
+                                <div class="spacer"></div>
+                                <!-- 
+                <lightning-button variant="brand" label="Save" title="Save Filters" onclick={showModalBox}>
+                </lightning-button>
+            -->
+                                <!-- <div class="spacer"></div>
+                <lightning-button variant="neutral" label="Clear" title="Clear Filter" value="Account"
+                onclick={handleClearFilters}></lightning-button>-->
+                            </div>
+                            <!-- modal start -->
+                            <lightning-card if:true={clearAllFilterNotification}>
+                                <div class="slds-container_small">
+                                    <section role="dialog" tabindex="-1" aria-labelledby="modal-heading-01"
+                                        aria-modal="true" aria-describedby="modal-content-id-2"
+                                        class="slds-modal slds-fade-in-open">
+                                        <div class="slds-modal__container">
+                                            <header class="slds-modal__header">
+                                                <h4 id="modal-heading-01"
+                                                    class="slds-text-heading_medium slds-hyphenate">Do you want to clear
+                                                    all applied Filter values?</h4>
+                                            </header>
+                                            <div class="slds-modal__content slds-p-around_medium"
+                                                id="modal-content-id-4">
+                                                <p><b>*Note </b>Your current applied filter values under All Filters
+                                                    section will be lost if you click on Yes.</p>
+                                            </div>
+                                            <footer class="slds-modal__footer">
+                                                <lightning-button variant="neutral" name="No" label="No" title="No"
+                                                    onclick={handleCancel}></lightning-button>
+                                                <div class="spacer"></div>
+                                                <lightning-button variant="brand" name="Yes" label="Yes" title="Yes"
+                                                    onclick={handleProceed}></lightning-button>
+                                            </footer>
+                                        </div>
+                                    </section>
+                                    <div class="slds-backdrop slds-backdrop_open"></div>
+                                </div>
+                            </lightning-card>
+                          
+                            <lightning-card if:true={clearAllFormNotification}>
+                                <div class="slds-container_small">
+                                    <section role="dialog" tabindex="-1" aria-labelledby="modal-heading-01"
+                                        aria-modal="true" aria-describedby="modal-content-id-2"
+                                        class="slds-modal slds-fade-in-open">
+                                        <div class="slds-modal__container">
+                                            <header class="slds-modal__header">
+                                                <h4 id="modal-heading-02"
+                                                    class="slds-text-heading_medium slds-hyphenate">Do you want to clear
+                                                    all Survey/Question/Submitted Date values?</h4>
+                                            </header>
+                                            <div class="slds-modal__content slds-p-around_medium"
+                                                id="modal-content-id-5">
+                                                <p><b>*Note </b>Your current applied all Survey/Question/Submitted Date
+                                                    will be lost if you click on Yes.</p>
+                                            </div>
+                                            <footer class="slds-modal__footer">
+                                                <lightning-button variant="neutral" name="No" label="No" title="No"
+                                                    onclick={handleCancelForm}></lightning-button>
+                                                <div class="spacer"></div>
+                                                <lightning-button variant="brand" name="Yes" label="Yes" title="Yes"
+                                                    onclick={handleProceedForm}></lightning-button>
+                                            </footer>
+                                        </div>
+                                    </section>
+                                    <div class="slds-backdrop slds-backdrop_open"></div>
+                                </div>
+                            </lightning-card>
+
+                            <template if:true={isShowModal}>
+
+                                <section role="dialog" tabindex="-1" aria-labelledby="modal-heading-01"
+                                    aria-modal="true" aria-describedby="modal-content-id-1"
+                                    class="slds-modal slds-fade-in-open">
+                                    <div class="slds-modal__container">
+                                        <!-- modal header start -->
+                                        <header class="slds-modal__header">
+                                            <lightning-layout class="slds-grid slds-grid_align-center">
+                                                <lightning-layout-item padding="around-small" class="slds-col">
+                                                    <lightning-icon icon-name="utility:filterList"
+                                                        alternative-text="record_create" size="medium"></lightning-icon>
+                                                </lightning-layout-item>
+                                                <lightning-layout-item padding="around-small" class="slds-col">
+                                                    <h2 class="slds-text-heading_medium">Save Filter</h2>
+                                                </lightning-layout-item>
+                                            </lightning-layout>
+                                        </header>
+
+                                        <!-- modal body start -->
+                                        <div class="slds-modal__content slds-p-around_small" id="modal-content-id-3">
+                                            <div class="slds-p-around_small lgc-bg">
+                                                <lightning-input type="text" class="myclas"
+                                                    label="Please enter new filter name" placeholder="Type here..."
+                                                    minlength="3" value={selectedEditSavedFilterName}
+                                                    message-when-too-short="Filter name must be at least 3 characters."
+                                                    required></lightning-input>
+                                            </div>
+                                        </div>
+
+                                        <!-- modal footer start-->
+                                        <footer class="slds-modal__footer">
+                                            <button class="slds-button slds-button_neutral"
+                                                onclick={hideModalBox}>Cancel</button>
+                                            <button class="slds-button slds-button_brand" title="Save this filter"
+                                                onclick={savefilter}>Save</button>
+                                        </footer>
+
+                                    </div>
+                                </section>
+                                <div class="slds-backdrop slds-backdrop_open"></div>
+                            </template>
+
+                        </div>
+                        <template if:true={loadingEditFilter}>
+                            <lightning-spinner alternative-text="Loading" size="large"></lightning-spinner>
+                        </template>
+                       
+
+                        <template if:true={isfilterpersona}>
+                            <lightning-tabset variant="scoped" class="tab-active" style="position:relative;top:6px;">
+                                <template for:each={fieldTabValues} for:item="tab">
+                                    <lightning-tab label={tab} key={tab} value={tab}
+                                        onactive={handleFieldFilterActivetab}>
+                                        <template if:true={retailTheaterTab}>
+                                            <div class="slds-grid">
+                                                <p class="slds-p-top_xxx-small slds-p-left_xx-small" style="color:red;"><strong>Beta feature. Will seek feedback in the future.</strong></p>
+                                            <lightning-helptext alternative-text="" content="These are AND statements, meaning that all criteria is referenced.">
+                                            </lightning-helptext>
+                                            </div>
+                                        </template>
+                                        <template for:each={mytabsetvalues} for:item="fielfilterval" for:index="index">
+                                            <template if:true={fielfilterval.isLookup}>
+                                                <div key={mainDIvIcon} style="display: flex;">
+                                                    <div class="tabset slds-p-horizontal_small" key={fielfilterval.key}>
+                                                        <c-multi-custom-lookup-search
+                                                            object-name={fielfilterval.objectlookupname}
+                                                            key={fielfilterval.labeltype}
+                                                            icon-name="utility:record_lookup"
+                                                            label={fielfilterval.labeltype}
+                                                            help-text={fielfilterval.helpText}
+                                                            placeholder={fielfilterval.labeltype} field-name="Name"
+                                                            fieldapiname={fielfilterval.APIName}
+                                                            selectedvalues={fielfilterval.tempofieldval}
+                                                            selected-mine-records={myselo} onselected={handleLookup}>
+                                                        </c-multi-custom-lookup-search>
+                                                    </div>
+                                                    <template if:true={iconhidePart}>
+                                                        <lightning-icon key={iconName} data-name={fielfilterval.labeltype}
+                                                        data-id={fielfilterval.masterLabel} class="iconName"
+                                                        title="Show/Hide filter value on photo thumbnail"
+                                                        icon-name={iconSymbole} size="x-small"
+                                                        onclick={handleToggleIconshow}>
+                                                    </lightning-icon>
+                                                    </template>
+                                                </div>
+                                            </template>
+                                            <template if:true={fielfilterval.isText}>
+                                                <div key={mainDIvIcon} style="display: flex;">
+                                                    <lightning-input class="tabset" value={fielfilterval.tempofieldval}
+                                                        key={fielfilterval.labeltype} type={fielfilterval.fieldtype}
+                                                        name={fielfilterval.APIName} label={fielfilterval.labeltype}
+                                                        onchange={handleValueChangeField} title="test">
+                                                    </lightning-input>
+                                                    <template if:true={fielfilterval.iconBl}>
+                                                        <lightning-icon key={iconName} data-name={fielfilterval.labeltype}
+                                                        title=" Show/Hide filter value on photo thumbnail"
+                                                        data-id={fielfilterval.masterLabel} class="iconName"
+                                                        icon-name={iconSymbole} size="x-small"
+                                                        onclick={handleToggleIconshow}>
+                                                    </lightning-icon>
+                                                    </template>
+                                                    <template if:true={fielfilterval.tooltip}>
+                                                        <lightning-helptext alternative-text="AccountId"
+                                                            content="Refers to 18 Character SFID. Searching for more than 1 Account ID requires each item to be separated by comma."
+                                                            style="position: absolute;left:145px;">
+                                                        </lightning-helptext>
+                                                    </template>
+                                                </div>
+                                            </template>
+                                            <template if:true={fielfilterval.isPicklist}>
+                                                <div key={mainDIvIcon} style="display: flex;">
+                                                    <div class="tabset_comboBOX slds-p-horizontal_small"
+                                                        key={fielfilterval.key}>
+                                                        <template if:false={retailTheaterTab}>
+                                                            <c-multi-pick-list-filter options={fielfilterval.picklistvalues}
+                                                            showclearbutton='true' showfilterinput='true'
+                                                            showrefreshbutton='false'
+                                                            objecttabname={fielfilterval.ObjectTabName}
+                                                            data-key={fielfilterval.labeltype}
+                                                            multiselect={fielfilterval.isMultiSelect}
+                                                            selectednamevalues={fielfilterval.tempofieldval}
+                                                            fieldapiname={fielfilterval.APIName}
+                                                            label={fielfilterval.labeltype}
+                                                            onitemselected={handleValueChange}></c-multi-pick-list-filter>
+                                                          </template>
+                                                          <template if:true={retailTheaterTab}>
+                                                      <template if:false={retailTabBl}>
+                                                        <c-multi-pick-list-filter options={fielfilterval.picklistvalues}
+                                                        showclearbutton='true' showfilterinput='true'
+                                                        showrefreshbutton='false'
+                                                        objecttabname={fielfilterval.ObjectTabName}
+                                                        data-key={fielfilterval.labeltype}
+                                                        multiselect={fielfilterval.isMultiSelect}
+                                                        selectednamevalues={fielfilterval.tempofieldval}
+                                                        fieldapiname={fielfilterval.APIName}
+                                                        label={fielfilterval.labeltype}
+                                                        onitemselected={handleValueChange}></c-multi-pick-list-filter>
+                                                      </template>
+                                                      <template if:true={retailTabBl}>
+                                                        <c-multi-pick-list-filter options={fielfilterval.picklistvalues}
+                                                        showclearbutton='true' showfilterinput='true'
+                                                        showrefreshbutton='false'
+                                                        objecttabname={fielfilterval.ObjectTabName}
+                                                        data-key={fielfilterval.labeltype}
+                                                        multiselect={fielfilterval.isMultiSelect}
+                                                        selectednamevalues='Select Options...'
+                                                        fieldapiname={fielfilterval.APIName}
+                                                        label={fielfilterval.labeltype}
+                                                        onitemselected={handleValueChange}></c-multi-pick-list-filter>
+                                                      </template>
+                                                      </template>
+                                                    </div>
+                                                    <lightning-icon key={iconName} data-name={fielfilterval.labeltype}
+                                                        title=" Show/Hide filter value on photo thumbnail"
+                                                        data-id={fielfilterval.masterLabel} class="iconName_2"
+                                                        icon-name={iconSymbole} size="x-small"
+                                                        onclick={handleToggleIconshow}>
+                                                    </lightning-icon>
+                                                </div>
+                                            </template>
+                                        </template>
+                                        <template if:true={retailTheaterTab}>
+                                            <div class="slds-p-top_small" style="position: relative;top:6px !important;">
+                                                <lightning-button 
+                                                variant="brand"
+                                                label="Clear Filters" 
+                                                onclick={handleClearFilter} 
+                                              ></lightning-button>
+                                            </div>
+                                        </template>
+                                    </lightning-tab>
+                                  
+                                </template>
+                            </lightning-tabset>
+                        </template>
+                        <template if:false={isfilterpersona}>
+                            <lightning-tabset variant="scoped" class="tab-active" style="position:relative;top:6px;">
+                                <template for:each={kamTabValues} for:item="tab">
+                                    <lightning-tab label={tab} key={tab} value={tab}
+                                        onactive={handleKAMFilterActivetab}>
+                                        <template for:each={mykamtabset} for:item="fielfilterval" for:index="index">
+                                            <template if:true={fielfilterval.isLookup}>
+                                                <div key={mainDIvIcon} style="display: flex;">
+                                                    <div class="tabset_comboBOX_1" key={fielfilterval.key}>
+                                                        <c-multi-custom-lookup-search
+                                                            object-name={fielfilterval.objectlookupname}
+                                                            key={fielfilterval.labeltype}
+                                                            icon-name="utility:record_lookup"
+                                                            label={fielfilterval.labeltype}
+                                                            placeholder={fielfilterval.labeltype} field-name="Name"
+                                                            fieldapiname={fielfilterval.APIName}
+                                                            selectedvalues={fielfilterval.tempofieldval}
+                                                            selected-mine-records={myselo} onselected={handleLookup}>
+                                                        </c-multi-custom-lookup-search>
+                                                    </div>
+                                                    <lightning-icon key={iconName}
+                                                        title=" Show/Hide filter value on photo thumbnail"
+                                                        data-name={fielfilterval.labeltype}
+                                                        data-id={fielfilterval.masterLabel} class="iconName"
+                                                        icon-name={iconSymbole} size="x-small"
+                                                        onclick={handleToggleIconshow}>
+                                                    </lightning-icon>
+                                                </div>
+                                            </template>
+                                            <template if:true={fielfilterval.isText}>
+                                                <div key={mainDIvIcon} style="display: flex;">
+                                                    <lightning-input class="tabset" value={fielfilterval.tempofieldval}
+                                                        key={fielfilterval.labeltype} type={fielfilterval.fieldtype}
+                                                        name={fielfilterval.APIName} label={fielfilterval.labeltype}
+                                                        onchange={handleValueChangeField}>
+                                                    </lightning-input>
+                                                    <lightning-icon key={iconName}
+                                                        title=" Show/Hide filter value on photo thumbnail"
+                                                        data-name={fielfilterval.labeltype}
+                                                        data-id={fielfilterval.masterLabel} class="iconName"
+                                                        icon-name={iconSymbole} size="x-small"
+                                                        onclick={handleToggleIconshow}>
+                                                    </lightning-icon>
+                                                </div>
+                                            </template>
+
+
+                                            <template if:true={fielfilterval.isPicklist}>
+                                                <div key={mainDIvIcon} style="display: flex;">
+                                                    <div class="tabset_comboBOX slds-p-horizontal_small"
+                                                        key={fielfilterval.key}>
+                                                        <c-multi-pick-list-filter options={fielfilterval.picklistvalues}
+                                                            showclearbutton='true' showfilterinput='true'
+                                                            showrefreshbutton='false'
+                                                            multiselect={fielfilterval.isMultiSelect}
+                                                            selectednamevalues={fielfilterval.tempofieldval}
+                                                            fieldapiname={fielfilterval.APIName}
+                                                            label={fielfilterval.labeltype}
+                                                            onitemselected={handleValueChange}></c-multi-pick-list-filter>
+                                                    </div>
+                                                    <lightning-icon key={iconName}
+                                                        title=" Show/Hide filter value on photo thumbnail"
+                                                        data-name={fielfilterval.labeltype}
+                                                        data-id={fielfilterval.masterLabel} class="iconName_2"
+                                                        icon-name={iconSymbole} size="x-small"
+                                                        onclick={handleToggleIconshow}>
+                                                    </lightning-icon>
+                                                </div>
+                                            </template>
+                                        </template>
+                                    </lightning-tab>
+                                </template>
+                            </lightning-tabset>
+                        </template>
+                    </lightning-card>
+
+
+                </c-expandable-section>
+
+            </div>
+            <!--<div class="save-1">
+    
+            <lightning-card variant="Narrow" title={customLabel.savedFilterHeader} class="save-1 slds-theme_shade"
+                icon-name="utility:filter">
+                <div class="slds-grid  slds-grid_align-end">
+                    <lightning-button variant="brand" label="Apply" title="Apply Selected Saved Filter" onclick={appliedsavedfilter}
+                       ></lightning-button>
+                       <div class="spacer"></div>
+                    <lightning-button variant="brand" label="Edit" title="Edit Selected Saved Filter" onclick={handleClick} >
+                    </lightning-button>
+                    <div class="spacer"></div>
+                    <lightning-button variant="neutral" label="Refresh" title="Refresh Saved Filter Values" onclick={handleRefreshFilter} >
+                    </lightning-button>
+                </div>
+                <div style="margin-left:4%;width:90%;">
+                <c-multi-pick-list-filter options={filterOption} showclearbutton='true' showfilterinput='true'
+                    showrefreshbutton='false' multiselect={isMultiSelectFilter} label={customLabel.savedFilterSubHeader}
+                    onitemselected={handleSavedFilterChange}></c-multi-pick-list-filter>
+                </div>
+            </lightning-card>
+          
+        </div>
+    -->
+            <!--     <div class="save_2">
+            <lightning-card variant="Narrow" title={customLabel.formHeader} class="photo_fil_1" icon-name="utility:questions_and_answers">
+                <div class="slds-grid slds-grid_align-end hideBtn">
+                      
+          <div class="spacer"></div>
+                    <div class="lightning_button">
+                    <lightning-button variant="brand" label="Apply" title="Apply" onclick={handleFormSendFilter}
+                       ></lightning-button>
+                    </div>
+                    <div class="spacer"></div>
+                    <lightning-button onclick={handleToggleSectionD} label={show}></lightning-button>
+               </div>
+                <template if:true={isDVisible}>
+                    <div style="margin-left:4%;width:90%;">
+                <c-multi-pick-list-filter options={formOption} showclearbutton='true' showfilterinput='true'
+                    showrefreshbutton='false' multiselect={isMultiSelectForm} label={customLabel.formSubHeader}
+                    onitemselected={handleTemplateChange}></c-multi-pick-list-filter>
+               
+                <c-multi-pick-list-filter options={questionOption} showclearbutton='true' showfilterinput='true'
+                    showrefreshbutton='false' multiselect={isMultiSelectForm} label={customLabel.formSubHeaderQuestion}
+                    onitemselected={handleQuestionChange}></c-multi-pick-list-filter></div>
+                    <div style="margin-left:4%;width:90.2%;">
+                <lightning-input type="date" name="submittedDateFrom" value={myFormSubmittedDate} label="Original Submitted Date (From)" onchange={handleFormDateFrom}></lightning-input></div>
+                <div style="margin-left:4%;width:90.2%;">
+                    <lightning-input type="date" name="submittedDateTo" value={myFormSubmittedDateTo} label="Original Submitted Date (To)" onchange={handleFormDateTo}></lightning-input></div>
+                </template>
+            </lightning-card></div>
+        -->
+            <div class="save_2">
+                <!--   <lightning-card variant="Narrow" title={customLabel.filterSection} icon-name="utility:filterList">
+                <div class="filter_button slds-grid slds-grid_align-end" style="position:relative;top:1px;right:4%;">
+                   
+                <div class="spacer"></div>
+                <div class="lightning_button">
+                    <lightning-button variant="brand" label="Apply" title="Apply Filters" onclick={handlesenddata}
+                       ></lightning-button>
+                       <div class="spacer"></div>
+                    <lightning-button variant="brand" label="Save" title="Save Filters" onclick={showModalBox}>
+                    </lightning-button>
+                
+                </div> 
+                    <lightning-card if:true={clearAllFilterNotification}>
+                        <div class="slds-container_small">
+                            <section role="dialog" tabindex="-1" aria-labelledby="modal-heading-01" aria-modal="true" aria-describedby="modal-content-id-2" class="slds-modal slds-fade-in-open">
+                                <div class="slds-modal__container">
+                                    <header class="slds-modal__header">
+                                        <h4 id="modal-heading-01" class="slds-text-heading_medium slds-hyphenate">Do you want to clear all applied Filter values?</h4>
+                                    </header>
+                                    <div class="slds-modal__content slds-p-around_medium" id="modal-content-id-4">
+                                        <p><b>*Note </b>Your current applied filter values under All Filters section will be lost if you click on Yes.</p>
+                                    </div>
+                                    <footer class="slds-modal__footer">
+                                        <lightning-button variant="neutral"
+                                                          name="No"
+                                                          label="No"
+                                                          title="No"
+                                                          onclick={handleCancel} ></lightning-button>
+                                                          <div class="spacer"></div>
+                                        <lightning-button variant="brand"
+                                                          name="Yes"
+                                                          label="Yes"
+                                                          title="Yes"
+                                                          onclick={handleProceed} ></lightning-button>
+                                    </footer>
+                                </div>
+                            </section>
+                            <div class="slds-backdrop slds-backdrop_open"></div>
+                        </div>
+                    </lightning-card>
+
+                    <lightning-card if:true={clearAllFormNotification}>
+                        <div class="slds-container_small">
+                            <section role="dialog" tabindex="-1" aria-labelledby="modal-heading-01" aria-modal="true" aria-describedby="modal-content-id-2" class="slds-modal slds-fade-in-open">
+                                <div class="slds-modal__container">
+                                    <header class="slds-modal__header">
+                                        <h4 id="modal-heading-02" class="slds-text-heading_medium slds-hyphenate">Do you want to clear all Survey/Question/Submitted Date values?</h4>
+                                    </header>
+                                    <div class="slds-modal__content slds-p-around_medium" id="modal-content-id-5">
+                                        <p><b>*Note </b>Your current applied all Survey/Question/Submitted Date will be lost if you click on Yes.</p>
+                                    </div>
+                                    <footer class="slds-modal__footer">
+                                        <lightning-button variant="neutral"
+                                                          name="No"
+                                                          label="No"
+                                                          title="No"
+                                                          onclick={handleCancelForm} ></lightning-button>
+                                                          <div class="spacer"></div>
+                                        <lightning-button variant="brand"
+                                                          name="Yes"
+                                                          label="Yes"
+                                                          title="Yes"
+                                                          onclick={handleProceedForm} ></lightning-button>
+                                    </footer>
+                                </div>
+                            </section>
+                            <div class="slds-backdrop slds-backdrop_open"></div>
+                        </div>
+                    </lightning-card>
+
+                    <template if:true={isShowModal}>
+
+                        <section role="dialog" tabindex="-1" aria-labelledby="modal-heading-01" aria-modal="true"
+                            aria-describedby="modal-content-id-1" class="slds-modal slds-fade-in-open">
+                            <div class="slds-modal__container">
+                                <header class="slds-modal__header">
+                             <lightning-layout class="slds-grid slds-grid_align-center">
+                                        <lightning-layout-item padding="around-small" class="slds-col">
+                                            <lightning-icon icon-name="utility:filterList"
+                                                alternative-text="record_create" size="medium"></lightning-icon>
+                                        </lightning-layout-item>
+                                        <lightning-layout-item padding="around-small" class="slds-col">
+                                            <h2 class="slds-text-heading_medium">Save Filter</h2>
+                                        </lightning-layout-item>
+                                    </lightning-layout>
+                                </header>
+
+                                <div class="slds-modal__content slds-p-around_small" id="modal-content-id-3">
+                                    <div class="slds-p-around_small lgc-bg">
+                                        <lightning-input type="text" class="myclas" label="Please enter new filter name"
+                                            placeholder="Type here..." minlength="3"
+                                            value={selectedEditSavedFilterName}
+                                            message-when-too-short="Filter name must be at least 3 characters."
+                                            required></lightning-input>
+                                    </div>
+                                </div>
+
+                                <footer class="slds-modal__footer">
+                                    <button class="slds-button slds-button_neutral"
+                                        onclick={hideModalBox}>Cancel</button>
+                                    <button class="slds-button slds-button_brand" title="Save this filter"
+                                        onclick={savefilter}>Save</button>
+                                </footer>
+
+                            </div>
+                        </section>
+                        <div class="slds-backdrop slds-backdrop_open"></div>
+                    </template>
+
+                </div>
+                <template if:true={loadingEditFilter}>
+                    <lightning-spinner alternative-text="Loading" size="large"></lightning-spinner>
+                </template>
+                <template if:true={isfilterpersona}>
+                    <lightning-tabset variant="scoped" class="tab-active" style="position:relative;top:6px;">
+                        <template for:each={fieldTabValues} for:item="tab">
+                            <lightning-tab label={tab} key={tab} value={tab} onactive={handleFieldFilterActivetab}>
+                                <template for:each={mytabsetvalues} for:item="fielfilterval" for:index="index">
+                                    <template if:true={fielfilterval.isLookup}>
+                                        <div key={mainDIvIcon} style="display: flex;">
+                                        <div class="tabset slds-p-horizontal_small" key={fielfilterval.key}>
+                                        <c-multi-custom-lookup-search object-name={fielfilterval.objectlookupname}
+                                            key={fielfilterval.labeltype} icon-name="utility:record_lookup"
+                                            label={fielfilterval.labeltype} placeholder={fielfilterval.labeltype}
+                                            field-name="Name" fieldapiname={fielfilterval.APIName}
+                                            selectedvalues={fielfilterval.tempofieldval} selected-mine-records={myselo}
+                                            onselected={handleLookup}>
+                                        </c-multi-custom-lookup-search>
+                                        </div>
+                                        <lightning-icon key={iconName} data-name={fielfilterval.labeltype} data-id={fielfilterval.masterLabel} class="iconName" title="Show/Hide filter value on photo thumbnail" icon-name={iconSymbole}  size="x-small" onclick={handleToggleIconshow}>
+                                        </lightning-icon>
+                                        </div>
+                                    </template>
+                                    <template if:true={fielfilterval.isText}>
+                                        <div key={mainDIvIcon} style="display: flex;">
+                                        <lightning-input class="tabset" value={fielfilterval.tempofieldval}
+                                            key={fielfilterval.labeltype} type={fielfilterval.fieldtype}
+                                            name={fielfilterval.APIName} label={fielfilterval.labeltype}
+                                            onchange={handleValueChangeField}>
+                                        </lightning-input>
+                                        <lightning-icon key={iconName} data-name={fielfilterval.labeltype} title=" Show/Hide filter value on photo thumbnail" data-id={fielfilterval.masterLabel} class="iconName" icon-name={iconSymbole}  size="x-small" onclick={handleToggleIconshow}>
+                                        </lightning-icon>
+                                    </div>
+                                    </template>
+                                    <template if:true={fielfilterval.isPicklist}>
+                                        <div key={mainDIvIcon} style="display: flex;">
+                                        <div class="tabset_comboBOX slds-p-horizontal_small" key={fielfilterval.key}>
+                                            <c-multi-pick-list-filter options={fielfilterval.picklistvalues} 
+                                                showclearbutton='true' showfilterinput='true' showrefreshbutton='false'
+                                                multiselect={fielfilterval.isMultiSelect}
+                                                selectednamevalues={fielfilterval.tempofieldval}
+                                                fieldapiname={fielfilterval.APIName} label={fielfilterval.labeltype}
+                                                onitemselected={handleValueChange}></c-multi-pick-list-filter>
+                                        </div>
+                                        <lightning-icon key={iconName} data-name={fielfilterval.labeltype} title=" Show/Hide filter value on photo thumbnail" data-id={fielfilterval.masterLabel} class="iconName_2" icon-name={iconSymbole}  size="x-small" onclick={handleToggleIconshow}>
+                                        </lightning-icon>
+                                        </div>
+                                    </template>
+                                </template>
+                            </lightning-tab>
+                        </template>
+                    </lightning-tabset>
+                </template>
+                <template if:false={isfilterpersona}>
+                    <lightning-tabset variant="scoped" class="tab-active" style="position:relative;top:6px;">
+                        <template for:each={kamTabValues} for:item="tab">
+                            <lightning-tab label={tab} key={tab} value={tab} onactive={handleKAMFilterActivetab}>
+                                <template for:each={mykamtabset} for:item="fielfilterval" for:index="index">
+                                    <template if:true={fielfilterval.isLookup}>
+                                        <div key={mainDIvIcon} style="display: flex;">
+                                        <div class="tabset_comboBOX_1" key={fielfilterval.key}>
+                                        <c-multi-custom-lookup-search object-name={fielfilterval.objectlookupname}
+                                            key={fielfilterval.labeltype} icon-name="utility:record_lookup"
+                                            label={fielfilterval.labeltype} placeholder={fielfilterval.labeltype}
+                                            field-name="Name" fieldapiname={fielfilterval.APIName}
+                                            selectedvalues={fielfilterval.tempofieldval} selected-mine-records={myselo}
+                                            onselected={handleLookup}>
+                                        </c-multi-custom-lookup-search>
+                                        </div>
+                                        <lightning-icon key={iconName} title=" Show/Hide filter value on photo thumbnail" data-name={fielfilterval.labeltype} data-id={fielfilterval.masterLabel} class="iconName" icon-name={iconSymbole}  size="x-small" onclick={handleToggleIconshow}>
+                                        </lightning-icon>
+                                       </div>
+                                    </template>
+                                    <template if:true={fielfilterval.isText}>
+                                        <div key={mainDIvIcon} style="display: flex;">
+                                        <lightning-input class="tabset" value={fielfilterval.tempofieldval}
+                                            key={fielfilterval.labeltype} type={fielfilterval.fieldtype}
+                                            name={fielfilterval.APIName} label={fielfilterval.labeltype}
+                                            onchange={handleValueChangeField}>
+                                        </lightning-input>
+                                        <lightning-icon key={iconName} title=" Show/Hide filter value on photo thumbnail" data-name={fielfilterval.labeltype} data-id={fielfilterval.masterLabel} class="iconName" icon-name={iconSymbole}  size="x-small" onclick={handleToggleIconshow}>
+                                        </lightning-icon>
+                                       </div>
+                                    </template>
+
+
+                                    <template if:true={fielfilterval.isPicklist}>
+                                        <div key={mainDIvIcon} style="display: flex;">
+                                        <div class="tabset_comboBOX slds-p-horizontal_small" key={fielfilterval.key}>
+                                            <c-multi-pick-list-filter options={fielfilterval.picklistvalues}
+                                                showclearbutton='true' showfilterinput='true' showrefreshbutton='false'
+                                                multiselect={fielfilterval.isMultiSelect}
+                                                selectednamevalues={fielfilterval.tempofieldval}
+                                                fieldapiname={fielfilterval.APIName} label={fielfilterval.labeltype}
+                                                onitemselected={handleValueChange}></c-multi-pick-list-filter>
+                                        </div>
+                                        <lightning-icon key={iconName} title=" Show/Hide filter value on photo thumbnail" data-name={fielfilterval.labeltype} data-id={fielfilterval.masterLabel} class="iconName_2" icon-name={iconSymbole}  size="x-small" onclick={handleToggleIconshow}>
+                                        </lightning-icon>
+                                        </div>
+                                    </template>
+                                </template>
+                            </lightning-tab>
+                        </template>
+                    </lightning-tabset>
+                </template>
+            </lightning-card>
+        -->
+            </div>
+        </div>
+
+        <div class="slds-col slds-size_8-of-12 sape-2 ">
+            <lightning-card icon-name="utility:photo" title="Photo Gallery">
+                <!-- <template if:true={allimages}>
+                    <lightning-button variant="brand" label="Download" onclick={downloadAllImages}
+                        style="position: absolute !important;right:15px;top:8px;"></lightning-button>
+                </template> -->
+                <template if:false={teamon}>
+                    <div></div>
+                </template>
+                <template if:true={showDataLoading}>
+                    <lightning-spinner alternative-text="Loading" size="large"></lightning-spinner>
+                </template>
+                <template if:false={isPhotoNotAvailable}>
+                    <div id="lightgallery" class="slds-box slds-m-top_small slds-m-left_small">
+                        <div class="gallery-scroll-view">
+                            <!-- <template for:each={localphotos} for:item="photo">
+                            <div class="photo-eleme" key={photo.versionID}
+                                 data-myversion={photo.versionID}
+                                 data-src={photo.downloadUrl}>
+                                 {photo.renditionUrl}
+                                <img src={photo.renditionUrl} />
+                                
+                                <div data-id="Audit DateCheck" style="background-color: rgb(70, 69, 69); color:white; display: block; font-size:12px;">
+                                    <div style="display:flex; padding-top:5px; padding-left:3px; padding-bottom:5px;">
+                                        <p style="background-color:white; border-radius:5px; color:rgb(70, 69, 69); width:80px; font-size:12px; padding-left:3px;">
+                                            Audit Date
+                                        </p>
+                                        <p style="padding-left:3px; font-size:12px;">
+                                            {photo.auditDate}
+                                        </p>
+                                    </div>
+                                </div>
+                
+                                <template for:each={mytloKeys} for:item="key">
+                                    <template if:true={isPreview(key)}>
+                                        <div data-id={`${key}Check`} style="background-color: rgb(70, 69, 69); color:white; display: block; font-size:12px;">
+                                            <div style="display:flex; padding-top:5px; padding-left:3px; padding-bottom:5px;">
+                                                <p style="background-color:white; border-radius:5px; color:rgb(70, 69, 69); width:80px; font-size:12px; padding-left:3px;">
+                                                    {key}
+                                                </p>
+                                                <p style="padding-left:3px; font-size:12px;">
+                                                    {mytlo[key]}
+                                                </p>
+                                            </div>
+                                        </div>
+                                    </template>
+                                    <template if:true={isHide(key)}>
+                                        <div data-id={`${key}Check`} style="background-color: rgb(70, 69, 69); color:white; display: none; font-size:12px;">
+                                            <div style="display:flex; padding-top:5px; padding-left:3px; padding-bottom:5px;">
+                                                <p style="background-color:white; border-radius:5px; color:rgb(70, 69, 69); width:80px; font-size:12px; padding-left:3px;">
+                                                    {key}
+                                                </p>
+                                                <p style="padding-left:3px; font-size:12px;">
+                                                    {mytlo[key]}
+                                                </p>
+                                            </div>
+                                        </div>
+                                    </template>
+                                </template> 
+                            </div>
+                        </template> -->
+                        </div>
+                    </div>
+                    <br>
+                </template>
+                <template if:true={isPhotoNotAvailable}>
+                    <div class="slds-scoped-notification slds-media slds-media_center slds-scoped-notification_dark"
+                        role="status">
+                        <div class="slds-media__figure">
+                            <span class="slds-icon_container slds-icon-utility-info" title="information">
+                                <span class="slds-assistive-text">Message</span>
+                            </span>
+                        </div>
+                        <div class="slds-media__body">
+                            <p style="text-align:center;">It looks like there are no records available for applied/Saved
+                                filters. Please apply different filter values.
+                            </p>
+                        </div>
+                    </div>
+                </template>
+                <template if:true={leng}>
+                    <c-photo-pagination records={allimages} total-records={totallenrecord}
+                        onpagination={handlePagination}> </c-photo-pagination>
+                </template>
+
+            </lightning-card>
+        </div>
+    </div>
+
+</template>

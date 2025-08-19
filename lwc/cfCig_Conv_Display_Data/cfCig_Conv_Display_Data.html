@@ -1,0 +1,135 @@
+<template>
+            <div class="slds-grid slds-wrap slds-is-relative ">
+            <div style="position: fixed;z-index: 999999;top: 0;right: 0;">
+  <vlocity_ins-toast class="flexcard-toast-element" theme="slds" title="" message="" styletype=""> </vlocity_ins-toast>
+</div>
+            <div if:true={showLoader} class="slds-is-absolute vloc-loader_override" style="height: 100%; width: 100%; min-height:50px; background: transparent; z-index: 99;">
+  <div>
+   <vlocity_ins-spinner
+      variant="brand"
+      alternative-text="Loading content..."
+      size="medium"
+      theme="slds"
+      ></vlocity_ins-spinner>
+  </div>
+</div>
+            <template if:false={hasPermission}>
+              You don't have required permissions to view this card.
+            </template>
+            <template if:true={hasPermission}>
+              <template if:true={hasRecords}>
+                        <template for:each={_records} for:item="record" for:index="rindex">
+                            <vlocity_ins-flex-card-state if:true={record}  key={record._flex.uniqueKey} data-recordid={record.Id} record={record} data-statue="true"  data-index="0" data-rindex={rindex} class="cf-vlocity-state-0 cf-vlocity-state slds-size_12-of-12"  tracking-obj={_childCardTrackingObj} >
+      <div if:true={cardLoaded} class="slds-grid slds-wrap slds-card slds-p-around_x-small slds-m-bottom_x-small" style="">
+          <div data-style-id="state0element0" class="slds-col   slds-border_bottom slds-border_right slds-border_left slds-p-around_x-small  slds-size_12-of-12  " data-rindex={rindex} style="     border-bottom: #89A4CA 5px solid;border-right: #89A4CA 5px solid;border-left: #89A4CA 5px solid; 
+    border-radius:15px;     " >
+    <vlocity_ins-block data-style-id="state0element0_child"  record={record}  card={card}  collapsed-by-default="false"  collapsible="false"  label="Block"  theme="slds"  ><div class="slds-grid slds-wrap">
+          <div data-style-id="state0element0block_element0" class="slds-col   slds-size_12-of-12 " data-rindex={rindex} style="" ><vlocity_ins-output-field data-style-id="state0element0block_element0_child"   record={record}  card={card}  merge-field="%3Ch3%3ERelated%20To:%3C/h3%3E%0A%3Cp%3E%3Cspan%20style=%22font-size:%2014pt;%22%3E&lt;a%20href=%22/lightning/r/Account/%7BAccount_Id%7D/view%22&gt;%7BAccount_Name%7D&lt;/a&gt;%3C/span%3E%3C/p%3E"  theme="slds"  ></vlocity_ins-output-field>
+      </div>
+        </div></vlocity_ins-block>
+    </div><div data-style-id="state0element1" class="slds-col   slds-text-align_center slds-border_bottom slds-border_left slds-p-around_x-small  slds-size_12-of-12  " data-rindex={rindex} style="     border-bottom: #8AC38A 5px solid;border-left: #8AC38A 5px solid; 
+    border-radius:15px;     " >
+    <vlocity_ins-block data-style-id="state0element1_child"  record={record}  card={card}  collapsed-by-default="false"  collapsible="false"  label="Block"  theme="slds"  ><div class="slds-grid slds-wrap">
+          <div data-style-id="state0element1block_element0" class="slds-col  slds-border_bottom slds-border_left  slds-size_12-of-12  " data-rindex={rindex} style="     border-bottom: #8AC38A 5px inset;border-left: #8AC38A 5px inset; 
+    border-radius:15px;     " ><vlocity_ins-output-field data-style-id="state0element1block_element0_child"   record={record}  card={card}  currency="USD"  field-name="AnnualizedGP"  label="Post-Conversion Annualized Gross Profit"  locale="en-US"  placeholder="0"  styles='\{"label":{"fontSize":"20px"},"value":{"fontSize":"20px"}}'  type="currency"  theme="slds"  ></vlocity_ins-output-field>
+      </div><div data-style-id="state0element1block_element1" class="slds-col  slds-border_bottom slds-border_left  slds-size_12-of-12  " data-rindex={rindex} style="     border-bottom: #8AC38A 5px solid;border-left: #8AC38A 5px solid; 
+    border-radius:15px;     " ><vlocity_ins-output-field data-style-id="state0element1block_element1_child"   record={record}  card={card}  currency="USD"  field-name="AnnualizedGP$Change"  format="M/D/YYYY"  label="Annualized GP $ Change"  locale="en-US"  mask=""  placeholder="0"  styles='\{"label":{"fontSize":"20px"},"value":{"fontSize":"20px"}}'  type="currency"  theme="slds"  ></vlocity_ins-output-field>
+      </div><div data-style-id="state0element1block_element2" class="slds-col  slds-border_bottom slds-border_left  slds-size_12-of-12  " data-rindex={rindex} style="     border-bottom: #8AC38A 5px solid;border-left: #8AC38A 5px solid; 
+    border-radius:15px;     " ><vlocity_ins-output-field data-style-id="state0element1block_element2_child"   record={record}  card={card}  currency="USD"  field-name="AnnualizedGP%Change"  format="M/D/YYYY"  label="Annualized GP % Change"  locale="en-US"  mask=""  placeholder="0"  styles='\{"label":{"fontSize":"20px"},"value":{"fontSize":"20px"}}'  type="text"  theme="slds"  ></vlocity_ins-output-field>
+      </div>
+        </div></vlocity_ins-block>
+    </div><div data-style-id="state0element2" class="slds-col   slds-border_bottom slds-border_left slds-p-around_x-small  slds-size_6-of-12  " data-rindex={rindex} style="     border-bottom: #cccccc 5px solid;border-left: #cccccc 5px solid; 
+         " >
+    <vlocity_ins-block data-style-id="state0element2_child"  record={record}  card={card}  collapsed-by-default="false"  collapsible="false"  label="Block"  theme="slds"  ><div class="slds-grid slds-wrap">
+          <div data-style-id="state0element2block_element0" class="slds-col  slds-border_left slds-border_bottom  slds-size_12-of-12  " data-rindex={rindex} style="     border-left: #cccccc 5px solid;border-bottom: #cccccc 5px solid; 
+    border-radius:10px;     " ><vlocity_ins-output-field data-style-id="state0element2block_element0_child"   record={record}  card={card}  merge-field="%3Ch2%3ECalculations%3C/h2%3E"  theme="slds"  ></vlocity_ins-output-field>
+      </div><div data-style-id="state0element2block_element1" class="slds-col   slds-size_12-of-12 " data-rindex={rindex} style="" ><vlocity_ins-output-field data-style-id="state0element2block_element1_child"   record={record}  card={card}  field-name="AnnualizedGP"  label="Annualized GP"  placeholder="output"  type="text"  theme="slds"  ></vlocity_ins-output-field>
+      </div><div data-style-id="state0element2block_element2" class="slds-col   slds-size_12-of-12 " data-rindex={rindex} style="" ><vlocity_ins-output-field data-style-id="state0element2block_element2_child"   record={record}  card={card}  field-name="AnnualizedGP$Change"  label="Annualized GP $ Change"  placeholder="output"  type="text"  theme="slds"  ></vlocity_ins-output-field>
+      </div><div data-style-id="state0element2block_element3" class="slds-col   slds-size_12-of-12 " data-rindex={rindex} style="" ><vlocity_ins-output-field data-style-id="state0element2block_element3_child"   record={record}  card={card}  field-name="AnnualizedGP%Change"  label="Annualized GP % Change"  placeholder="output"  type="text"  theme="slds"  ></vlocity_ins-output-field>
+      </div><div data-style-id="state0element2block_element4" class="slds-col   slds-size_12-of-12 " data-rindex={rindex} style="" ><vlocity_ins-output-field data-style-id="state0element2block_element4_child"   record={record}  card={card}  field-name="CigaretteGP"  label="Pre-Conversion Cigarette Gross Profit"  placeholder="output"  type="text"  theme="slds"  ></vlocity_ins-output-field>
+      </div><div data-style-id="state0element2block_element5" class="slds-col   slds-size_12-of-12 " data-rindex={rindex} style="" ><vlocity_ins-output-field data-style-id="state0element2block_element5_child"   record={record}  card={card}  field-name="ConvertedCigaretteGP"  label="Converted Cigarette GP"  placeholder="output"  type="text"  theme="slds"  ></vlocity_ins-output-field>
+      </div><div data-style-id="state0element2block_element6" class="slds-col   slds-size_12-of-12 " data-rindex={rindex} style="" ><vlocity_ins-output-field data-style-id="state0element2block_element6_child"   record={record}  card={card}  field-name="NonConvertedCigaretteGP"  label="Non Converted Cigarette GP"  placeholder="output"  type="text"  theme="slds"  ></vlocity_ins-output-field>
+      </div>
+        </div></vlocity_ins-block>
+    </div><div data-style-id="state0element3" class="slds-col   slds-border_bottom slds-border_left slds-p-around_x-small  slds-size_6-of-12  " data-rindex={rindex} style="     border-bottom: #cccccc 5px solid;border-left: #cccccc 5px solid; 
+         " >
+    <vlocity_ins-block data-style-id="state0element3_child"  record={record}  card={card}  collapsed-by-default="false"  collapsible="false"  label="Block"  theme="slds"  ><div class="slds-grid slds-wrap">
+          <div data-style-id="state0element3block_element0" class="slds-col  slds-border_bottom slds-border_left  slds-size_12-of-12  " data-rindex={rindex} style="     border-bottom: #cccccc 5px solid;border-left: #cccccc 5px solid; 
+    border-radius:10px;     " ><vlocity_ins-output-field data-style-id="state0element3block_element0_child"   record={record}  card={card}  merge-field="%3Ch2%3EInputs%3C/h2%3E"  theme="slds"  ></vlocity_ins-output-field>
+      </div><div data-style-id="state0element3block_element1" class="slds-col   slds-size_12-of-12 " data-rindex={rindex} style="" ><vlocity_ins-output-field data-style-id="state0element3block_element1_child"   record={record}  card={card}  field-name="AnnualizedCigarettePacks"  label="Annualized Cigarette Packs"  mask="#,##0.###"  placeholder="output"  type="text"  theme="slds"  ></vlocity_ins-output-field>
+      </div><div data-style-id="state0element3block_element2" class="slds-col   slds-size_12-of-12 " data-rindex={rindex} style="" ><vlocity_ins-output-field data-style-id="state0element3block_element2_child"   record={record}  card={card}  field-name="AvgEQPrice"  label="Avg EQ Price"  placeholder="output"  type="text"  theme="slds"  ></vlocity_ins-output-field>
+      </div><div data-style-id="state0element3block_element3" class="slds-col   slds-size_12-of-12 " data-rindex={rindex} style="" ><vlocity_ins-output-field data-style-id="state0element3block_element3_child"   record={record}  card={card}  field-name="AvgCigarettePackPrice"  label="Avg Cigarette Pack Price"  placeholder="output"  type="text"  theme="slds"  ></vlocity_ins-output-field>
+      </div><div data-style-id="state0element3block_element4" class="slds-col   slds-size_12-of-12 " data-rindex={rindex} style="" ><vlocity_ins-output-field data-style-id="state0element3block_element4_child"   record={record}  card={card}  field-name="Margin-Cigarettes"  label="Margin-Cigarettes"  placeholder="output"  type="text"  theme="slds"  ></vlocity_ins-output-field>
+      </div><div data-style-id="state0element3block_element5" class="slds-col   slds-size_12-of-12 " data-rindex={rindex} style="" ><vlocity_ins-output-field data-style-id="state0element3block_element5_child"   record={record}  card={card}  field-name="Margin-VaporRK"  label="Margin-VaporRK"  placeholder="output"  type="text"  theme="slds"  ></vlocity_ins-output-field>
+      </div><div data-style-id="state0element3block_element6" class="slds-col   slds-size_12-of-12 " data-rindex={rindex} style="" ><vlocity_ins-output-field data-style-id="state0element3block_element6_child"   record={record}  card={card}  field-name="VolumeConversion"  label="Volume Conversion"  placeholder="output"  type="text"  theme="slds"  ></vlocity_ins-output-field>
+      </div>
+        </div></vlocity_ins-block>
+    </div>
+        </div>
+      </vlocity_ins-flex-card-state>
+                        </template>
+                      </template>
+                      <template if:false={hasRecords}>
+                            <vlocity_ins-flex-card-state  record={record} data-statue="false"  data-index="0" data-rindex={rindex} class="cf-vlocity-state-0 cf-vlocity-state slds-size_12-of-12"  tracking-obj={_childCardTrackingObj} >
+      <div if:true={cardLoaded} class="slds-grid slds-wrap slds-card slds-p-around_x-small slds-m-bottom_x-small" style="">
+          <div data-style-id="state0element0" class="slds-col   slds-border_bottom slds-border_right slds-border_left slds-p-around_x-small  slds-size_12-of-12  " data-rindex={rindex} style="     border-bottom: #89A4CA 5px solid;border-right: #89A4CA 5px solid;border-left: #89A4CA 5px solid; 
+    border-radius:15px;     " >
+    <vlocity_ins-block data-style-id="state0element0_child"  record={record}  card={card}  collapsed-by-default="false"  collapsible="false"  label="Block"  theme="slds"  ><div class="slds-grid slds-wrap">
+          <div data-style-id="state0element0block_element0" class="slds-col   slds-size_12-of-12 " data-rindex={rindex} style="" ><vlocity_ins-output-field data-style-id="state0element0block_element0_child"   record={record}  card={card}  merge-field="%3Ch3%3ERelated%20To:%3C/h3%3E%0A%3Cp%3E%3Cspan%20style=%22font-size:%2014pt;%22%3E&lt;a%20href=%22/lightning/r/Account/%7BAccount_Id%7D/view%22&gt;%7BAccount_Name%7D&lt;/a&gt;%3C/span%3E%3C/p%3E"  theme="slds"  ></vlocity_ins-output-field>
+      </div>
+        </div></vlocity_ins-block>
+    </div><div data-style-id="state0element1" class="slds-col   slds-text-align_center slds-border_bottom slds-border_left slds-p-around_x-small  slds-size_12-of-12  " data-rindex={rindex} style="     border-bottom: #8AC38A 5px solid;border-left: #8AC38A 5px solid; 
+    border-radius:15px;     " >
+    <vlocity_ins-block data-style-id="state0element1_child"  record={record}  card={card}  collapsed-by-default="false"  collapsible="false"  label="Block"  theme="slds"  ><div class="slds-grid slds-wrap">
+          <div data-style-id="state0element1block_element0" class="slds-col  slds-border_bottom slds-border_left  slds-size_12-of-12  " data-rindex={rindex} style="     border-bottom: #8AC38A 5px inset;border-left: #8AC38A 5px inset; 
+    border-radius:15px;     " ><vlocity_ins-output-field data-style-id="state0element1block_element0_child"   record={record}  card={card}  currency="USD"  field-name="AnnualizedGP"  label="Post-Conversion Annualized Gross Profit"  locale="en-US"  placeholder="0"  styles='\{"label":{"fontSize":"20px"},"value":{"fontSize":"20px"}}'  type="currency"  theme="slds"  ></vlocity_ins-output-field>
+      </div><div data-style-id="state0element1block_element1" class="slds-col  slds-border_bottom slds-border_left  slds-size_12-of-12  " data-rindex={rindex} style="     border-bottom: #8AC38A 5px solid;border-left: #8AC38A 5px solid; 
+    border-radius:15px;     " ><vlocity_ins-output-field data-style-id="state0element1block_element1_child"   record={record}  card={card}  currency="USD"  field-name="AnnualizedGP$Change"  format="M/D/YYYY"  label="Annualized GP $ Change"  locale="en-US"  mask=""  placeholder="0"  styles='\{"label":{"fontSize":"20px"},"value":{"fontSize":"20px"}}'  type="currency"  theme="slds"  ></vlocity_ins-output-field>
+      </div><div data-style-id="state0element1block_element2" class="slds-col  slds-border_bottom slds-border_left  slds-size_12-of-12  " data-rindex={rindex} style="     border-bottom: #8AC38A 5px solid;border-left: #8AC38A 5px solid; 
+    border-radius:15px;     " ><vlocity_ins-output-field data-style-id="state0element1block_element2_child"   record={record}  card={card}  currency="USD"  field-name="AnnualizedGP%Change"  format="M/D/YYYY"  label="Annualized GP % Change"  locale="en-US"  mask=""  placeholder="0"  styles='\{"label":{"fontSize":"20px"},"value":{"fontSize":"20px"}}'  type="text"  theme="slds"  ></vlocity_ins-output-field>
+      </div>
+        </div></vlocity_ins-block>
+    </div><div data-style-id="state0element2" class="slds-col   slds-border_bottom slds-border_left slds-p-around_x-small  slds-size_6-of-12  " data-rindex={rindex} style="     border-bottom: #cccccc 5px solid;border-left: #cccccc 5px solid; 
+         " >
+    <vlocity_ins-block data-style-id="state0element2_child"  record={record}  card={card}  collapsed-by-default="false"  collapsible="false"  label="Block"  theme="slds"  ><div class="slds-grid slds-wrap">
+          <div data-style-id="state0element2block_element0" class="slds-col  slds-border_left slds-border_bottom  slds-size_12-of-12  " data-rindex={rindex} style="     border-left: #cccccc 5px solid;border-bottom: #cccccc 5px solid; 
+    border-radius:10px;     " ><vlocity_ins-output-field data-style-id="state0element2block_element0_child"   record={record}  card={card}  merge-field="%3Ch2%3ECalculations%3C/h2%3E"  theme="slds"  ></vlocity_ins-output-field>
+      </div><div data-style-id="state0element2block_element1" class="slds-col   slds-size_12-of-12 " data-rindex={rindex} style="" ><vlocity_ins-output-field data-style-id="state0element2block_element1_child"   record={record}  card={card}  field-name="AnnualizedGP"  label="Annualized GP"  placeholder="output"  type="text"  theme="slds"  ></vlocity_ins-output-field>
+      </div><div data-style-id="state0element2block_element2" class="slds-col   slds-size_12-of-12 " data-rindex={rindex} style="" ><vlocity_ins-output-field data-style-id="state0element2block_element2_child"   record={record}  card={card}  field-name="AnnualizedGP$Change"  label="Annualized GP $ Change"  placeholder="output"  type="text"  theme="slds"  ></vlocity_ins-output-field>
+      </div><div data-style-id="state0element2block_element3" class="slds-col   slds-size_12-of-12 " data-rindex={rindex} style="" ><vlocity_ins-output-field data-style-id="state0element2block_element3_child"   record={record}  card={card}  field-name="AnnualizedGP%Change"  label="Annualized GP % Change"  placeholder="output"  type="text"  theme="slds"  ></vlocity_ins-output-field>
+      </div><div data-style-id="state0element2block_element4" class="slds-col   slds-size_12-of-12 " data-rindex={rindex} style="" ><vlocity_ins-output-field data-style-id="state0element2block_element4_child"   record={record}  card={card}  field-name="CigaretteGP"  label="Pre-Conversion Cigarette Gross Profit"  placeholder="output"  type="text"  theme="slds"  ></vlocity_ins-output-field>
+      </div><div data-style-id="state0element2block_element5" class="slds-col   slds-size_12-of-12 " data-rindex={rindex} style="" ><vlocity_ins-output-field data-style-id="state0element2block_element5_child"   record={record}  card={card}  field-name="ConvertedCigaretteGP"  label="Converted Cigarette GP"  placeholder="output"  type="text"  theme="slds"  ></vlocity_ins-output-field>
+      </div><div data-style-id="state0element2block_element6" class="slds-col   slds-size_12-of-12 " data-rindex={rindex} style="" ><vlocity_ins-output-field data-style-id="state0element2block_element6_child"   record={record}  card={card}  field-name="NonConvertedCigaretteGP"  label="Non Converted Cigarette GP"  placeholder="output"  type="text"  theme="slds"  ></vlocity_ins-output-field>
+      </div>
+        </div></vlocity_ins-block>
+    </div><div data-style-id="state0element3" class="slds-col   slds-border_bottom slds-border_left slds-p-around_x-small  slds-size_6-of-12  " data-rindex={rindex} style="     border-bottom: #cccccc 5px solid;border-left: #cccccc 5px solid; 
+         " >
+    <vlocity_ins-block data-style-id="state0element3_child"  record={record}  card={card}  collapsed-by-default="false"  collapsible="false"  label="Block"  theme="slds"  ><div class="slds-grid slds-wrap">
+          <div data-style-id="state0element3block_element0" class="slds-col  slds-border_bottom slds-border_left  slds-size_12-of-12  " data-rindex={rindex} style="     border-bottom: #cccccc 5px solid;border-left: #cccccc 5px solid; 
+    border-radius:10px;     " ><vlocity_ins-output-field data-style-id="state0element3block_element0_child"   record={record}  card={card}  merge-field="%3Ch2%3EInputs%3C/h2%3E"  theme="slds"  ></vlocity_ins-output-field>
+      </div><div data-style-id="state0element3block_element1" class="slds-col   slds-size_12-of-12 " data-rindex={rindex} style="" ><vlocity_ins-output-field data-style-id="state0element3block_element1_child"   record={record}  card={card}  field-name="AnnualizedCigarettePacks"  label="Annualized Cigarette Packs"  mask="#,##0.###"  placeholder="output"  type="text"  theme="slds"  ></vlocity_ins-output-field>
+      </div><div data-style-id="state0element3block_element2" class="slds-col   slds-size_12-of-12 " data-rindex={rindex} style="" ><vlocity_ins-output-field data-style-id="state0element3block_element2_child"   record={record}  card={card}  field-name="AvgEQPrice"  label="Avg EQ Price"  placeholder="output"  type="text"  theme="slds"  ></vlocity_ins-output-field>
+      </div><div data-style-id="state0element3block_element3" class="slds-col   slds-size_12-of-12 " data-rindex={rindex} style="" ><vlocity_ins-output-field data-style-id="state0element3block_element3_child"   record={record}  card={card}  field-name="AvgCigarettePackPrice"  label="Avg Cigarette Pack Price"  placeholder="output"  type="text"  theme="slds"  ></vlocity_ins-output-field>
+      </div><div data-style-id="state0element3block_element4" class="slds-col   slds-size_12-of-12 " data-rindex={rindex} style="" ><vlocity_ins-output-field data-style-id="state0element3block_element4_child"   record={record}  card={card}  field-name="Margin-Cigarettes"  label="Margin-Cigarettes"  placeholder="output"  type="text"  theme="slds"  ></vlocity_ins-output-field>
+      </div><div data-style-id="state0element3block_element5" class="slds-col   slds-size_12-of-12 " data-rindex={rindex} style="" ><vlocity_ins-output-field data-style-id="state0element3block_element5_child"   record={record}  card={card}  field-name="Margin-VaporRK"  label="Margin-VaporRK"  placeholder="output"  type="text"  theme="slds"  ></vlocity_ins-output-field>
+      </div><div data-style-id="state0element3block_element6" class="slds-col   slds-size_12-of-12 " data-rindex={rindex} style="" ><vlocity_ins-output-field data-style-id="state0element3block_element6_child"   record={record}  card={card}  field-name="VolumeConversion"  label="Volume Conversion"  placeholder="output"  type="text"  theme="slds"  ></vlocity_ins-output-field>
+      </div>
+        </div></vlocity_ins-block>
+    </div>
+        </div>
+      </vlocity_ins-flex-card-state>
+                      </template>
+            </template>
+            <template if:true={hasError}>
+            {error}
+            </template>
+            
+      <vlocity_ins-action action-wrapperclass="slds-hide" re-render-flyout class="action-trigger slds-col" onupdateos={updateOmniscript} onselectcards={updateSelectedCards} onsetvalue={updateAction} onfireactionevent={actionEvtHandler}>
+      
+      </vlocity_ins-action>
+  
+            <vlocity_ins-action class="execute-action" re-render-flyout action-wrapperclass="slds-hide" onupdateos={updateOmniscript} onselectcards={updateSelectedCards} onsetvalue={updateAction} onfireactionevent={actionEvtHandler}>
+            
+            </vlocity_ins-action>
+            </div>
+          </template>

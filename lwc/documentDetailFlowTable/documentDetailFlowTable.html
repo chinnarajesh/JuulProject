@@ -1,0 +1,18 @@
+<template>
+   
+    <lightning-card >
+        <template if:true={lstDocDetailFlowVar2}>
+            <lightning-datatable key-field="Id" 
+                                 data={lstDocDetailFlowVar2} 
+                                 columns={columns} 
+                                 onsave={handleSave}
+                                 draft-values={saveDraftValues} 
+                                 hide-checkbox-column 
+                                 show-row-number-column>
+                                 
+            </lightning-datatable>
+           
+        </template>
+    </lightning-card>
+
+</template>

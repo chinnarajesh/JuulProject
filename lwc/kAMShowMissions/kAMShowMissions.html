@@ -1,0 +1,90 @@
+<template>
+    <header class="slds-modal__header slds-size_1-of-1">
+        <h2 id="modal-heading-01" class="slds-text-heading_medium slds-hyphenate">Select Associated Missions</h2>
+    </header>
+    <div class="slds-modal__content slds-p-around_medium slds-size_1-of-1" id="modal-content-id-1">
+        <div class="slds-scrollable" style="height:calc(100vh - 350px)">
+            <div class="lgc-bg container_height">
+
+                <template if:true={loading}>
+                    <div class="loader">
+                        <lightning-spinner alternative-text="Loading"></lightning-spinner>
+                    </div>
+                </template>
+
+                <template if:false={loading}>
+                    <table class="slds-table slds-table_cell-buffer slds-table_bordered slds-table_col-bordered">
+                        <thead>
+                            <tr class="slds-text-title_caps">
+                                
+                                <th scope="col">
+                                    <div class="slds-truncate" title="Mission Name">Mission Name</div>
+                                    <div class="slds-resizable">
+                                    </div>
+                                </th>
+
+                                <th scope="col">
+                                    <div class="slds-truncate" title="Commercial Activity">Commercial Activity</div>
+                                    <div class="slds-resizable">
+                                    </div>
+                                </th>
+
+                                <th scope="col">
+                                    <div class="slds-truncate" title="Mission Type">Mission Type</div>
+                                    <div class="slds-resizable">
+                                    </div>
+                                </th>
+                                <th scope="col">
+                                    <div class="slds-truncate" title="Mission Status">Mission Status</div>
+                                    <div class="slds-resizable">
+                                    </div>
+                                </th>
+                                <th scope="col">
+                                    <div class="slds-truncate" title="Start Date">Start Date</div>
+                                    <div class="slds-resizable">
+                                    </div>
+                                </th>
+                                <th scope="col">
+                                    <div class="slds-truncate" title="End Date">End Date</div>
+                                    <div class="slds-resizable">
+                                    </div>
+                                </th>
+                                <th scope="col">
+                                    <div class="slds-truncate" title="Special Instructions">Special Instructions</div>
+                                    <div class="slds-resizable">
+                                    </div>
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <template for:each={relatedMissionData} for:item="relatedMissionRecord">
+                                <tr key={relatedMissionRecord.index}>
+                                    <td>
+                                        <a href="#" onclick={openMissionRecord} id={relatedMissionRecord.index}>{relatedMissionRecord.Name}</a>
+                                    </td>
+                                    <td>{relatedMissionRecord.CommercialActivity}</td>
+                                    <td>{relatedMissionRecord.Type}</td>
+                                    <td>{relatedMissionRecord.Status}</td>
+                                    <td>{relatedMissionRecord.StartDate}</td>
+                                    <td>{relatedMissionRecord.EndDate}</td>
+                                    <td>
+                                        <lightning-formatted-rich-text value={relatedMissionRecord.Description}>
+                                        </lightning-formatted-rich-text>
+                                    </td>
+
+                                </tr>
+                            </template>
+                        </tbody>
+                    </table>
+                </template>
+
+            </div>
+        </div>
+    </div>
+    <footer class="slds-modal__footer slds-size_1-of-1 manage_footer">
+
+            <lightning-button variant="Neutral" class="slds-button" label="Cancel" onclick={closeModal}>
+            </lightning-button>
+        
+    </footer>
+</template>

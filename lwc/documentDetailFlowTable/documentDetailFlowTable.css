@@ -1,0 +1,15 @@
+/*.THIS .table-test thead th {
+background-color: hsl(357, 80%, 58%);
+color: black}
+
+.contentClass {
+    font-weight: bold;
+	background-color: hsl(357, 80%, 58%);
+}*/
+
+.THIS {
+}
+.THIS .POdataTable thead th span { 
+background-color: #2a5596; 
+color: white;
+}

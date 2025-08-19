@@ -1,0 +1,7 @@
+<template>
+        <lightning-button-group class="slds-grid slds-grid_align-end">
+                <c-previous-flow-button if:true={previousButtonVisible} onpreviousselect={handlePreviousSelect}></c-previous-flow-button>
+                <c-submit-flow-button if:true={submitButtonVisible} onsubmitselect={handleSubmitSelect}></c-submit-flow-button>     
+                <c-next-flow-button if:true={nextButtonVisible} onnextselect={handleNextSelect}></c-next-flow-button> 
+        </lightning-button-group>
+</template>

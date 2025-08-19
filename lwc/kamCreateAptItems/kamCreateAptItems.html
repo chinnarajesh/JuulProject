@@ -1,0 +1,53 @@
+<template>
+    <div class="slds-scrollable" style="height:35vh">
+        <template if:true={loading}>
+            <div class="loader">
+                <lightning-spinner alternative-text="Loading"></lightning-spinner>
+            </div>
+        </template>
+
+        <template if:false={loading}>
+            <template for:each={currentPageData} for:item="item" for:index="index">
+                <div key={item.Id} class="planTemplate">
+                    <lightning-input type="checkbox" class="template" label={item.name} value={item.Id}
+                        onchange={handleCheckboxChange}>
+                    </lightning-input>
+                    <template if:true={item.expanded}>
+                        <lightning-accordion allow-multiple-sections-open key={item.Id}
+                            onsectiontoggle={handleSectionToggle} active-section-name={activeSections}>
+                            <lightning-accordion-section name="A" label="Select Template Items">
+                                <template if:true={item._children}>
+                                    <lightning-tree-grid columns={columns} data={item._children} key-field="name"
+                                        onrowselection={handleSelect}>
+                                    </lightning-tree-grid>
+                                </template>
+                            </lightning-accordion-section>
+
+                            <lightning-accordion-section name="A" label="Select Store Products">
+                                <template if:true={item.products}>
+                                    <lightning-datatable key-field="id" data={item.products} class="store_products"
+                                        columns={storeProductColumns} onrowselection={handleStoreProductsSelect}>
+                                    </lightning-datatable>
+                                </template>
+                            </lightning-accordion-section>
+
+                            <lightning-accordion-section name="A" label="Select Commercial Activity Items">
+                                <template if:true={item.commercialActivityItems}>
+                                    <lightning-datatable key-field="id" class="commercial_products"
+                                        data={item.commercialActivityItems} columns={commercialActivityColumns}
+                                        onrowselection={handleCommercialItemsSelect}>
+                                    </lightning-datatable>
+                                </template>
+                            </lightning-accordion-section>
+                        </lightning-accordion>
+                    </template>
+                </div>
+            </template>
+        </template>
+    </div>
+    <div style="text-align:center; padding-top: 16px">
+        <c-kam-pagination-navigator onprevious={onPrev} onnext={onNext} loading={loading}
+            disable-next-button={disableNextButton} disable-previous-button={disablePreviousButton}>
+        </c-kam-pagination-navigator>
+    </div>
+</template>

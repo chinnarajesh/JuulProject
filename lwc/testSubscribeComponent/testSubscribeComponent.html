@@ -1,0 +1,21 @@
+<template>
+    <div style="font-size:4px;display:flex;"><lightning-icon icon-name="utility:warning" alternative-text="Preview" size="xx-small" title="Preview"></lightning-icon><p>This component is used for associate states navigation purpose don't remove </p></div>
+    <template if:true={popmodel}>
+        <section role="dialog" tabindex="-1" aria-labelledby="modal-heading-01" aria-modal="true" aria-describedby="modal-content-id-1" class="slds-modal slds-fade-in-open">
+            <div class="slds-modal__container">
+                <!-- <c-k-am-associate-states></c-k-am-associate-states> -->
+                <c-kam-associate-states-clone record-id={recordId} onclose={closeAssociate} onrefresh={closeAssociate}></c-kam-associate-states-clone>
+            </div>
+        </section>
+    <div class="slds-backdrop slds-backdrop_open"></div>
+    </template>
+    <template lwc:if={manageAPT}>
+        <section role="dialog" tabindex="-1" aria-labelledby="modal-heading-01" aria-modal="true" aria-describedby="modal-content-id-1" class="slds-modal slds-fade-in-open">
+            <div class="slds-modal__container">
+                <c-kam-manage-action-plan-template record-id={recordId} onclose={closeManageAPt} onrefresh={closeManageAPt}></c-kam-manage-action-plan-template>
+            </div>
+        </section>
+        <div class="slds-backdrop slds-backdrop_open"></div>
+    </template>
+    
+</template>

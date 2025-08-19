@@ -1,0 +1,51 @@
+<template>
+<!--<div style="height: 300px;">
+
+    <lightning-datatable
+            key-field="id"
+            data={data}
+            columns={columns}
+           >
+    </lightning-datatable>
+<lightning-button onclick={handleclick} value="Next" label="Next"></lightning-button>
+</div>-->
+
+ <div class="slds-scrollable" style="height:25rem;width:86rem">
+      <div class="slds-p-left_x-large slds-m-right_x-large slds-m-bottom_x-large slds-m-top_x-large">
+        <table class="slds-table slds-table_cell-buffer slds-table_bordered slds-table_col-bordered slds-table slds-border_left slds-border_right">
+          <thead>
+            <tr class="slds-text-title_caps">
+              <template for:each={columns} for:item="column">
+                <th scope="col" key={column.fieldName}>
+                  <b><div class="slds-truncate" title={column.label}>{column.label}</div></b>
+                </th>
+              </template>
+            </tr>
+          </thead>
+          <tbody>
+            <template for:each={Missions} for:item="missions">
+              <tr key={missions.Id}>
+                <td data-label="Action" style="width:10px">
+                  <!-- <input type="radio" name="Radiobutton" value={missions.Id} onchange={handleValuesSelect} >-->
+                  <div><input type="radio" name="radiobutton" value={missions.Id} onchange={handleValuesSelect}></div>
+                </td>
+                <td data-label="Name">
+                  <div class="slds-truncate" title="Name">{missions.Name}</div>
+                </td>
+                <td data-label="Customer PO Number">
+                  <div class="slds-truncate" title="Customer PO Number">{missions.Customer_PO_Number__c}</div>
+                </td>
+                <td data-label="Order Date">
+                  <div class="slds-truncate" title="Order Date">{missions.Order_Date__c}</div>
+                </td>
+                <td data-label="Order Total">
+                  <div class="slds-truncate" title="Order Total">{missions.orderTotal__c}</div>
+                </td>
+              </tr>
+            </template>
+          </tbody>
+        </table>
+      </div>
+ </div>
+
+</template>

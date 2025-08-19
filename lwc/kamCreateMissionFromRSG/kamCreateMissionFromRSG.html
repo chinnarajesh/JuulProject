@@ -1,0 +1,64 @@
+<template>
+    <header class="slds-modal__header slds-size_1-of-1">
+        <h2 id="modal-heading-01" class="slds-text-heading_medium slds-hyphenate">Select Action Plan
+            Templates To Create Missions</h2>
+    </header>
+    <div class="slds-modal__content slds-p-around_medium slds-size_1-of-1" id="modal-content-id-1">
+        <div class="slds-grid slds-gutters products_container">
+            <div class="slds-col slds-size_2-of-3">
+                <!-- <lightning-combobox name="planogram" label="Planogram" value={selectedPlanogram} placeholder="Select Planogram"
+                    options={options} onchange={handleChange}>
+                </lightning-combobox> -->
+                <lightning-record-edit-form object-api-name="RetailLocationGroup__c" record-id={recordId}>
+                    <lightning-input-field field-name="PlanogramId__c" onchange={handleChange}>
+                    </lightning-input-field>
+                </lightning-record-edit-form>
+            </div>
+            <!-- <div class="slds-col slds-size_1-of-3">
+                <img src="https://images.unsplash.com/photo-1542362567-b07e54358753?ixlib=rb-1.2.1&q=80&fm=jpg&crop=entropy&cs=tinysrgb&w=1080&fit=max&ixid=eyJhcHBfaWQiOjEyMDd9"
+                    alt="uploading" width="60" height="120" class="image_viewer" />
+            </div> -->
+        </div>
+        <lightning-tabset variant="scoped">
+            <lightning-tab label="Account Plan">
+                <c-kam-create-apt-items record-id={recordId} onactionplanselect={actionPlanAccountSelectHandler}>
+                </c-kam-create-apt-items>
+            </lightning-tab>
+            <lightning-tab label="Promotion">
+                <c-kam-create-promotion-template-items record-id={recordId}
+                    onactionplanpromotionselect={actionPlanPromotionSelectHandler}>
+                </c-kam-create-promotion-template-items>
+            </lightning-tab>
+            <lightning-tab label="Reset">
+                <c-kam-create-reset-template-items record-id={recordId}
+                    onactionplanresetselect={actionPlanResetSelectHandler}>
+                </c-kam-create-reset-template-items>
+            </lightning-tab>
+        </lightning-tabset>
+    </div>
+
+    <footer class="slds-modal__footer slds-size_1-of-1">
+        <template if:true={saveInProgress}>
+            <div class="loader">
+                <lightning-spinner alternative-text="Loading"></lightning-spinner>
+            </div>
+        </template>
+
+        <template if:false={saveInProgress}>
+            <lightning-button variant="Brand" class="slds-button" label="Cascade to Doors"
+                onclick={handleCascadeToDoorClick}>
+            </lightning-button>
+        </template>
+
+        <lightning-button variant="Brand" class="slds-button" label="Save">
+        </lightning-button>
+
+        <lightning-button variant="Neutral" class="slds-button" label="Cancel" onclick={closeModal}>
+        </lightning-button>
+    </footer>
+
+    <template if:true={showPopup}>
+        <c-kam-common-alert message={message} onyes={createVisits} oncancel={handlePopupCancel}></c-kam-common-alert>
+        <div class="slds-backdrop slds-backdrop_open backdrop_container"></div>
+    </template>
+</template>

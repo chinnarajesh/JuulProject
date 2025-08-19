@@ -1,0 +1,123 @@
+<template>
+            <div class="slds-grid slds-wrap slds-is-relative ">
+            <div style="position: fixed;z-index: 999999;top: 0;right: 0;">
+  <vlocity_ins-toast class="flexcard-toast-element" theme="slds" title="" message="" styletype=""> </vlocity_ins-toast>
+</div>
+            <div if:true={showLoader} class="slds-is-absolute vloc-loader_override" style="height: 100%; width: 100%; min-height:50px; background: transparent; z-index: 99;">
+  <div>
+   <vlocity_ins-spinner
+      variant="brand"
+      alternative-text="Loading content..."
+      size="medium"
+      theme="slds"
+      ></vlocity_ins-spinner>
+  </div>
+</div>
+            <template if:false={hasPermission}>
+              You don't have required permissions to view this card.
+            </template>
+            <template if:true={hasPermission}>
+              <template if:true={hasRecords}>
+                        <template for:each={_records} for:item="record" for:index="rindex">
+                            <vlocity_ins-flex-card-state if:true={record}  key={record._flex.uniqueKey} data-recordid={record.Id} record={record} data-statue="true"  data-index="0" data-rindex={rindex} class="cf-vlocity-state-0 cf-vlocity-state slds-size_12-of-12"  tracking-obj={_childCardTrackingObj} >
+      <div if:true={cardLoaded} class="slds-grid slds-wrap slds-card slds-p-around_x-small slds-m-bottom_x-small" style="">
+          <div data-style-id="state0element0" class="slds-col   slds-p-around_x-small slds-size_12-of-12 " data-rindex={rindex} style="" >
+    <vlocity_ins-block data-style-id="state0element0_child"  card={card}  record={record}  label="Block"  collapsible="false"  collapsed-by-default="false"  theme="slds"  ><div class="slds-grid slds-wrap">
+          <div data-style-id="state0element0block_element0" class="slds-col   slds-size_1-of-12  " data-rindex={rindex} style="" ><vlocity_ins-flex-action data-style-id="state0element0block_element0_child"  tracking-obj={_childCardTrackingObj}  class= "state0element0block_element0_child flexActionElement" 
+        data-action-element-class="state0element0block_element0_child" onexecuteaction={performAction} data-show-spinner="false"
+        data-element-label="block0action0"   state-obj={record}  card={card}  record={record}  label="Action"  icon-name="standard-default"  action-list='\[{"stateAction":{"id":"test-action","type":"Custom","targetType":"Web Page","openUrlIn":"Current Window","Web Page":{"targetName":"/apex"}}}]'  theme="slds"  ></vlocity_ins-flex-action>
+      </div><div data-style-id="state0element0block_element1" class="slds-col   slds-size_2-of-12  " data-rindex={rindex} style="" ><vlocity_ins-output-field data-style-id="state0element0block_element1_child"   card={card}  record={record}  merge-field="%3Cdiv%3EAccount%20Name%3C/div%3E"  theme="slds"  ></vlocity_ins-output-field>
+      </div><div data-style-id="state0element0block_element2" class="slds-col   slds-size_2-of-12  " data-rindex={rindex} style="" ><vlocity_ins-output-field data-style-id="state0element0block_element2_child"   card={card}  record={record}  merge-field="%3Cdiv%3EAccount%20Type%3C/div%3E"  theme="slds"  ></vlocity_ins-output-field>
+      </div><div data-style-id="state0element0block_element3" class="slds-col   slds-size_2-of-12  " data-rindex={rindex} style="" ><vlocity_ins-output-field data-style-id="state0element0block_element3_child"   card={card}  record={record}  merge-field="%3Cdiv%3EShipping%20Street%3C/div%3E"  theme="slds"  ></vlocity_ins-output-field>
+      </div><div data-style-id="state0element0block_element4" class="slds-col   slds-size_2-of-12  " data-rindex={rindex} style="" ><vlocity_ins-output-field data-style-id="state0element0block_element4_child"   card={card}  record={record}  merge-field="%3Cdiv%3EShipping%20City%3C/div%3E"  theme="slds"  ></vlocity_ins-output-field>
+      </div><div data-style-id="state0element0block_element5" class="slds-col   slds-size_1-of-12  " data-rindex={rindex} style="" ><vlocity_ins-output-field data-style-id="state0element0block_element5_child"   card={card}  record={record}  merge-field="%3Cdiv%3EShipping%20State%3C/div%3E"  theme="slds"  ></vlocity_ins-output-field>
+      </div><div data-style-id="state0element0block_element6" class="slds-col   slds-size_1-of-12  " data-rindex={rindex} style="" ><vlocity_ins-output-field data-style-id="state0element0block_element6_child"   card={card}  record={record}  merge-field="%3Cdiv%3EShipping%20Country%3C/div%3E"  theme="slds"  ></vlocity_ins-output-field>
+      </div><div data-style-id="state0element0block_element7" class="slds-col   slds-size_1-of-12  " data-rindex={rindex} style="" ><vlocity_ins-flex-action data-style-id="state0element0block_element7_child"  tracking-obj={_childCardTrackingObj}  class= "state0element0block_element7_child flexActionElement" 
+        data-action-element-class="state0element0block_element7_child" onexecuteaction={performAction} data-show-spinner="false"
+        data-element-label="block0action8"   state-obj={record}  card={card}  record={record}  label=" "  icon-name="standard-default"  action-list='\[{"stateAction":{"id":"test-action","type":"Custom","targetType":"Web Page","openUrlIn":"Current Window","Web Page":{"targetName":"/apex"}}}]'  theme="slds"  ></vlocity_ins-flex-action>
+      </div>
+        </div></vlocity_ins-block>
+    </div><div data-style-id="state0element1" class="slds-col   slds-p-around_x-small slds-size_12-of-12 " data-rindex={rindex} style="" >
+    <vlocity_ins-block data-style-id="state0element1_child"  card={card}  record={record}  label="\{Name} {Type}"  collapsible="true"  collapsed-by-default="false"  theme="slds"  ><div class="slds-grid slds-wrap">
+          <div data-style-id="state0element1block_element0" class="slds-col    slds-size_12-of-12  " data-rindex={rindex} style="      
+         " >
+    <vlocity_ins-block data-style-id="state0element1block_element0_child"  card={card}  record={record}  label="Block"  collapsible="false"  collapsed-by-default="false"  theme="slds"  ><div class="slds-grid slds-wrap">
+          <div data-style-id="state0element1block_element0block_element0" class="slds-col   slds-size_1-of-12  " data-rindex={rindex} style="" ><vlocity_ins-flex-action data-style-id="state0element1block_element0block_element0_child"  tracking-obj={_childCardTrackingObj}  class= "state0element1block_element0block_element0_child flexActionElement" 
+        data-action-element-class="state0element1block_element0block_element0_child" onexecuteaction={performAction} data-show-spinner="false"
+        data-element-label="block0block0action7"   state-obj={record}  card={card}  record={record}  label=" "  icon-name="standard-default"  action-list='\[{"stateAction":{"id":"flex-action-1689894459021","type":"cardAction","targetType":"Web Page","openUrlIn":"Current Window","Web Page":{"targetName":"/apex"},"eventName":"selectcards"},"key":"1689894427741-8xcbche1c","label":"Action","draggable":true,"isOpen":true,"actionIndex":0}]'  flyout-details='\{}'  theme="slds"  ></vlocity_ins-flex-action>
+      </div><div data-style-id="state0element1block_element0block_element1" class="slds-col   slds-size_2-of-12  " data-rindex={rindex} style="" ><vlocity_ins-output-field data-style-id="state0element1block_element0block_element1_child"   card={card}  record={record}  placeholder="output"  type="text"  label="Account Name"  field-name="Name"  theme="slds"  ></vlocity_ins-output-field>
+      </div><div data-style-id="state0element1block_element0block_element2" class="slds-col   slds-size_2-of-12  " data-rindex={rindex} style="" ><vlocity_ins-output-field data-style-id="state0element1block_element0block_element2_child"   card={card}  record={record}  placeholder="output"  type="text"  label="Account Type"  field-name="Type"  theme="slds"  ></vlocity_ins-output-field>
+      </div><div data-style-id="state0element1block_element0block_element3" class="slds-col   slds-size_2-of-12  " data-rindex={rindex} style="" ><vlocity_ins-output-field data-style-id="state0element1block_element0block_element3_child"   card={card}  record={record}  placeholder="output"  type="text"  label="Shipping Street"  field-name="ShippingStreet"  theme="slds"  ></vlocity_ins-output-field>
+      </div><div data-style-id="state0element1block_element0block_element4" class="slds-col   slds-size_2-of-12  " data-rindex={rindex} style="" ><vlocity_ins-output-field data-style-id="state0element1block_element0block_element4_child"   card={card}  record={record}  placeholder="output"  type="text"  label="Shipping City"  field-name="ShippingCity"  theme="slds"  ></vlocity_ins-output-field>
+      </div><div data-style-id="state0element1block_element0block_element5" class="slds-col   slds-size_1-of-12  " data-rindex={rindex} style="" ><vlocity_ins-output-field data-style-id="state0element1block_element0block_element5_child"   card={card}  record={record}  placeholder="output"  type="text"  label="Shipping State"  field-name="ShippingState"  theme="slds"  ></vlocity_ins-output-field>
+      </div><div data-style-id="state0element1block_element0block_element6" class="slds-col   slds-size_1-of-12  " data-rindex={rindex} style="" ><vlocity_ins-output-field data-style-id="state0element1block_element0block_element6_child"   card={card}  record={record}  placeholder="output"  type="text"  label="Shipping Country"  field-name="ShippingCountry"  theme="slds"  ></vlocity_ins-output-field>
+      </div><div data-style-id="state0element1block_element0block_element7" class="slds-col   slds-size_1-of-12  " data-rindex={rindex} style="" ><vlocity_ins-flex-action data-style-id="state0element1block_element0block_element7_child"  tracking-obj={_childCardTrackingObj}  class= "state0element1block_element0block_element7_child flexActionElement" 
+        data-action-element-class="state0element1block_element0block_element7_child" onexecuteaction={performAction} data-show-spinner="false"
+        data-element-label="block0block0action6"   state-obj={record}  card={card}  record={record}  label="Edit"  icon-name="standard-default"  action-list='\[{"stateAction":{"id":"test-action","type":"Custom","targetType":"Web Page","openUrlIn":"Current Window","Web Page":{"targetName":"/apex"}}}]'  display-as-button="false"  hide-action-icon="false"  theme="slds"  ></vlocity_ins-flex-action>
+      </div>
+        </div></vlocity_ins-block>
+    </div>
+        </div></vlocity_ins-block>
+    </div>
+        </div>
+      </vlocity_ins-flex-card-state>
+                        </template>
+                      </template>
+                      <template if:false={hasRecords}>
+                            <vlocity_ins-flex-card-state  record={record} data-statue="false"  data-index="0" data-rindex={rindex} class="cf-vlocity-state-0 cf-vlocity-state slds-size_12-of-12"  tracking-obj={_childCardTrackingObj} >
+      <div if:true={cardLoaded} class="slds-grid slds-wrap slds-card slds-p-around_x-small slds-m-bottom_x-small" style="">
+          <div data-style-id="state0element0" class="slds-col   slds-p-around_x-small slds-size_12-of-12 " data-rindex={rindex} style="" >
+    <vlocity_ins-block data-style-id="state0element0_child"  card={card}  record={record}  label="Block"  collapsible="false"  collapsed-by-default="false"  theme="slds"  ><div class="slds-grid slds-wrap">
+          <div data-style-id="state0element0block_element0" class="slds-col   slds-size_1-of-12  " data-rindex={rindex} style="" ><vlocity_ins-flex-action data-style-id="state0element0block_element0_child"  tracking-obj={_childCardTrackingObj}  class= "state0element0block_element0_child flexActionElement" 
+        data-action-element-class="state0element0block_element0_child" onexecuteaction={performAction} data-show-spinner="false"
+        data-element-label="block0action0"   state-obj={record}  card={card}  record={record}  label="Action"  icon-name="standard-default"  action-list='\[{"stateAction":{"id":"test-action","type":"Custom","targetType":"Web Page","openUrlIn":"Current Window","Web Page":{"targetName":"/apex"}}}]'  theme="slds"  ></vlocity_ins-flex-action>
+      </div><div data-style-id="state0element0block_element1" class="slds-col   slds-size_2-of-12  " data-rindex={rindex} style="" ><vlocity_ins-output-field data-style-id="state0element0block_element1_child"   card={card}  record={record}  merge-field="%3Cdiv%3EAccount%20Name%3C/div%3E"  theme="slds"  ></vlocity_ins-output-field>
+      </div><div data-style-id="state0element0block_element2" class="slds-col   slds-size_2-of-12  " data-rindex={rindex} style="" ><vlocity_ins-output-field data-style-id="state0element0block_element2_child"   card={card}  record={record}  merge-field="%3Cdiv%3EAccount%20Type%3C/div%3E"  theme="slds"  ></vlocity_ins-output-field>
+      </div><div data-style-id="state0element0block_element3" class="slds-col   slds-size_2-of-12  " data-rindex={rindex} style="" ><vlocity_ins-output-field data-style-id="state0element0block_element3_child"   card={card}  record={record}  merge-field="%3Cdiv%3EShipping%20Street%3C/div%3E"  theme="slds"  ></vlocity_ins-output-field>
+      </div><div data-style-id="state0element0block_element4" class="slds-col   slds-size_2-of-12  " data-rindex={rindex} style="" ><vlocity_ins-output-field data-style-id="state0element0block_element4_child"   card={card}  record={record}  merge-field="%3Cdiv%3EShipping%20City%3C/div%3E"  theme="slds"  ></vlocity_ins-output-field>
+      </div><div data-style-id="state0element0block_element5" class="slds-col   slds-size_1-of-12  " data-rindex={rindex} style="" ><vlocity_ins-output-field data-style-id="state0element0block_element5_child"   card={card}  record={record}  merge-field="%3Cdiv%3EShipping%20State%3C/div%3E"  theme="slds"  ></vlocity_ins-output-field>
+      </div><div data-style-id="state0element0block_element6" class="slds-col   slds-size_1-of-12  " data-rindex={rindex} style="" ><vlocity_ins-output-field data-style-id="state0element0block_element6_child"   card={card}  record={record}  merge-field="%3Cdiv%3EShipping%20Country%3C/div%3E"  theme="slds"  ></vlocity_ins-output-field>
+      </div><div data-style-id="state0element0block_element7" class="slds-col   slds-size_1-of-12  " data-rindex={rindex} style="" ><vlocity_ins-flex-action data-style-id="state0element0block_element7_child"  tracking-obj={_childCardTrackingObj}  class= "state0element0block_element7_child flexActionElement" 
+        data-action-element-class="state0element0block_element7_child" onexecuteaction={performAction} data-show-spinner="false"
+        data-element-label="block0action8"   state-obj={record}  card={card}  record={record}  label=" "  icon-name="standard-default"  action-list='\[{"stateAction":{"id":"test-action","type":"Custom","targetType":"Web Page","openUrlIn":"Current Window","Web Page":{"targetName":"/apex"}}}]'  theme="slds"  ></vlocity_ins-flex-action>
+      </div>
+        </div></vlocity_ins-block>
+    </div><div data-style-id="state0element1" class="slds-col   slds-p-around_x-small slds-size_12-of-12 " data-rindex={rindex} style="" >
+    <vlocity_ins-block data-style-id="state0element1_child"  card={card}  record={record}  label="\{Name} {Type}"  collapsible="true"  collapsed-by-default="false"  theme="slds"  ><div class="slds-grid slds-wrap">
+          <div data-style-id="state0element1block_element0" class="slds-col    slds-size_12-of-12  " data-rindex={rindex} style="      
+         " >
+    <vlocity_ins-block data-style-id="state0element1block_element0_child"  card={card}  record={record}  label="Block"  collapsible="false"  collapsed-by-default="false"  theme="slds"  ><div class="slds-grid slds-wrap">
+          <div data-style-id="state0element1block_element0block_element0" class="slds-col   slds-size_1-of-12  " data-rindex={rindex} style="" ><vlocity_ins-flex-action data-style-id="state0element1block_element0block_element0_child"  tracking-obj={_childCardTrackingObj}  class= "state0element1block_element0block_element0_child flexActionElement" 
+        data-action-element-class="state0element1block_element0block_element0_child" onexecuteaction={performAction} data-show-spinner="false"
+        data-element-label="block0block0action7"   state-obj={record}  card={card}  record={record}  label=" "  icon-name="standard-default"  action-list='\[{"stateAction":{"id":"flex-action-1689894459021","type":"cardAction","targetType":"Web Page","openUrlIn":"Current Window","Web Page":{"targetName":"/apex"},"eventName":"selectcards"},"key":"1689894427741-8xcbche1c","label":"Action","draggable":true,"isOpen":true,"actionIndex":0}]'  flyout-details='\{}'  theme="slds"  ></vlocity_ins-flex-action>
+      </div><div data-style-id="state0element1block_element0block_element1" class="slds-col   slds-size_2-of-12  " data-rindex={rindex} style="" ><vlocity_ins-output-field data-style-id="state0element1block_element0block_element1_child"   card={card}  record={record}  placeholder="output"  type="text"  label="Account Name"  field-name="Name"  theme="slds"  ></vlocity_ins-output-field>
+      </div><div data-style-id="state0element1block_element0block_element2" class="slds-col   slds-size_2-of-12  " data-rindex={rindex} style="" ><vlocity_ins-output-field data-style-id="state0element1block_element0block_element2_child"   card={card}  record={record}  placeholder="output"  type="text"  label="Account Type"  field-name="Type"  theme="slds"  ></vlocity_ins-output-field>
+      </div><div data-style-id="state0element1block_element0block_element3" class="slds-col   slds-size_2-of-12  " data-rindex={rindex} style="" ><vlocity_ins-output-field data-style-id="state0element1block_element0block_element3_child"   card={card}  record={record}  placeholder="output"  type="text"  label="Shipping Street"  field-name="ShippingStreet"  theme="slds"  ></vlocity_ins-output-field>
+      </div><div data-style-id="state0element1block_element0block_element4" class="slds-col   slds-size_2-of-12  " data-rindex={rindex} style="" ><vlocity_ins-output-field data-style-id="state0element1block_element0block_element4_child"   card={card}  record={record}  placeholder="output"  type="text"  label="Shipping City"  field-name="ShippingCity"  theme="slds"  ></vlocity_ins-output-field>
+      </div><div data-style-id="state0element1block_element0block_element5" class="slds-col   slds-size_1-of-12  " data-rindex={rindex} style="" ><vlocity_ins-output-field data-style-id="state0element1block_element0block_element5_child"   card={card}  record={record}  placeholder="output"  type="text"  label="Shipping State"  field-name="ShippingState"  theme="slds"  ></vlocity_ins-output-field>
+      </div><div data-style-id="state0element1block_element0block_element6" class="slds-col   slds-size_1-of-12  " data-rindex={rindex} style="" ><vlocity_ins-output-field data-style-id="state0element1block_element0block_element6_child"   card={card}  record={record}  placeholder="output"  type="text"  label="Shipping Country"  field-name="ShippingCountry"  theme="slds"  ></vlocity_ins-output-field>
+      </div><div data-style-id="state0element1block_element0block_element7" class="slds-col   slds-size_1-of-12  " data-rindex={rindex} style="" ><vlocity_ins-flex-action data-style-id="state0element1block_element0block_element7_child"  tracking-obj={_childCardTrackingObj}  class= "state0element1block_element0block_element7_child flexActionElement" 
+        data-action-element-class="state0element1block_element0block_element7_child" onexecuteaction={performAction} data-show-spinner="false"
+        data-element-label="block0block0action6"   state-obj={record}  card={card}  record={record}  label="Edit"  icon-name="standard-default"  action-list='\[{"stateAction":{"id":"test-action","type":"Custom","targetType":"Web Page","openUrlIn":"Current Window","Web Page":{"targetName":"/apex"}}}]'  display-as-button="false"  hide-action-icon="false"  theme="slds"  ></vlocity_ins-flex-action>
+      </div>
+        </div></vlocity_ins-block>
+    </div>
+        </div></vlocity_ins-block>
+    </div>
+        </div>
+      </vlocity_ins-flex-card-state>
+                      </template>
+            </template>
+            <template if:true={hasError}>
+            {error}
+            </template>
+            
+      <vlocity_ins-action action-wrapperclass="slds-hide" re-render-flyout class="action-trigger slds-col" onupdateos={updateOmniscript} onselectcards={updateSelectedCards} onsetvalue={updateAction} onfireactionevent={actionEvtHandler}>
+      
+      </vlocity_ins-action>
+  
+            <vlocity_ins-action class="execute-action" re-render-flyout action-wrapperclass="slds-hide" onupdateos={updateOmniscript} onselectcards={updateSelectedCards} onsetvalue={updateAction} onfireactionevent={actionEvtHandler}>
+            
+            </vlocity_ins-action>
+            </div>
+          </template>

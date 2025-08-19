@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<LightningComponentBundle xmlns="http://soap.sforce.com/2006/04/metadata">
+    <apiVersion>52.0</apiVersion>
+    <isExposed>true</isExposed>
+
+    <targets>
+        <target>lightning__RecordPage</target>
+        <target>lightning__AppPage</target>
+        <target>lightning__HomePage</target>
+        <target>lightning__FlowScreen</target>
+         <target>lightningCommunity__Page</target>
+    </targets>
+
+<targetConfigs>
+        <targetConfig targets="lightning__FlowScreen">
+       <propertyType name="T" extends="SObject" label="Input Type" description="Generic sObject data type used for input sObject properties" />
+       <property label="Record" name="SelectedValues" role="inputOnly" type="{T[]}" />
+      
+       <property label="SOID LWC" name="lstDocDetailFlowVar3" role="inputOnly" type= "String" />
+
+            <!--<propertyType name="sObj" extends="SObject" label="Select a SObject">
+             <property name="lstDocDetailFlowVar" label="Document Detail Records" type="{sObj[]}" label="Records" />
+             -->
+        </targetConfig>
+  </targetConfigs>
+
+   <!-- <targetConfigs>
+   role="inputOnly"
+        <targetConfig targets="lightning__FlowScreen">
+            <property name="columns" type="String"  /> 
+        </targetConfig>
+    </targetConfigs>-->
+    
+
+</LightningComponentBundle>

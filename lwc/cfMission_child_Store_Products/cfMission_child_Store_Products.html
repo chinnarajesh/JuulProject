@@ -1,0 +1,125 @@
+<template>
+            <div class="slds-grid slds-wrap slds-is-relative ">
+            <div style="position: fixed;z-index: 999999;top: 0;right: 0;">
+  <vlocity_ins-toast class="flexcard-toast-element" theme="slds" title="" message="" styletype=""> </vlocity_ins-toast>
+</div>
+            <div if:true={showLoader} class="slds-is-absolute vloc-loader_override" style="height: 100%; width: 100%; min-height:50px; background: transparent; z-index: 99;">
+  <div>
+   <vlocity_ins-spinner
+      variant="brand"
+      alternative-text="Loading content..."
+      size="medium"
+      theme="slds"
+      ></vlocity_ins-spinner>
+  </div>
+</div>
+            <template if:false={hasPermission}>
+              You don't have required permissions to view this card.
+            </template>
+            <template if:true={hasPermission}>
+              <template if:true={hasRecords}>
+                      <vlocity_ins-flex-card-state   data-statue="true"  data-index="0" data-rindex={rindex} class="cf-vlocity-state-0 cf-vlocity-state slds-size_12-of-12 "  tracking-obj={_childCardTrackingObj} >
+      <div if:true={cardLoaded} class="slds-grid slds-wrap " style="background-color:#f9fbfe;      
+         ">
+          <div data-style-id="state0element0" class="slds-col   slds-size_8-of-12  " data-rindex={rindex} style="      
+             left: 10px !important;
+    position: relative !important;" ><vlocity_ins-output-field data-style-id="state0element0_child"   card={card}  record={record}  placeholder=""  type="text"  field-name="JUUL Product"  field-level-help=""  label="JUUL Product"  styles='\{"label":{"color":"#808faa"}}'  theme="slds"  ></vlocity_ins-output-field>
+      </div><div data-style-id="state0element1" class="slds-col   slds-size_4-of-12  " data-rindex={rindex} style="      
+             left: 10px !important;
+    position: relative !important;" ><vlocity_ins-output-field data-style-id="state0element1_child"   card={card}  record={record}  placeholder=""  type="text"  field-name="ED Pricing"  field-level-help="Pricing based on offer. Ex. MB2 ED pricing is multiplied by 2"  label="ED Pricing"  styles='\{"label":{"color":"#808faa"}}'  theme="slds"  ></vlocity_ins-output-field>
+      </div><div data-style-id="state0element2" class="slds-col    slds-size_8-of-12  " data-rindex={rindex} style="      
+         padding-bottom:3px;" >
+    <vlocity_ins-block data-style-id="state0element2_child"  card={card}  record={record}  label="Block"  collapsible="false"  collapsed-by-default="false"  theme="slds"  ><div class="slds-grid slds-wrap">
+          <div data-style-id="state0element2block_element0" class="slds-col   slds-size_12-of-12  " data-rindex={rindex} style="      
+         padding-left: 10px !important;
+padding-bottom:3px;" ><c-cf-mission_child_-store_-product_-name data-style-id="state0element2block_element0_child"  tracking-obj={_childCardTrackingObj}  is-inside-parent={insideParent} parent-uniquekey={uniqueKey}  card-node=""  parent-record={record}  records={_records}  parent-mergefields={card}  record-id={recordId}  is-child-card-tracking-enabled="false"  parent-attribute='\{"ISL_Id":"{Parent.ISL_Id}"}'  object-api-name={objectApiName}  theme="slds"   onupdateparent={updateParentData}></c-cf-mission_child_-store_-product_-name>
+    </div>
+        </div></vlocity_ins-block>
+    </div><div data-style-id="state0element3" class="slds-col    slds-size_4-of-12  " data-rindex={rindex} style="      
+         " >
+    <vlocity_ins-block data-style-id="state0element3_child"  card={card}  record={record}  label="Block"  collapsible="false"  collapsed-by-default="false"  theme="slds"  ><div class="slds-grid slds-wrap">
+          <div data-style-id="state0element3block_element0" class="slds-col   slds-size_12-of-12  " data-rindex={rindex} style="      
+         padding-left: 10px !important;
+padding-bottom:3px;" ><c-cf-ssion_child_-store_-products_-planned_-p-t-c data-style-id="state0element3block_element0_child"  tracking-obj={_childCardTrackingObj}  is-inside-parent={insideParent} parent-uniquekey={uniqueKey}  card-node=""  parent-record={record}  records={_records}  parent-mergefields={card}  record-id={recordId}  is-child-card-tracking-enabled="false"  parent-attribute='\{"ISL_Id":"{Parent.ISL_Id}"}'  object-api-name={objectApiName}  theme="slds"   onupdateparent={updateParentData}></c-cf-ssion_child_-store_-products_-planned_-p-t-c>
+    </div>
+        </div></vlocity_ins-block>
+    </div><div data-style-id="state0element4" class="slds-col   slds-size_8-of-12  " data-rindex={rindex} style="      
+             left: 10px !important;
+    position: relative !important;
+padding-top:5px;" ><vlocity_ins-output-field data-style-id="state0element4_child"   card={card}  record={record}  placeholder=""  type="text"  field-name="Trade Collateral"  field-level-help=""  label="Trade Collateral"  styles='\{"label":{"color":"#808faa"}}'  theme="slds"  ></vlocity_ins-output-field>
+      </div><div data-style-id="state0element5" class="slds-col   slds-size_4-of-12  " data-rindex={rindex} style="      
+             left: 10px !important;
+    position: relative !important;
+    padding-top:5px;" ><vlocity_ins-output-field data-style-id="state0element5_child"   card={card}  record={record}  placeholder=""  type="text"  field-name="Status"  field-level-help=""  label="Status"  styles='\{"label":{"color":"#808faa"}}'  theme="slds"  ></vlocity_ins-output-field>
+      </div><div data-style-id="state0element6" class="slds-col    slds-size_12-of-12  " data-rindex={rindex} style="      
+         padding-bottom:3px;" >
+    <vlocity_ins-block data-style-id="state0element6_child"  card={card}  record={record}  label="Block"  collapsible="false"  collapsed-by-default="false"  theme="slds"  ><div class="slds-grid slds-wrap">
+          <div data-style-id="state0element6block_element0" class="slds-col   slds-size_12-of-12  " data-rindex={rindex} style="background-color:#f9fbfe;      
+             left: 10px !important;
+    position: relative !important;padding-bottom:3px;" ><c-cf-mission_child_-asset_-names data-style-id="state0element6block_element0_child"  tracking-obj={_childCardTrackingObj}  is-inside-parent={insideParent} parent-uniquekey={uniqueKey}  card-node=""  parent-record={record}  records={_records}  parent-mergefields={card}  record-id={recordId}  is-child-card-tracking-enabled="false"  parent-attribute='\{"ISL_Id":"{Parent.ISL_Id}"}'  object-api-name={objectApiName}  theme="slds"   onupdateparent={updateParentData}></c-cf-mission_child_-asset_-names>
+    </div>
+        </div></vlocity_ins-block>
+    </div>
+        </div>
+      </vlocity_ins-flex-card-state>
+                </template>
+                <template if:false={hasRecords}>
+                      <vlocity_ins-flex-card-state   data-statue="false"  data-index="0" data-rindex={rindex} class="cf-vlocity-state-0 cf-vlocity-state slds-size_12-of-12 "  tracking-obj={_childCardTrackingObj} >
+      <div if:true={cardLoaded} class="slds-grid slds-wrap " style="background-color:#f9fbfe;      
+         ">
+          <div data-style-id="state0element0" class="slds-col   slds-size_8-of-12  " data-rindex={rindex} style="      
+             left: 10px !important;
+    position: relative !important;" ><vlocity_ins-output-field data-style-id="state0element0_child"   card={card}  record={record}  placeholder=""  type="text"  field-name="JUUL Product"  field-level-help=""  label="JUUL Product"  styles='\{"label":{"color":"#808faa"}}'  theme="slds"  ></vlocity_ins-output-field>
+      </div><div data-style-id="state0element1" class="slds-col   slds-size_4-of-12  " data-rindex={rindex} style="      
+             left: 10px !important;
+    position: relative !important;" ><vlocity_ins-output-field data-style-id="state0element1_child"   card={card}  record={record}  placeholder=""  type="text"  field-name="ED Pricing"  field-level-help="Pricing based on offer. Ex. MB2 ED pricing is multiplied by 2"  label="ED Pricing"  styles='\{"label":{"color":"#808faa"}}'  theme="slds"  ></vlocity_ins-output-field>
+      </div><div data-style-id="state0element2" class="slds-col    slds-size_8-of-12  " data-rindex={rindex} style="      
+         padding-bottom:3px;" >
+    <vlocity_ins-block data-style-id="state0element2_child"  card={card}  record={record}  label="Block"  collapsible="false"  collapsed-by-default="false"  theme="slds"  ><div class="slds-grid slds-wrap">
+          <div data-style-id="state0element2block_element0" class="slds-col   slds-size_12-of-12  " data-rindex={rindex} style="      
+         padding-left: 10px !important;
+padding-bottom:3px;" ><c-cf-mission_child_-store_-product_-name data-style-id="state0element2block_element0_child"  tracking-obj={_childCardTrackingObj}  is-inside-parent={insideParent} parent-uniquekey={uniqueKey}  card-node=""  parent-record={record}  records={_records}  parent-mergefields={card}  record-id={recordId}  is-child-card-tracking-enabled="false"  parent-attribute='\{"ISL_Id":"{Parent.ISL_Id}"}'  object-api-name={objectApiName}  theme="slds"   onupdateparent={updateParentData}></c-cf-mission_child_-store_-product_-name>
+    </div>
+        </div></vlocity_ins-block>
+    </div><div data-style-id="state0element3" class="slds-col    slds-size_4-of-12  " data-rindex={rindex} style="      
+         " >
+    <vlocity_ins-block data-style-id="state0element3_child"  card={card}  record={record}  label="Block"  collapsible="false"  collapsed-by-default="false"  theme="slds"  ><div class="slds-grid slds-wrap">
+          <div data-style-id="state0element3block_element0" class="slds-col   slds-size_12-of-12  " data-rindex={rindex} style="      
+         padding-left: 10px !important;
+padding-bottom:3px;" ><c-cf-ssion_child_-store_-products_-planned_-p-t-c data-style-id="state0element3block_element0_child"  tracking-obj={_childCardTrackingObj}  is-inside-parent={insideParent} parent-uniquekey={uniqueKey}  card-node=""  parent-record={record}  records={_records}  parent-mergefields={card}  record-id={recordId}  is-child-card-tracking-enabled="false"  parent-attribute='\{"ISL_Id":"{Parent.ISL_Id}"}'  object-api-name={objectApiName}  theme="slds"   onupdateparent={updateParentData}></c-cf-ssion_child_-store_-products_-planned_-p-t-c>
+    </div>
+        </div></vlocity_ins-block>
+    </div><div data-style-id="state0element4" class="slds-col   slds-size_8-of-12  " data-rindex={rindex} style="      
+             left: 10px !important;
+    position: relative !important;
+padding-top:5px;" ><vlocity_ins-output-field data-style-id="state0element4_child"   card={card}  record={record}  placeholder=""  type="text"  field-name="Trade Collateral"  field-level-help=""  label="Trade Collateral"  styles='\{"label":{"color":"#808faa"}}'  theme="slds"  ></vlocity_ins-output-field>
+      </div><div data-style-id="state0element5" class="slds-col   slds-size_4-of-12  " data-rindex={rindex} style="      
+             left: 10px !important;
+    position: relative !important;
+    padding-top:5px;" ><vlocity_ins-output-field data-style-id="state0element5_child"   card={card}  record={record}  placeholder=""  type="text"  field-name="Status"  field-level-help=""  label="Status"  styles='\{"label":{"color":"#808faa"}}'  theme="slds"  ></vlocity_ins-output-field>
+      </div><div data-style-id="state0element6" class="slds-col    slds-size_12-of-12  " data-rindex={rindex} style="      
+         padding-bottom:3px;" >
+    <vlocity_ins-block data-style-id="state0element6_child"  card={card}  record={record}  label="Block"  collapsible="false"  collapsed-by-default="false"  theme="slds"  ><div class="slds-grid slds-wrap">
+          <div data-style-id="state0element6block_element0" class="slds-col   slds-size_12-of-12  " data-rindex={rindex} style="background-color:#f9fbfe;      
+             left: 10px !important;
+    position: relative !important;padding-bottom:3px;" ><c-cf-mission_child_-asset_-names data-style-id="state0element6block_element0_child"  tracking-obj={_childCardTrackingObj}  is-inside-parent={insideParent} parent-uniquekey={uniqueKey}  card-node=""  parent-record={record}  records={_records}  parent-mergefields={card}  record-id={recordId}  is-child-card-tracking-enabled="false"  parent-attribute='\{"ISL_Id":"{Parent.ISL_Id}"}'  object-api-name={objectApiName}  theme="slds"   onupdateparent={updateParentData}></c-cf-mission_child_-asset_-names>
+    </div>
+        </div></vlocity_ins-block>
+    </div>
+        </div>
+      </vlocity_ins-flex-card-state>
+                </template>
+            </template>
+            <template if:true={hasError}>
+            {error}
+            </template>
+            
+      <vlocity_ins-action action-wrapperclass="slds-hide" re-render-flyout class="action-trigger slds-col" onupdateos={updateOmniscript} onselectcards={updateSelectedCards} onsetvalue={updateAction} onfireactionevent={actionEvtHandler}>
+      
+      </vlocity_ins-action>
+  
+            <vlocity_ins-action class="execute-action" re-render-flyout action-wrapperclass="slds-hide" onupdateos={updateOmniscript} onselectcards={updateSelectedCards} onsetvalue={updateAction} onfireactionevent={actionEvtHandler}>
+            
+            </vlocity_ins-action>
+            </div>
+          </template>

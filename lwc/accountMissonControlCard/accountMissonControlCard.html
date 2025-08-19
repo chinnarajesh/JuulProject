@@ -1,0 +1,182 @@
+<template>
+  <template if:true={isMobile}>  
+    
+    
+   <!---Code Written : Subodh Shukla-->
+   <!---Date : 11/05/2021-->
+    <!---For Mission  data  -->
+    <div>
+    <template for:each={Missions1} for:item="missions1">
+      <div key={missions1.Id}>
+        <article class="slds-card">
+          <div class="slds-card__header slds-grid">
+            <header class="slds-media slds-media_center slds-has-flexi-truncate">
+              <div class="slds-media__body">
+                <h2 class="slds-card__header-title">
+                  <lightning-icon icon-name="standard:goals" size= "small" alternative-text="product" title="product"></lightning-icon>
+                  <a href="#" class="slds-card__header-link slds-truncate" title="Mission Task">&nbsp; &nbsp;<span><b>Selected Mission</b></span></a>
+                </h2>
+              <p class="slds-var-m-bottom_xx-small" >Commercial Activity: {missions1.CommercialActivity}</p>  
+              <p class="slds-var-m-bottom_xx-small" >Start Date: {missions1.missionStartDate}</p>
+              <p class="slds-var-m-bottom_xx-small" >End Date: {missions1.missionEndDate}</p>
+              <p class="slds-var-m-bottom_xx-small" >Status: {missions1.missionstatus}</p>              
+                <div>
+                  <template if:true={upsellOptions}>
+                    <lightning-combobox 
+                    name="Type"
+                    label="Mission Type" 
+                    value={missions1.missiontype} 
+                    options={upsellOptions} 
+                    onchange={handleUpsellChange} disabled>
+                    </lightning-combobox>
+                    <lightning-combobox 
+                      name="Status"
+                      label="Status" 
+                      value={missions1.missionstatus} 
+                      options={slaOptions} 
+                      onchange={handleChange} required>
+                      </lightning-combobox>
+                  </div><br>
+                  <lightning-button 
+                            label={toggleSaveLabel} 
+                            icon-name="utility:save" 
+                            slot="actions"
+                            onclick={handleStatusSave}>
+                  </lightning-button>
+                          
+                </template> 
+                </div>
+                <br>
+                <!--value={missions1.missionstatus} -->
+                <b>KAM Instructions</b>
+               <!-- <p class="slds-truncate" title="Special Instructions">{missions1.NormalText}</p>
+                <p class="slds-truncate" title="Special Instructions"><a href={missions1.getURL}>{missions1.getURL}</a></p>
+                <p class="slds-truncate" title="Start Date"><img src= {missions1.getImageURL}></img></p>-->
+                <p><lightning-formatted-rich-text value={missions1.InstructionDescription}></lightning-formatted-rich-text></p>
+              </div>
+            </header>
+          </div>
+      </article>
+      </div>
+</template>
+</div>
+
+  <template for:each={StoreProducts1} for:item="StrProduct">
+    <div key={StrProduct.id}>
+     <article class="slds-card">
+        <div class="slds-card__header slds-grid">
+          <header class="slds-media slds-media_center slds-has-flexi-truncate">
+            
+            <div class="slds-media__body">
+              <h2 class="slds-card__header-title">
+                <span><lightning-icon icon-name="standard:product" size= "small" alternative-text="product" title="product"></lightning-icon></span>&nbsp; &nbsp;
+                <a href="#" class="slds-card__header-link slds-truncate" title="Store Product"></a>
+                <span><b>Store Product</b></span>&nbsp; &nbsp;
+                <span><lightning-button variant="Brand" class="slds-button" label="Save" onclick={handleSaveStoreProdDesktop}></lightning-button></span>
+              </h2>
+              <p class="slds-var-m-bottom_xx-small">Product Name:{StrProduct.ProductName} </p>
+              <!-- <p class="slds-var-m-bottom_xx-small">Final PTC: {StrProduct.FinalPTC} </p> -->
+              <!--<p class="slds-var-m-bottom_xx-small">Actual PTC: {StrProduct.ActualMSRP} </p>-->
+              <!--<lightning-input label="Actual PTC" onchange={handleNameChange} value={StrProduct.ActualMSRP} class="slds-m-bottom_x-small"></lightning-input>-->
+
+              <lightning-input 
+              data-id={StrProduct.Id}
+              label="Actual PTC" 
+              onchange={handleNameChange} 
+              value={StrProduct.ActualMSRP} 
+              class="slds-m-bottom_x-small">
+            </lightning-input>
+            </div>  
+          </header>
+        </div>
+    </article>  
+    <!--<lightning-button variant="Brand" class="slds-button" label="Save" onclick={createAccount}></lightning-button>-->
+    </div> 
+  </template>
+
+  <template for:each={Asset1} for:item="assets">
+   <div key={assets.id}>
+    <article class="slds-card">
+      <div class="slds-card__header slds-grid">
+        <header class="slds-media slds-media_center slds-has-flexi-truncate">
+          <div class="slds-media__body">
+            <h2 class="slds-card__header-title">
+              <span>
+                <lightning-icon icon-name="custom:custom85" size="small" alternative-text="asset" title="asset"></lightning-icon>
+              </span>&nbsp; &nbsp;
+              <a href="#" class="slds-card__header-link slds-truncate" title="Store Product">&nbsp; &nbsp;
+              <span><b>Assets</b></span>&nbsp; &nbsp;
+              <span><lightning-button variant="Brand" class="slds-button" label="Save" onclick={handleSaveDesktop}></lightning-button></span></a>
+            </h2>
+          <p class="slds-var-m-bottom_xx-small">Asset Name:{assets.Name} </p>
+          <p class="slds-var-m-bottom_xx-small">Quantity:{assets.Quantity} </p>
+          <!--<p class="slds-var-m-bottom_xx-small">Status:{assets.Status} </p>
+          <lightning-input label="Status" onchange={handleStatusChange} class="slds-m-bottom_x-small"></lightning-input>-->
+              <p>Status:
+                <c-picklist 
+                label="Status"
+                unique-key={assets.Id} 
+                object-api-name="Asset__c" 
+                selected-value={assets.Status__c}  
+                pick-listfield-api-name="Status__c" 
+                variant="label-hidden"
+                onpicklistchange={handlePicklistChange}>
+                </c-picklist>
+              </p>
+             <!-- selected-value={assets.Status} -->
+          </div>
+        </header>
+      </div>
+  </article> 
+  <!--<lightning-button variant="Brand" class="slds-button" label="Save" onclick={handleSave}></lightning-button>-->
+
+  </div>  
+  </template>
+
+
+      <!---FOR MISSION TASK DATA -->
+<div>
+<template for:each={MissionTask} for:item="MissionTask1">
+  <div key={MissionTask1.Id}>
+  <article class="slds-card">
+      <div class="slds-card__header slds-grid">
+        <header class="slds-media slds-media_center slds-has-flexi-truncate">
+          <div class="slds-media__body">
+            <h2 class="slds-card__header-title">
+              <lightning-icon icon-name="standard:task2" size= "small" alternative-text="product" title="product"></lightning-icon>
+              <a href="#" class="slds-card__header-link slds-truncate" title="Mission Task">&nbsp; &nbsp;<span><b>Mission Task</b></span></a>
+            </h2>
+          <p class="slds-var-m-bottom_xx-small" value={MissionTask.Id}>Name: {MissionTask1.Name}</p>
+          <p class="slds-var-m-bottom_xx-small" value={MissionTask.Id}>Status: {MissionTask1.Status}</p>
+          </div>
+        </header>
+      </div>
+  </article>
+  </div>
+  </template>
+</div>
+<!--- END OF MISSION TASK DATA -->
+
+
+ <footer>
+     <!-- <div class="slds-card">
+        
+          <lightning-button variant="Brand" class="slds-button" value={accountId} name={accountId} label="Back" onclick={navigateToComponent}></lightning-button> 
+          <lightning-button variant="Brand" class="slds-button" label="Close" onclick={navigateToViewAccountPage}></lightning-button>
+          
+          <div class="slds-no-flex">
+            <button class="slds-button slds-button_neutral" name={missions.Id} value={missions.Id} onclick= "{navigateToComponent}">Back</button>
+          </div>
+  
+    </div>-->
+
+    <lightning-card >
+      <lightning-button variant="Brand" class="slds-button" value={accountId} name={accountId} label="Back" onclick={navigateToComponent}></lightning-button> 
+      <lightning-button variant="Brand" class="slds-button" label="Close" onclick={navigateToViewAccountPage}></lightning-button>
+      <!--<lightning-button variant="Brand" class="slds-button" label="Back" onclick={navigateToViewAccountPage}></lightning-button>-->
+    </lightning-card>
+  </footer>
+
+
+</template>
+</template>

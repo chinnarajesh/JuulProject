@@ -1,0 +1,66 @@
+<template>
+  <div class=" big_div">
+
+    <div class="slds-grid slds-grid_align-spread" style=" background-color: white; display:flex;border-radius:5px;">
+      <div class="slds-col slds-grid">
+        <lightning-icon class="slds-p-around_small" style="margin-top:14px;" icon-name="utility:user_role"
+          alternative-text="Persona" title="Persona">
+        </lightning-icon>
+        <div class="slds-p-around_x-small boo1 b4 ">
+          <lightning-button-stateful label-when-off={label.fieldFilterOff} label-when-on={label.fieldFilterOn}
+            icon-name-when-off="utility:add" icon-name-when-on="utility:check" variant="brand" selected={isSelected}
+            onclick={handlePersonaChangeFilter}>
+          </lightning-button-stateful>
+          <!--
+        <lightning-button-stateful class="slds-m-around_small backgroundInverse" label-when-off={label.KAMFilterOff}
+          label-when-on={label.KAMFilterOn} icon-name-when-off="utility:add" icon-name-when-on="utility:check"
+          variant="brand" selected={notSelected} onclick={handlePersonaChangeKAM}>
+        </lightning-button-stateful>
+        -->
+        </div>
+      </div>
+      <div class="slds-col">
+        <!-- <center> -->
+        <div class="top">
+          <img src={juulImage} />
+        </div>
+        <!-- </center> -->
+      </div>
+      <div class="slds-col slds-p-around_x-small boo1 b4 ">
+        <!-- <lightning-button variant="neutral" label=" Navigate To Reports" onclick={navigateToReport}></lightning-button> -->
+        <!-- <a href="" target="_blank" onclick={navigateToReport}>Click Here</a> -->
+      </div>
+    </div>
+    <div if:true={changepersonaaction}>
+      <div class="slds-container_small">
+        <section role="dialog" tabindex="-1" aria-labelledby="modal-heading-01" aria-modal="true"
+          aria-describedby="modal-content-id-1" class="slds-modal slds-fade-in-open">
+          <div class="slds-modal__container">
+            <header class="slds-modal__header">
+              <h4 id="modal-heading-01" class="slds-text-heading_medium slds-hyphenate">Do you want to change applied
+                Persona?</h4>
+            </header>
+            <div class="slds-modal__content slds-p-around_medium" id="modal-content-id-1">
+              <p><b>*Note </b>Your current applied filter values under All Filters section will be lost if you change to
+                other Persona.</p>
+            </div>
+            <footer class="slds-modal__footer">
+              <lightning-button variant="neutral" name="No" label="No" title="No"
+                onclick={handelCancel}></lightning-button>
+              <div class="spacer"></div>
+              <lightning-button variant="brand" name="Yes" label="Yes" title="Yes"
+                onclick={handleProceed}></lightning-button>
+            </footer>
+          </div>
+        </section>
+        <div class="slds-backdrop slds-backdrop_open"></div>
+      </div>
+    </div>
+
+    <div class="photo_gallery_section">
+      <c-photo-library isfilterpersona={intermediateValue}></c-photo-library>
+    </div>
+
+  </div>
+
+</template>

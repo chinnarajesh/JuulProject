@@ -1,0 +1,17 @@
+.loader{
+    position: relative;
+    width: 100%;
+    height: 100%;
+    background: #ccc;
+}
+.container_height{
+    height: 100%;
+    padding-top: 0;
+}
+.template{
+    font-weight: bold;
+    font-size: 16px;
+}
+.manage_footer{
+    height: 60px;
+}

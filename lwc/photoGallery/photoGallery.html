@@ -1,0 +1,19 @@
+<template>
+
+  <lightning-card icon-name="utility:photo" title={label.photoGalleryHeader}>
+    <template if:true={leng}>
+      <c-photo-pagination records={photos} onpagination={handlePagination}> </c-photo-pagination>
+    </template>
+    <template if:false={isPhotoAvailable}>
+      <div></div>
+    </template>
+    <!-- <div id="lightgallery" class="slds-box slds-m-top_small slds-m-left_small">
+      <div class="gallery-scroll-view">
+      </div> -->
+    </div>
+    <br>
+    <template if:true={leng}>
+      <c-photo-pagination records={photos} onpagination={handlePagination}> </c-photo-pagination>
+    </template>
+  </lightning-card>
+</template>

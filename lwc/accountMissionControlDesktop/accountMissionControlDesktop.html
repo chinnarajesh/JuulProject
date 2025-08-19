@@ -1,0 +1,498 @@
+<template>
+ 
+  <lightning-card title="Mission Control component">
+      <template if:true={MAINTemplate}>
+    <lightning-accordion allow-multiple-sections-open onsectiontoggle={handleSectionToggle}>
+        <lightning-accordion-section name="Search" label="Active Missions">
+         <div class="slds-p-left_x-large slds-p-right_x-large">
+          <table style="width:80%;" class=" slds-table slds-table_cell-buffer slds-table_bordered slds-table_col-bordered slds-table slds-border_left slds-border_right">
+            <!--Header of the table-->
+            <thead >
+                <tr class="slds-line-height--reset" >
+                    <th  class="slds-is-sortable slds-is-resizable slds-text-title--caps" scope="col" style="width:5%">
+                        <div class="slds-truncate " title="VIEW">VIEW </div>
+                    </th>
+                    <th  class="slds-is-sortable slds-is-resizable slds-text-title--caps" scope="col" style="width:10%">
+                        <div class="slds-truncate " title="STATUS"> STATUS</div>
+                    </th>
+                    <th  class="slds-is-sortable slds-is-resizable slds-text-title--caps" scope="col" style="width:15%">
+                        <div class="slds-truncate " title="START DATE">START DATE</div>
+                    </th>
+                    <th  class="slds-is-sortable slds-is-resizable slds-text-title--caps" scope="col" style="width:15%">
+                        <div class="slds-truncate " title="END DATE">END DATE </div>
+                    </th>
+                    <th  class="slds-is-sortable slds-is-resizable slds-text-title--caps" scope="col" style="width:20%">
+                        <div class="slds-truncate " title="COMMERCIAL ACTIVITY">COMMERCIAL ACTIVITY
+                        </div>
+                    </th>
+                    <th  class="slds-is-sortable slds-is-resizable slds-text-title--caps" scope="col" style="width:10%">
+                        <div class="slds-truncate " title="">RECORD TYPE</div>
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                <template for:each={MISSIONList} for:item="item" >
+                    <tr key={item.Id} >
+                        <td style="width:5%">
+                            <input type="radio" name={item.RecordType} value={item.Id} onchange={handleRadiobutton}>
+                        </td>
+                        <td style="width:10%">
+                            <div>
+                              {item.status}
+                            </div>
+                        </td>
+                        <td style="width:15%">
+                            <div>
+                                {item.StartDate}
+                            </div>
+                        </td>
+                        <td style="width:15%">
+                            <div>
+                                {item.EndDate}
+                            </div>
+                        </td>
+                        <td style="width:20%">
+                            <div>
+                                {item.CommercialActivity}
+                            </div>
+                        </td>
+                        <td style="width:10%">
+                            <div>
+                                {item.RecordType }
+                            </div>
+                        </td>
+                     </tr>
+                </template>
+               </tbody>
+             </table>
+            </div>
+   </lightning-accordion-section>
+</lightning-accordion>
+  </template>
+  <!--VIEW FOR ACCOUNT PLAN MISSIONS-->
+    <template if:true={ACCOUNTPlan}> 
+     
+      <lightning-accordion allow-multiple-sections-open onsectiontoggle={handleSectionToggle}>
+        <lightning-accordion-section name="Mission Details" label="Mission Details">
+      <div class="slds-p-left_x-large slds-p-right_x-large">
+        <table  class="slds-table slds-table_cell-buffer slds-table_bordered slds-table_col-bordered slds-table slds-border_left slds-border_right" >
+            <tbody>
+                <template for:each={MISSIONDetails} for:item="data">
+                <tr key={data.Id} style="background-color:#FFFFE0;">
+                  <TD > Executional Details </TD>
+                 
+                </tr>
+               <!-- Commented for JTP-440 <tr key={data.Id}>
+                  <td>
+                    <div class="slds-truncate" title="Commercial Activity">Sign Vendor Log</div>
+                  </td>
+                  <td>
+                    {data.vendorLog}
+                  </td>
+                </tr>-->
+               <!-- Commented for JTP-440 <tr key={data.Id}>
+                  <td>
+                    <div class="slds-truncate" title="Start Date">Third Party Allowed </div>
+                  </td>
+                  <td>
+                    {data.thirdPartyAllowed}
+                  </td>
+                </tr>-->
+                <tr key={data.Id} style="background-color:#FFFFE0;">   
+                  <TD>Pricing/Presence</TD>
+                
+                </tr>
+              
+               <!-- Commented for JTP 440 <tr key={data.Id}>
+                  <td>
+                    <div class="slds-truncate" title="Start Date">Allowed to Price Scan</div>
+                  </td>
+                  <td>
+                   {data.allowedtoPriceScan}
+                  </td>
+                </tr>
+                <tr key={data.Id}>
+                  <td>
+                    <div class="slds-truncate" title="Start Date">If Price Doesn't Scan</div>
+                  </td>
+                  <td>
+                    {data.ifPriceDoesntScan}
+                  </td>
+                </tr>
+                <tr key={data.Id}>
+                  <td>
+                    <div class="slds-truncate" title="Commercial Activity">If No Pricing, Use JUUL Pricing </div>
+                  </td>
+                  <td>
+                    {data.noPricingUse}
+                  </td>
+                </tr>-->
+                <tr key={data.Id} style="background-color:#FFFFE0;"> 
+                <TD>Product </TD>
+            
+                  </tr>
+                <!--Commented for JTP-440<tr  key={data.Id}>
+                  <td>
+                    <div class="slds-truncate" title="Status">How to Fix Out of Stocks</div>
+                  </td>
+                  <td>
+                    {data.fixOutOfStocks}
+                  </td>
+                </tr>
+                <tr key={data.Id}>
+                  <td>
+                    <div class="slds-truncate" title="Commercial Activity">Can You Label Fixtures</div>
+                  </td>
+                  <td>
+                    {data.labelFixtures}
+                  </td>
+                </tr>
+                <tr key={data.Id}>
+                  <td>
+                    <div class="slds-truncate" title="Status">Can You Provide Leave Behinds</div>
+                  </td>
+                  <td>
+                     {data.provideLeadBehinds}
+                  </td>
+                </tr>-->
+                <tr key={data.Id}>
+                  <td>
+                  <p>KAM Instructions</p>
+                   </td>
+                   <td>
+                    <div><lightning-formatted-rich-text value={data.InstructionDescription}></lightning-formatted-rich-text></div>
+                   </td>
+                </tr>
+              </template>
+            </tbody>
+          </table>
+        </div>
+        </lightning-accordion-section>
+        </lightning-accordion>
+    
+    <lightning-accordion allow-multiple-sections-open onsectiontoggle={handleSectionToggle}>
+      <lightning-accordion-section name="Store Product Details" label="Store Product">
+        
+        <div class="slds-p-left_x-large slds-p-right_x-large">
+          
+          <table    class="slds-table slds-table_cell-buffer slds-table_bordered slds-table_col-bordered slds-table slds-border_left slds-border_right">
+            <!--Header of the table-->
+            <thead >
+                <tr class="slds-line-height_reset" >
+                    <th class="slds-size_1-of-6 " scope="col">
+                        <div class="slds-truncate " title="PRODUCT NAM">PRODUCT NAME </div>
+                    </th>
+                    <th class="slds-size_1-of-6 " scope="col">
+                        <div class="slds-truncate " title="PLANNED PTC"> PLANNED PTC</div>
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                <template for:each={STOREProducts} for:item="data" >
+                    <tr key={data.Id} class="slds-hint-parent">
+                        <td class="slds-size_1-of-6">
+                            <div>
+                                {data.Product_Name_Formula__c}
+                            </div>
+                        </td>
+                        <td class="slds-size_1-of-6">
+                            <div>
+                              {data.Final_PTC__c} 
+                             </div>
+                        </td>
+                        
+                     </tr>
+                </template>
+               </tbody>
+             </table>
+            </div>
+        </lightning-accordion-section>
+        </lightning-accordion>
+   
+   
+    <lightning-accordion allow-multiple-sections-open onsectiontoggle={handleSectionToggle}>
+      <lightning-accordion-section name="Asset Details" label="Asset">
+        <div class="slds-p-left_x-large slds-p-right_x-large">
+          <table   class="slds-table slds-table_cell-buffer slds-table_bordered slds-table_col-bordered slds-table slds-border_left slds-border_right" >
+            <!--Header of the table-->
+            <thead >
+                <tr class="slds-line-height_reset" >
+                    <th class="slds-size_1-of-6 " scope="col">
+                        <div class="slds-truncate " title="PRODUCT NAM">ASSET NAME</div>
+                    </th>
+                    <th class="slds-size_1-of-6 " scope="col">
+                        <div class="slds-truncate " title="PLANNED PTC">QUANTITY</div>
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                <template for:each={ASSET} for:item="data" >
+                    <tr key={data.Id} class="slds-hint-parent">
+                        <td class="slds-size_1-of-6">
+                            <div>
+                                {data.Name}
+                            </div>
+                        </td>
+                        <td class="slds-size_1-of-6">
+                            <div>
+                              {data.Quantity__c}
+                            </div>
+                        </td>
+                        
+                     </tr>
+                </template>
+               </tbody>
+             </table>
+            </div>
+        </lightning-accordion-section>
+        </lightning-accordion>
+   
+    <lightning-accordion allow-multiple-sections-open onsectiontoggle={handleSectionToggle}>
+      <lightning-accordion-section name="Mission Task Details" label="Mission Task">
+        <div class="slds-p-left_x-large slds-p-right_x-large">
+          <table   class="slds-table slds-table_cell-buffer slds-table_bordered slds-table_col-bordered slds-table slds-border_left slds-border_right" >
+            <!--Header of the table-->
+            <thead >
+                <tr class="slds-line-height_reset" >
+                    <th class="slds-size_1-of-6 " scope="col">
+                        <div class="slds-truncate " title="NAME">NAME</div>
+                    </th>
+                    <th class="slds-size_1-of-6 " scope="col">
+                        <div class="slds-truncate " title="STATUS">STATUS</div>
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                <template for:each={MISSIONTASK} for:item="data" >
+                    <tr key={data.Id} class="slds-hint-parent">
+                        <td class="slds-size_1-of-6">
+                            <div>
+                                {data.Name}
+                               
+                            </div>
+                        </td>
+                        <td class="slds-size_1-of-6">
+                            <div>
+
+                                {data.Status__c}
+                            </div>
+                        </td>
+                        
+                     </tr>
+                </template>
+               </tbody>
+             </table>
+            </div>
+        </lightning-accordion-section>
+        </lightning-accordion>
+        <br></br>
+        <div class="slds-p-left_x-large slds-p-right_x-large">
+         <button  class="slds-button slds-button_text-destructive" onclick={GOBack}>BACK </button>     
+       </div>
+    
+</template>
+<!--VIEW FOR PROMOTIONAL PLAN MISSIONS-->
+<template if:true={PROMOPlan}> 
+  <lightning-accordion allow-multiple-sections-open onsectiontoggle={handleSectionToggle}>
+    <lightning-accordion-section name="Mission Details" label="Mission Details">
+      <p>Only mark Mission as "Executed" when both price and all expected POS is executed according to KAM Direction</p>
+
+  <div class="slds-p-left_x-large slds-p-right_x-large">
+    <table class="slds-table slds-table_cell-buffer slds-table_bordered slds-table_col-bordered slds-table slds-border_left slds-border_right" >
+        <tbody>
+            <template for:each={MISSIONDetails} for:item="data">
+            <tr key={data.Id} style="background-color:#FFFFE0;">
+              <TD >Commercial Activity  </TD>
+              
+            </tr>
+            <tr key={data.Id}>
+              <td>
+                <div class="slds-truncate" title="Commercial Activity">Start Date</div>
+              </td>
+              <td>
+                {data.missionStartDate}
+              </td>
+            </tr>
+            <tr key={data.Id}>
+              <td>
+                <div class="slds-truncate" title="Start Date">End Date </div>
+              </td>
+              <td>
+                {data.missionEndDate}
+              </td>
+            </tr>
+            <tr key={data.Id}>
+              <td>
+                <div class="slds-truncate" title="Start Date">Mission Type</div>
+              </td>
+              <td>
+              
+                <lightning-combobox name="Type"  value=  {data.missiontype}
+                            options={upsellOptions} onchange={handleUpsellChange} disabled></lightning-combobox>
+             </td>
+            </tr>
+            <tr key={data.Id}>
+              <td>
+                <div class="slds-truncate" title="Start Date">Mission Status {data.missionstatus}  </div>
+               </td>
+                  <td>
+                  <lightning-combobox data-id={data.Id}  name="Sla"
+                                      options={slaOptions}
+                                      value={data.missionstatus} 
+                                      onchange={handleChangeMission}>
+                  </lightning-combobox>
+                </td>
+              
+            </tr>
+           </template>
+        </tbody>
+      </table>
+    </div>
+    </lightning-accordion-section>
+    </lightning-accordion>
+
+<lightning-accordion allow-multiple-sections-open onsectiontoggle={handleSectionToggle}>
+  <lightning-accordion-section name="Store Product Details" label="Store Product">
+    
+    <div class="slds-p-left_x-large slds-p-right_x-large">
+      
+      <table   class="slds-table slds-table_cell-buffer slds-table_bordered slds-table_col-bordered slds-table slds-border_left slds-border_right">
+        <!--Header of the table-->
+        <thead >
+            <tr class="slds-line-height_reset" >
+                <th class="slds-size_1-of-6 " scope="col">
+                    <div class="slds-truncate " title="PRODUCT NAM">PRODUCT NAME </div>
+                </th>
+                <th class="slds-size_1-of-6 " scope="col">
+                    <div class="slds-truncate " title="PLANNED PTC"> PLANNED PTC</div>
+                </th>
+                <th class="slds-size_1-of-6 " scope="col">
+                  <div class="slds-truncate " title="ACTUAL  PTC"> ACTUAL  PTC</div>
+              </th>
+            </tr>
+        </thead>
+        <tbody>
+            <template for:each={STOREProducts} for:item="data" >
+                <tr key={data.Id} class="slds-hint-parent">
+                    <td class="slds-size_1-of-6">
+                        <div>
+                            {data.Product_Name_Formula__c}
+                        </div>
+                    </td>
+                    <td class="slds-size_1-of-6">
+                      <div>
+                          {data.Final_PTC__c}
+                      </div>
+                  </td>
+                    <td class="slds-size_1-of-6">
+                        <div>
+                          <lightning-input data-id={data.Id} value=  {data.ActualMSRP__c} onchange={StoreProducthandleFieldChange}></lightning-input>
+                        </div>
+                    </td>
+                    
+                 </tr>
+            </template>
+           </tbody>
+         </table>
+        </div>
+    </lightning-accordion-section>
+    </lightning-accordion>
+
+
+<lightning-accordion allow-multiple-sections-open onsectiontoggle={handleSectionToggle}>
+  <lightning-accordion-section name="Asset Details" label="Asset">
+    <div class="slds-p-left_x-large slds-p-right_x-large">
+      <table    class="slds-table slds-table_cell-buffer slds-table_bordered slds-table_col-bordered slds-table slds-border_left slds-border_right" >
+        <!--Header of the table-->
+        <thead >
+            <tr class="slds-line-height_reset" >
+                <th class="slds-size_1-of-6 " scope="col">
+                    <div class="slds-truncate " title="PRODUCT NAM">ASSET NAME</div>
+                </th>
+                <th class="slds-size_1-of-6 " scope="col">
+                    <div class="slds-truncate " title="PLANNED PTC">QUANTITY</div>
+                </th>
+                <th class="slds-size_1-of-6 " scope="col">
+                  <div class="slds-truncate " title="Statuc">STATUS</div>
+              </th>
+            </tr>
+        </thead>
+        <tbody>
+            <template for:each={ASSET} for:item="data" >
+                <tr key={data.Id} class="slds-hint-parent">
+                    <td class="slds-size_1-of-6">
+                        <div>
+                            {data.Name}
+                        </div>
+                    </td>
+                    <td class="slds-size_1-of-6">
+                      <div>
+                          {data.Quantity__c}
+                      </div>
+                  </td>
+                  
+                  <template if:true={AssetStatusValues.data}>
+                    <td>
+                       <lightning-combobox data-id={data.Id} name="progress"  value={data.Status__c} 
+                               options={AssetStatusValues.data.values} onchange={handleChangeAsset}>
+                           </lightning-combobox>
+                     </td>
+                   </template>
+                   </tr>
+            </template>
+           </tbody>
+         </table>
+        </div>
+    </lightning-accordion-section>
+    </lightning-accordion>
+ 
+<lightning-accordion allow-multiple-sections-open onsectiontoggle={handleSectionToggle}>
+  <lightning-accordion-section name="Mission Task Details" label="Mission Task">
+    <div class="slds-p-left_x-large slds-p-right_x-large">
+      <table    class="slds-table slds-table_cell-buffer slds-table_bordered slds-table_col-bordered slds-table slds-border_left slds-border_right" >
+        <!--Header of the table-->
+        <thead >
+            <tr class="slds-line-height_reset" >
+                <th class="slds-size_1-of-6 " scope="col">
+                    <div class="slds-truncate " title="NAME">NAME</div>
+                </th>
+                <th class="slds-size_1-of-6 " scope="col">
+                    <div class="slds-truncate " title="STATUS">STATUS</div>
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            <template for:each={MISSIONTASK} for:item="data" >
+                <tr key={data.Id} class="slds-hint-parent">
+                    <td class="slds-size_1-of-6">
+                        <div>
+                            {data.Name}
+                           
+                        </div>
+                    </td>
+                    <td class="slds-size_1-of-6">
+                        <div>
+
+                            {data.Status__c}
+                        </div>
+                    </td>
+                    
+                 </tr>
+            </template>
+           </tbody>
+         </table>
+        </div>
+    </lightning-accordion-section>
+    </lightning-accordion>
+    <br></br>
+   <div class="slds-p-left_x-large slds-p-right_x-large">
+      <button  class="slds-button slds-button_text-destructive" onclick={GOBack}>BACK </button>     
+     
+       <button  class="slds-button slds-button_text-destructive"  onclick={GOSave}>SAVE</button>     
+    </div>
+</template>
+
+
+</lightning-card>
+ 
+</template>

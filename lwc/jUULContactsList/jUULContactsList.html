@@ -1,0 +1,22 @@
+<template>
+    <div>
+            <lightning-combobox
+            name="Region"
+            label="Region Name"
+            placeholder="Choose Region"
+            value={value}
+            onchange={handleChange}
+            options={regionOptions}>
+        </lightning-combobox>
+    </div>
+      <br/>
+
+     <!--lightning datatable-->
+   <lightning-datatable 
+   key-field="Id"
+   data={allContacts} 
+   onrowaction={handleRowAction}
+   row-number-offset={rowOffset}
+   hide-checkbox-column="true"
+   columns={columns}></lightning-datatable> <!--parameters.data} -->
+</template>

@@ -1,0 +1,172 @@
+<!--
+    Name: kamNewPricingMatric
+    Description: Show the data of pricing matrix
+    Author: Ramya Ganeshkar
+     Created Date: 02/02/2021
+     Ticket: SFDC - 0000003183
+-->
+<template>
+    <header class="slds-modal__header slds-size_1-of-1">
+        <h2 id="modal-heading-01" class="slds-text-heading_medium slds-hyphenate">Update Pricing Matrices</h2>
+    </header>
+    <template if:true={showErrorMessage}>
+        <div class="slds-p-around_x-small slds-theme_error">
+                <p class="slds-text-body_regular">
+                    {errorMessage}
+                    <lightning-button-icon icon-name="utility:close" size="small" variant="border-filled" class="slds-button slds-button_icon slds-button_icon-inverse slds-float--right" alternative-text="Close" onclick={closeModel} ></lightning-button-icon>
+                </p>
+
+                <ul>
+                    <template for:each={errorMessageList} for:item='error'>
+                        <li key={error.key} >{error.value}</li>
+                    </template>
+                </ul>
+               <!-- <div class="slds-notify__close">-->
+               <!-- </div>-->
+        </div>
+    </template>
+    <!--<template for:each={data} for:item="price"> -->
+        <div class="slds-grid slds-gutter slds-p-bottom_medium">
+        <div class="slds-size_1-of-3 slds-p-horizontal_x-small slds-p-top_large">
+            <span class="slds-is-relative slds-m-left_small">
+                <lightning-input type="checkbox" label="Apply for all Products" name="selectAll" value={isAllSelected} onchange={selectAll}></lightning-input>
+            </span>
+        </div>
+        <div class="slds-size_1-of-3 slds-p-horizontal_x-small slds-p-top_large slds-form-element slds-form-element_horizontal" style="padding-top: 25px;">
+            <span class="slds-is-relative slds-p-top_small">
+                <lightning-input class="StartDateComp" type="date" name="startDateAll"  label = "Start Date" value={allStartDate} onchange={selectAll}></lightning-input>
+            </span>
+        </div>
+        <div class="slds-size_1-of-3 slds-p-horizontal_x-small slds-p-top_large slds-form-element slds-form-element_horizontal" style="padding-top: 25px;" >
+            <span class="slds-is-relative slds-p-top_small">
+                <lightning-input type="date" name="endDateAll"  class="EndDateComp" label = "End Date" value={allEndDate} onchange={selectAll}></lightning-input>
+            </span>
+        </div>
+    </div>
+    
+    <!--</template> -->
+    
+
+    <!--data-id={pricingMatrix.pricingMatrixId}    data-id={pricingMatrix.pricingMatrixId}-->
+    <!--<template if:false={selectedProducts}> -->
+        <div class="slds-scrollable" style="height:calc(100vh - 350px)">
+        <table class="slds-table slds-table_cell-buffer slds-table_bordered" width = "100%">
+        <thead>
+            <tr class="slds-line-height_reset slds-text-title_caps slds-is-resizable">
+                <th class="" scope="col" style="background-color:#A8A8A8" > 
+                    <div class="slds-truncate">
+                       <!-- <lightning-input onchange={allSelected} type="checkbox"></lightning-input> -->
+                    </div>
+                </th>
+                <th class="" scope="col" style="background-color:#A8A8A8">
+                    Product Name
+                </th>
+                <th class=""  scope="col" style="background-color:#A8A8A8">
+                    Product Code
+                </th>
+                <th class=""  scope="col" style="background-color:#A8A8A8">
+                    Product Pricing Family
+                </th>
+                <th class=""  scope="col" style="background-color:#A8A8A8">
+                    Start Date
+                </th>
+                <th class=""  scope="col" style="background-color:#A8A8A8">
+                    End Date
+                </th>
+                <th class=""  scope="col" style="background-color:#A8A8A8">
+                    RK 2PK Price
+                </th>
+                <th class=""  scope="col" style="background-color:#A8A8A8">
+                    DK Price
+                </th>
+                <th class=""  scope="col" style="background-color:#A8A8A8">
+                    RK 4PK Price
+                </th>
+                <th class=""  scope="col" style="background-color:#A8A8A8">
+                    Accessory Price - USB Charger
+                </th>
+                <!--Added by shreya-->
+               <th class=""  scope="col" style="background-color:#A8A8A8">
+                    Combo
+                </th>
+                <th class=""  scope="col" style="background-color:#A8A8A8">
+                    GetxSavex
+                </th>    
+                <!--end-->             
+            </tr>
+        </thead>
+        <tbody>
+            <template for:each={data} for:item="pricingMatrix">
+               <tr key={pricingMatrix.Id}>
+                    <th scope="col">
+                        <div>
+                            <lightning-input type="checkbox" name="selectedCheckbox" value={pricingMatrix.isSelected} data-id={pricingMatrix.pricingMatrixId} onchange={handleChange}></lightning-input>
+                        </div>
+                    </th>
+                    <th scope="col">
+                        <div>{pricingMatrix.productName}</div>
+                    </th>
+                    <th scope="col">
+                        <div>{pricingMatrix.productCode}</div>
+                    </th>
+                    <th scope="col">
+                        <div>{pricingMatrix.productPricingFamily}</div>
+                    </th>
+                    <th scope="col">
+                        <lightning-input class="StartDateComp" style="width: 125px;" type="date" name="startdate" data-id={pricingMatrix.pricingMatrixId} label = "Start Date" value={pricingMatrix.startDate} onchange={handleChange} disabled={disableStartEndDate} ></lightning-input>
+                    </th>
+                    <th scope="col" > <!--class="slds-is-resizable" size="30"-->
+                        <lightning-input type="date" style="width: 125px;" name="enddate" data-id={pricingMatrix.pricingMatrixId} class="EndDateComp" label = "End Date" value={pricingMatrix.endDate} onchange={handleChange} disabled={disableStartEndDate} ></lightning-input>
+                    </th>
+                    <th scope="col">
+                        <div>{pricingMatrix.rk2pkPrice}</div>
+                    </th>
+                    <th scope="col">
+                        <div>{pricingMatrix.dkPrice}</div>
+                    </th>
+                    <th scope="col">
+                        <div>{pricingMatrix.rk4pkPrice}</div>
+                    </th>
+                    <th scope="col">
+                        <div>{pricingMatrix.accessoryPrice}</div>
+                    </th>
+                    <!--Added by shreya-->
+                    <th scope="col">
+                        <div>{pricingMatrix.Combo}</div>
+                    </th>
+                    <th scope="col">
+                        <div>{pricingMatrix.GetxSavex}</div>
+                    </th>
+                    <!--end-->
+                </tr>
+            </template>
+        </tbody>
+        </table>
+        </div>  
+    <!--</template>  -->
+    
+    <footer class="slds-modal__footer slds-size_1-of-1 manage_footer">
+        <div class="slds-grid slds-gutters">
+           
+            <div class="slds-col">
+                <!--<template if:false={saveInProgress}>-->
+                    <lightning-button variant="Neutral" class="slds-button" label="Cancel" onclick={closeModal}>
+                    </lightning-button>
+                    
+                    <!--<template if:true={selectedProducts}> -->
+                      <!--  <lightning-button variant="Neutral" class="slds-button" label="Next" onclick={handleNext}>
+                        </lightning-button>-->
+                    <!-- </template> -->
+
+                   <!-- <template if:true={selectedProducts}> -->
+                        <lightning-button variant="Brand" class="slds-button" label="Save" onclick={handleSave}
+                            disabled={disableSave}>
+                        </lightning-button>
+                   <!-- </template> -->
+
+                <!--</template>-->
+            </div>
+        </div>
+    </footer>
+
+</template>

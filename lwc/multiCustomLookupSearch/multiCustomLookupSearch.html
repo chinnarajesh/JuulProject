@@ -1,0 +1,83 @@
+<template>
+    <div class="slds-form-element">
+        <div class="slds-form-element__control ">
+            <div class="slds-combobox_container elem">
+                <div class={txtclassname} data-id="resultBox" aria-expanded="false" aria-haspopup="listbox"
+                    role="combobox">
+                    <div class="slds-form-element__control slds-input-has-icon slds-input-has-icon slds-input-has-icon_left-right ICON_box "
+                        role="none">
+
+
+                        <span
+                            class="slds-icon_container slds-icon-utility-search slds-input__icon slds-input__icon_left iconheight searchIcon">
+                            <lightning-icon class="slds-icon slds-icon slds-icon_small slds-icon-text-default"
+                                icon-name={iconName} size="x-small" alternative-text="icon"></lightning-icon>
+                        </span>
+                        <div class="input-container">
+                            <lightning-input required={required} data-id="userinput" label={label} name="searchText"
+                                onmouseover={handlemouseOver} onmouseout={handleMouseOut} onchange={searchField}
+                                class="leftspace"></lightning-input>
+                            <template if:true={ultimateParent}>
+                                <lightning-helptext alternative-text="First Name" content={helpText}>
+                                </lightning-helptext>
+                            </template>
+                        </div>
+
+
+                        <span class="slds-form-element__control slds-input-has-icon slds-input-has-icon_right">
+                        </span>
+
+
+
+
+                    </div>
+                    <div class="slds-form-element__control slds-input-has-icon slds-input-has-icon slds-input-has-icon_left-right"
+                        role="none">
+
+
+                        <template for:each={selectedRecords} for:item="serecord">
+                            <span key={serecord.recId}>
+                                <lightning-pill label={serecord.recName} name={serecord.recId} onremove={removeRecord}
+                                    onmouseover={handlemouseOver}>
+                                </lightning-pill>
+                            </span>
+                        </template>
+
+                    </div>
+
+                    <!-- Second part display result -->
+                    <div id="listbox-id-1" class="slds-dropdown slds-dropdown_length-with-icon-7 slds-dropdown_fluid"
+                        role="listbox">
+                        <ul class="slds-listbox slds-listbox_vertical" role="presentation">
+                           <!-- <div class={dropdownList}> -->
+                            <template if:true={dropdownList} for:each={searchRecords} for:item="serecord">
+                                <li role="presentation" class="slds-listbox__item" key={serecord.recId}
+                                    onmouseout={handledropdown}>
+
+                                    <div data-id={serecord.recId} data-name={serecord.recName}
+                                        onclick={setSelectedRecord}
+                                        class="slds-media slds-listbox__option slds-listbox__option_entity slds-listbox__option_has-meta"
+                                        role="option">
+                                        <lightning-icon icon-name={iconName}
+                                            class="slds-icon slds-icon slds-icon_small slds-icon-text-default"
+                                            size="xx-small"></lightning-icon>
+                                        <span
+                                            class="slds-listbox__option-meta slds-listbox__option-meta_entity">{objectName}
+                                            : {serecord.recName}</span>
+                                    </div>
+                                </li>
+                            </template>
+                           <!-- </div> -->
+                        </ul>
+                    </div>
+                    <div if:true={messageFlag}>
+                        No result found.
+                    </div>
+                    <div if:true={LoadingText}>
+                        Loading...
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</template>

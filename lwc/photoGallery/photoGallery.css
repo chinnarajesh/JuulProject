@@ -1,0 +1,206 @@
+.mybox{
+  position: absolute;
+}
+
+.top{
+    position:absolute;
+    right:42%;
+    top:29px;
+    font-size:20px;
+    background-color:white;
+   
+    border-radius:20px;
+    width:10%;
+   
+}
+ 
+.backgroundInverse{
+    
+  padding-left:5px;
+}
+
+.boo1{
+   
+    position:relative;
+    bottom:10px;
+    left:32px;
+}
+
+.card-5{
+  padding-bottom:-2%;
+}
+
+.b1 {
+    background-color: rgba(190, 189, 189, 0.445);
+    color: black;
+    border: 2px solid #55555559;
+   
+    padding:5px 10px;
+    font-size:bold;
+  }
+  .b1:focus{
+    background-color: #292929cc;
+    color: white;
+    box-shadow: 7px 5px 7px 4px rgba(92, 92, 92, 0.541);
+   
+    border-radius:2px;
+    
+  }
+
+  .b2 {
+    background-color: rgba(190, 189, 189, 0.445);
+    color: black;
+    border: 2px solid #55555559;
+   
+    padding:7px 12px;
+    font-size:bold;
+    
+  }
+  .b2:focus{
+    background-color:#292929cc;
+    color: white;
+   border-radius:2px;
+    box-shadow: 7px 5px 7px 0px rgba(77, 76, 76, 0.418);
+    transform: scale(1);
+  }
+  .box1{
+    background-color: rgba(190, 189, 189, 0.445);
+  }
+  .box2{
+    background-color: rgba(190, 189, 189, 0.445);
+  }
+  .Box{
+      display:flex;
+  }
+  .Box1{
+    display:flex;
+}
+
+.b3 {
+    background-color: rgba(190, 189, 189, 0.445);
+    color: black;
+    border: 2px solid #55555559;
+    border-radius:50%;
+    font-size: 13px;
+    padding:7px 15px;
+    position:absolute;
+    left:18%;
+    transition: 0.1s;
+  }
+.b3:hover,
+.b3:active{
+    transform: scale(1);
+    box-shadow: 7px 5px 7px 0px rgba(77, 76, 76, 0.418);
+}
+.b3:focus{
+  background-color: #292929cc;
+  color: white;
+  
+}
+.b7 {
+  background-color: rgba(190, 189, 189, 0.445);
+  color: black;
+  border: 2px solid #55555559;
+  border-radius:50%;
+  font-size: 13px;
+  padding:7px 15px;
+ 
+  transition: 0.1s;
+}
+.b7:hover,
+.b7:active{
+  transform: scale(1);
+  box-shadow: 7px 5px 7px 0px rgba(77, 76, 76, 0.418);
+}
+
+  .b7:focus{
+    background-color: #292929cc;
+    color: white;
+    
+  }
+ .H1{
+    font-size:20px;
+    position:absolute;
+  left:72px;
+ }
+ .same{
+   
+     width:50%;
+     display:flex;
+ }
+ .H2{
+  font-size:20px;
+ 
+}
+ .R1{
+    display:inline-block;
+    position:relative;
+    left:25px;
+ }
+
+ .input1{
+    border-radius:20px;  
+ }
+ .bigd{
+     background-color:white;
+ }
+
+ .top{
+     position:absolute;
+     right:45%;
+     top:55px;
+     font-size:20px;
+     background-color:white;
+     padding:5px 28px;
+     border-radius:7px;
+    
+ }
+ .combo{
+     border-radius: 20%;
+ }    
+
+ .b4{
+     border:3px solid rgba(104, 103, 103, 0.61);
+     border-radius: 5%;
+   
+ }
+
+
+
+ .b5{
+  
+    position:relative;
+    right:20px;
+  
+}
+
+.b6{
+  border-radius:20px;}
+ 
+
+
+
+.icon{
+  background-color:rgba(58, 57, 58, 0.651);
+ 
+}
+
+.card-1{
+ 
+  transition: 0.5s;
+}
+.card-1:hover,
+.card-1:active{
+  transform: scale(1);
+  box-shadow: 7px 5px 7px 0px rgba(77, 76, 76, 0.418);
+}
+
+.box3{
+  width:71.5%;
+}
+
+.footer{
+    background-color:gray;
+    color:white;
+    padding-bottom:22px;
+}
