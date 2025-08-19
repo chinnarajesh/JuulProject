@@ -1,0 +1,19 @@
+<aura:component implements="forceCommunity:availableForAllPageTypes,force:lightningQuickAction" 
+                access="global" controller="CCPACommunityController" >
+    <aura:attribute name ="verifyCaptcha" type="Boolean" default="false" />
+    <aura:attribute name ="errorMsg" type="String" default="" />
+    <aura:attribute name ="IframeEndpoint" type="String" default="" />
+    <aura:attribute name ="showSpinner" type="Boolean" default="false" />
+    <aura:handler name ="init" value = "{!this}" action = "{!c.doInit}"/>
+    <iframe id = "iframeId"
+            src = "{!v.IframeEndpoint}" 
+            scrolling ="no"
+            height = "550px"
+            frameBorder="0"
+            style="transform:scale(0.77);-webkit-transform:scale(0.77);transform-origin:0 0;-webkit-transform-origin:0 0;"
+            />
+    
+    <aura:if isTrue="{!v.showSpinner}">
+        <lightning:spinner alternativeText="Loading" size="large" />
+    </aura:if>
+</aura:component>

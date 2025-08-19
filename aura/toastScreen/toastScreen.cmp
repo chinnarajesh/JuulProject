@@ -1,0 +1,4 @@
+<aura:component implements="lightning:availableForFlowScreens" access="global" >
+    Updated
+<lightning:button name="notice" label="Show Notice" onclick="{!c.showToast}"/>
+</aura:component>

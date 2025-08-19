@@ -1,0 +1,14 @@
+<aura:component implements="flexipage:availableForAllPageTypes,lightning:isUrlAddressable" access="global">
+    <aura:attribute type="String" name="propertyValue"/>
+    <aura:attribute type="String" name="recordId"/>
+    <aura:attribute type="String" name="accountId"/>
+    <aura:attribute type="boolean" name="doReload" default="false"/>
+    <aura:handler name="init" value="{!this}" action="{!c.init}"/>   
+    
+    <aura:if isTrue="{!v.doReload}">
+        <div class="slds-card">
+            <c:accountMissonControlCard propertyValue="{!v.propertyValue}" MissionID="{!v.recordId}" accountId="{!v.accountId}"
+               onclose="{!c.closeMethodInAuraController}" onrefresh="{!c.refreshMethodInAuraController}" isReload="true"/>
+        </div>
+    </aura:if>
+</aura:component>

@@ -1,0 +1,4 @@
+<aura:event type="APPLICATION" description="Event template">
+    <aura:attribute name="tab" type="Integer" default="0"></aura:attribute>
+    <aura:attribute name="subjectId" type="String" default="SubjectId"></aura:attribute>
+</aura:event>

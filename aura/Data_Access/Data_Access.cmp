@@ -1,0 +1,122 @@
+<aura:component implements="forceCommunity:availableForAllPageTypes,force:lightningQuickAction" 
+                access="global" controller="CCPACommunityController" >
+    <aura:attribute name = "showTileMenu" type = "Boolean" default = "true" />
+    <aura:attribute name = "showAccountDeletion" type = "Boolean" default = "true" />
+    <aura:attribute name = "showDoNotSellInfo" type = "Boolean" default = "true" />
+    <aura:attribute name = "showDataAccess" type = "Boolean" default = "true" />
+    <aura:attribute name ="Baseurl" type="String" default="" />
+    <aura:attribute name ="errorMsg" type="String" default="" />
+    <aura:attribute name="showLoadingSpinner" type="boolean" default="false" />
+    <aura:attribute name ="verifyCaptcha" type="Boolean" default="false" />
+    <aura:attribute name ="CaseValues" type = "Case" default = "{Web_First_Name__c : '',
+                                                                Web_Last_Name__c :'',
+                                                                SuppliedPhone : '',
+                                                                SuppliedEmail : '',
+                                                                Collection_Practices__c : false,
+                                                                Sharing_Practices__c : false,
+                                                                Specific_Information_Collected__c :false
+                                                                }"/>
+    <aura:attribute name = "NewCase" type = "Case" />
+    <aura:attribute name ="showSpinner" type="Boolean" default="false" />
+    <aura:attribute name ="deviceName" type="String" default="DESKTOP" />
+    <aura:handler name ="init" value = "{!this}" action = "{!c.doInit}"/>
+    <aura:registerEvent name="NewCaseEvent" type="c:showNewCaseEvent"/>
+    <div 
+         class="slds-truncate slds-align-middle slds-text-align_center slds-p-top--small">
+        <h1 class="slds-page-header__title" >Data Access Request
+        </h1>
+        <span class="subtitle" >
+        </span>
+    </div>
+    <div class= "container">
+        <div class="slds-text-body_small slds-text-color_error 
+                    slds-truncate slds-align-middle slds-text-align_center"
+             style = "font-size : .9rem"><b>{!v.errorMsg}</b> </div>
+        
+        <lightning:input aura:id ="Data_Access" class="slds-form-element__label" 
+                         label="First Name" 
+                         required= "true" 
+                         messageWhenValueMissing="Please Enter First Name"
+                         value = "{!v.CaseValues.Web_First_Name__c}"
+                         />
+        <lightning:input aura:id ="Data_Access" label="Last Name"  required= "true" 
+                         messageWhenValueMissing="Please Enter Last Name"
+                         value = "{!v.CaseValues.Web_Last_Name__c}"
+                         />
+        <lightning:input aura:id ="Data_Access" label="Email" type="email" required= "true"
+                         messageWhenValueMissing="Please Enter Email"
+                         value = "{!v.CaseValues.SuppliedEmail}"
+                         />
+        <lightning:input aura:id ="Data_Access"
+                         label="Phone" type="tel" required= "true" 
+                         pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}"
+                         messageWhenValueMissing="Please Enter Phone Number"
+                         messageWhenPatternMismatch="Phone Number should be of 10"
+                         value = "{!v.CaseValues.SuppliedPhone}"
+                         onchange = "{!c.formatPhone}"
+                         />
+        <lightning:input aura:id ="Data_Access" class="slds-form-element__label" 
+                         label="Zip or Postal Code" 
+                         required= "true" 
+                         messageWhenValueMissing="Please Enter Zip or Postal Code"
+                         value = "{!v.CaseValues.Ship_To_Zip__c}"
+                         />
+        <br />
+        <b>Please Select One <br /><br/></b>
+        <!-- Collection Practices -->
+        <div style = "display : inline-flex;">
+            <lightning:input type="checkbox" 
+                             checked = "{!v.CaseValues.Collection_Practices__c}"/>
+            <label class="slds-form-element__label" style="margin-right: 0.5rem;">
+                Collection Practices
+            </label>
+            <lightning:helptext 
+                                content="Categories of Information we collect and use of that information"
+                                class="customIcon"/>
+        </div>
+        <br />
+        <!-- Sharing Practices -->
+        <div style = "display : inline-flex;">
+            <lightning:input type="checkbox" 
+                             checked = "{!v.CaseValues.Sharing_Practices__c}"/>
+            <label class="slds-form-element__label" style="margin-right: 0.5rem;">
+                Sharing Practices
+            </label>
+            <lightning:helptext content="Categories of Information 
+                                         that we shared for a business purpose and recipients of that 
+                                         information in instances where we received value for the
+                                         exchange of the information" 
+                                class="customIcon"/>  
+        </div>
+        <br />
+        <!-- Specific Information Collected -->
+        <div style = "display : inline-flex;">
+            <lightning:input type="checkbox" 
+                             checked = "{!v.CaseValues.Specific_Information_Collected__c}"/>
+            <label class="slds-form-element__label" style="margin-right: 0.5rem;">
+                Specific Information Collected
+            </label>
+            <lightning:helptext content="Specific pieces of information we have collected 
+                                         during the past 12 months" 
+                                class="customIcon"/>  
+        </div>
+        <br />
+        <br />
+        <div class="slds-grid ">
+            <div class="slds-col slds-size_1-of-3">
+                <c:reCaptcha verifyCaptcha = "{!v.verifyCaptcha}"
+                             errorMsg = "{!v.errorMsg}"/>
+            </div>
+            <div class="slds-col slds-size_2-of-3 " style ="margin-top : 100px">
+                <aura:if isTrue = "{!(v.deviceName!='PHONE') ||
+                                   and(v.deviceName=='PHONE',v.verifyCaptcha)}">
+                    <lightning:button  variant="brand" label="Back" onclick="{! c.handleClick }"/>
+                    <lightning:button  variant="brand" label="Submit" onclick="{! c.handleClick }"/>
+                </aura:if>
+            </div>
+        </div>
+    </div>
+    <aura:if isTrue="{!v.showSpinner}">
+        <lightning:spinner alternativeText="Loading" size="large" />
+    </aura:if>
+</aura:component>

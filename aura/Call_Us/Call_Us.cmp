@@ -1,0 +1,6 @@
+<aura:component implements="lightning:availableForFlowScreens" access="global">
+<!--<ltng:require scripts="{!$Resource.gtm}"
+afterScriptsLoaded="{!c.afterScriptsLoaded}" />-->
+<aura:handler name="init" value="{!this}" action="{!c.doInit}"/>
+
+</aura:component>

@@ -1,0 +1,24 @@
+<aura:component implements="force:lightningQuickActionWithoutHeader,force:hasRecordId" access="global"> 
+    <aura:attribute name="selectedValue" type="String" description="Picklist selected value" ></aura:attribute>
+    
+    <c:accountMissionControlFlowLWC onclose="{!c.closeMethodInAuraController}" onrefresh="{!c.refreshMethodInAuraController}" recordId="{!v.recordId}" 
+                                    objectName="Mission__c" fieldName="Status__c" value="{!v.selectedValue}" />
+    <aura:html tag="style">
+        .cuf-content {
+        padding: 0 0rem !important;
+        }
+        .slds-p-around--medium {
+        padding: 0rem !important;
+        }
+        .slds-modal__content{
+        overflow-y:hidden !important;
+        height:unset !important;
+        max-height:unset !important;
+        }
+        .slds-modal__container{
+        max-width: 100rem !important;
+        width:80% !important;
+        min-height: 100% !important;
+        }
+    </aura:html>
+</aura:component>

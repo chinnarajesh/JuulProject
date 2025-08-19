@@ -1,0 +1,24 @@
+<aura:component implements="flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,force:lightningQuickAction" access="global" >
+	<aura:attribute name="record" type="Object" description="The record object to be displayed"/>
+    <aura:attribute name="simpleRecord" type="Object" default="{'sObjectType': 'Account'}" description="A simplified view record object to be displayed"/>
+    <aura:attribute name="recordError" type="String" description="An error message bound to force:recordData"/>
+    
+    <force:recordData aura:id="record"
+                      layoutType="FULL"
+                      recordId="{!v.recordId}"
+                      targetError="{!v.recordError}"
+                      targetRecord="{!v.record}"
+                      targetFields ="{!v.simpleRecord}"
+                      fields="Id,Hot_Sheet_URL_Link__c"
+                      mode="VIEW"/>
+    <div class="body">
+        <br/>
+        <div class="slds-align_absolute-center">
+            <lightning:button variant="brand"
+                              label="Hot Sheet"
+                              title="Hot Sheet"
+                              onclick="{!c.handleClick }" />
+        </div>
+        <br/>
+    </div>
+</aura:component>

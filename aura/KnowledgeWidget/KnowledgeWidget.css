@@ -1,0 +1,89 @@
+.THIS {
+    background: #fff;
+}
+
+.THIS .article-detail {
+    color: #afb5b9;
+    font-size: .833em;
+    margin-top: 0;
+    margin-left: 8px;
+}
+
+.THIS .article-detail>li {
+    float: left;
+    margin-right: 15px;
+    margin-left: 25px;
+}
+
+.THIS .article-detail>li>span {
+    position: relative;
+    left: -8px;
+}
+
+.THIS .add .slds-button {
+    height: 18px;
+    width: 18px;
+    border-radius: 20px;
+    color: #fff;
+    background-color: #5cb85c;
+    border-color: #4cae4c;
+    display: inline;
+}
+
+.THIS .add, .THIS .remove {
+    display: inline;
+    margin-right: 4px;
+}
+
+.THIS .remove .slds-button {
+    height: 18px;
+    width: 18px;
+    border-radius: 20px;
+    color: #fff;
+    background-color: #f70b0b;
+    border-color: #f70b0b;
+    display: inline;
+}
+
+.THIS .wrapping {
+    white-space: pre-wrap;
+    white-space: -moz-pre-wrap;
+    white-space: -pre-wrap;
+    white-space: -o-pre-wrap;
+    word-wrap: break-word;
+}
+
+.THIS .slds-button__icon {
+    width: 0.700rem;
+    height: 0.700rem;
+}
+.THIS .modal-header {
+    padding: 10px;
+    border-bottom: 3px solid #F2CF5B;
+    color: #54698D;
+    background: #F4F6F9;
+}
+.THIS .article-icon{
+    background: url(/img/icon/t4v35/standard/article_60.png);
+    content: url(/img/icon/t4v35/standard/article_60.png);
+    background-size: contain;
+    background-color: #f2cf5b;
+    height : 26px;
+    vertical-align : middle;
+    border-radius: 14px;
+}
+.THIS .btn{
+    float:right;
+}
+.THIS .btn-danger{
+    background-color: #f70b0b;
+    border-color: #f70b0b;
+    color: #fff;
+    padding: 5px;
+}
+.THIS .btn-success{
+    background-color: #5cb85c;
+    border-color: #4cae4c;
+    color: #fff;
+    padding: 5px;
+}

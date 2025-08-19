@@ -1,0 +1,44 @@
+<aura:component implements="flexipage:availableForAllPageTypes,force:hasRecordId" access="global" controller="CaseViewerCtrl">
+    <aura:attribute name="lcHost" type="String" />
+    <aura:attribute name="idle" type="Decimal" />
+    <aura:attribute name="vfHost" type="String" />
+    <aura:attribute name="users" type="Object[]"/>
+    <aura:attribute name="user" type="Object"/>
+    <aura:attribute name="skip" type="Boolean" default="false"/>
+    <aura:attribute name="loaded" type="Boolean" default="false" />
+
+
+    <ltng:require
+        scripts="{!join(',',
+           $Resource.CaseViewerResources +'/idle-new.js',
+           $Resource.CaseViewerResources + '/swal2/sweetalert2.js'
+        )}"
+        styles="{!join(',',
+           	$Resource.CaseViewerResources + '/swal2/sweetalert2.css'
+        )}"
+        afterScriptsLoaded="{!c.doInit}"/>
+
+    <iframe aura:id="vfFrame"
+        src="{! '/apex/CaseViewerFirebase?lcHost=' + v.lcHost + '&amp;recordId=' + v.recordId}"
+        width="100%"
+        height="0"
+        style="0"
+        frameborder="0" />
+    <div class="slds-grid slds-box slds-wrap">
+        <aura:iteration items="{!v.users}" var="u">
+            <span class="{!'slds-badge ' + u.status}" aura:id="{!u.Id}">
+                <aura:if isTrue="{!u.status == 'idle'}">
+                    <lightning:icon iconName="utility:clock"  size="xx-small"/>&nbsp;
+                </aura:if>
+                <aura:if isTrue="{!u.status == 'away'}">
+                    <lightning:icon iconName="utility:hide"  size="xx-small"/>&nbsp;
+                </aura:if>
+                <aura:if isTrue="{!u.status == 'online'}">
+                    <lightning:icon iconName="utility:preview"  size="xx-small"/>&nbsp;
+                </aura:if>
+                {!u.Name}
+            </span>
+        </aura:iteration>
+    </div>
+    <lightning:workspaceAPI aura:id="workspace"/>
+</aura:component>

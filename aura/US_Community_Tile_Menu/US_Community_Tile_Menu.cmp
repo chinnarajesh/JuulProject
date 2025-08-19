@@ -1,0 +1,69 @@
+<aura:component implements="forceCommunity:availableForAllPageTypes,force:lightningQuickAction" 
+                access="global" controller="CCPACommunityController" >
+    <aura:attribute name = "showTileMenu" type = "Boolean" default = "true" />
+    <aura:attribute name = "showAccountDeletion" type = "Boolean" default = "false" />
+    <aura:attribute name = "showDoNotSellInfo" type = "Boolean" default = "false" />
+    <aura:attribute name = "showDataAccess" type = "Boolean" default = "false" />
+    <aura:attribute name = "NewCase" type = "Case" />
+    <aura:attribute name ="deviceName" type="String" default="DESKTOP" />
+    <aura:handler name ="init" value = "{!this}" action = "{!c.checkBrowser}"/>
+    <aura:handler event="c:showNewCaseEvent" action="{!c.handleApplicationEvent}"/>
+    <aura:if isTrue = "{!v.showTileMenu}">
+        <c:US_Community_Tile_Menu_Data />
+        
+        <div class= "slds-text-align_center">
+            <lightning:button  variant="brand" label="Account Deletion" onclick="{! c.handleClick }"/>
+            <lightning:button  variant="brand" label="Do Not Sell My Info" onclick="{! c.handleClick }"/>
+            <lightning:button  variant="brand" label="Data Access" onclick="{! c.handleClick }"/>
+        </div>
+    </aura:if>
+    <aura:if isTrue = "{!v.showAccountDeletion}">
+        <c:Account_Deletion showTileMenu= "{!v.showTileMenu}"
+                            showAccountDeletion= "{!v.showAccountDeletion}"
+                            showDoNotSellInfo= "{!v.showDoNotSellInfo}"
+                            showDataAccess= "{!v.showDataAccess}"
+                            newCase = "{!v.newCase}"
+                            deviceName = "{!v.deviceName}"
+                            />
+    </aura:if>
+    <aura:if isTrue = "{!v.showDoNotSellInfo}">
+        <c:Do_Not_Sell_Info showTileMenu= "{!v.showTileMenu}"
+                            showAccountDeletion= "{!v.showAccountDeletion}"
+                            showDoNotSellInfo= "{!v.showDoNotSellInfo}"
+                            showDataAccess= "{!v.showDataAccess}"
+                            newCase = "{!v.newCase}"
+                            deviceName = "{!v.deviceName}"
+                            />
+    </aura:if>
+    <aura:if isTrue = "{!v.showDataAccess}">
+        <c:Data_Access showTileMenu= "{!v.showTileMenu}"
+                       showAccountDeletion= "{!v.showAccountDeletion}"
+                       showDoNotSellInfo= "{!v.showDoNotSellInfo}"
+                       showDataAccess= "{!v.showDataAccess}"
+                       newCase = "{!v.newCase}"
+                       deviceName = "{!v.deviceName}"
+                       />
+    </aura:if>
+    <aura:if isTrue = "{!and(v.NewCase != undefined , v.NewCase != null)}" >
+        <div class="slds-wrap slds-p-vertical--medium">
+            <h1 class="slds-page-header__title" >Your case was created.
+            </h1>
+            <div class="slds-m-top--small" >We’ll get back to you soon.
+            </div>
+        </div>
+        <div class="slds-border_top slds-p-vertical--medium ">
+            <h2 class="" >Case summary
+            </h2>
+            <div class="slds-grid" >
+                <div class="slds-col--padded slds-size--1-of-4 " >
+                    <div class="bold slds-m-top--x-small" >Case Number:</div>
+                </div>
+                <div class="slds-col--padded slds-size--3-of-4" >
+                    <div class="slds-m-top--x-small slds-wrap slds-hyphenate" >
+                        {!v.NewCase.CaseNumber}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </aura:if>
+</aura:component>

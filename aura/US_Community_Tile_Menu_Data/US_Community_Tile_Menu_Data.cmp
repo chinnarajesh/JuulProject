@@ -1,0 +1,109 @@
+<aura:component implements="forceCommunity:availableForAllPageTypes,force:lightningQuickAction" 
+                access="global" controller="CCPACommunityController" >
+    <div class="">
+        <p style="text-align: center;">
+            <b style="background-color: transparent; font-size: 18px;">
+                <u>For California Residents – California Consumer Privacy Act
+                </u>
+            </b>
+        </p>
+        <br />
+        <p >
+            <span style="background-color: transparent; font-size: 14px;">
+                Beginning January 1, 2020 verified California Residents may request the following:
+                &nbsp;
+            </span>
+        </p>
+        <br />
+        <ul class ="mainul">
+            <li>
+                <b style="background-color: transparent; font-size: 14px;">
+                    Information Collection Practices
+                </b><span style="background-color: transparent; font-size: 14px;">
+                &nbsp;– You may request to receive the categories of information we collected about 
+                you, the sources and uses of that information and how it was shared in the last 
+                12 months.
+                </span>
+            </li>
+            <br />
+            <li>
+                <b style="background-color: transparent; font-size: 14px;">
+                    Information Sharing Practices 
+                </b><span style="background-color: transparent; font-size: 14px;">
+                &nbsp;– You may request to receive the categories of information we collected 
+                about you that we shared for a business purpose and the categories of information 
+                we shared and the recipients of that information in instances where we received value 
+                for the exchange of the information.
+                </span>
+            </li>
+            <br />
+            <li>
+                <b style="background-color: transparent; font-size: 14px;">
+                    Specific Information Collected
+                </b><span style="background-color: transparent; font-size: 14px;">
+                &nbsp;– You may request to receive the specific pieces of information we have 
+                collected about you  during the past 12 months.
+                </span>
+            </li>
+            <br />
+            <li>
+                <b style="background-color: transparent; font-size: 14px;">
+                    Information and Account Deletion
+                </b><span style="background-color: transparent; font-size: 14px;">
+                &nbsp;– Where requested and where appropriate, we will delete (and ask our service 
+                providers to delete) to the extent practicable information about you but we will not 
+                delete your account with us or the information in your account. If you wish to delete
+                your account, please click on the “account deletion” link below. California law 
+                permits us to retain certain information and not to delete it under certain 
+                circumstances. 
+                
+                </span>
+                <ul class="nestedUL">
+                    <li style="margin-left:50px;">
+                        By way of example, we are not required to comply with a request to delete 
+                        information if the information is necessary for us to complete a transaction 
+                        for you or otherwise perform a contract; to detect, protect against, or 
+                        prosecute security incidents,fraud or illegal activity;to use the information
+                        only internally in ways reasonably aligned with your expectations as our 
+                        customer (such as maintaining sales records),and to comply with legal 
+                        obligations.
+                    </li>
+                </ul> 
+            </li>
+            <br />
+            <li>
+                <b style="background-color: transparent; font-size: 14px;">
+                    Do Not Sell
+                </b><span style="background-color: transparent; font-size: 14px;">
+                &nbsp;– Where requested, we will not share your information with business 
+                partners who provide value to us in exchange for such information. For “Do-Not-Sell” 
+                requests please visit the link below.
+                </span>
+            </li>
+        </ul>
+        <br />
+        <p style="text-align: center;">
+            <b style="background-color: transparent; font-size: 18px;">
+                <u>For All U.S. Residents – Account Deletion Requests
+                </u>
+            </b>
+        </p>
+        <br />
+        <p > 
+            <span style="background-color: transparent; font-size: 14px;">
+                For Account Deletion requests for all U.S. residents, please see the link below 
+                titled “Account Deletion”.
+            </span>
+        </p>
+        <br />
+        <p >
+            <span style="background-color: transparent; font-size: 14px;">
+                To respond to your request, we will need to collect information from you to verify
+                your identity and to enable us to link the information we hold relevant to your
+                identity. The verification process helps ensure that we are honoring your requests 
+                for information about you, and not about someone else.
+            </span>
+        </p>
+        <br /> <br /> 
+    </div>
+</aura:component>

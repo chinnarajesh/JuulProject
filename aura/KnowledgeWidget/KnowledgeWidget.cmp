@@ -1,0 +1,168 @@
+<aura:component implements="flexipage:availableForRecordHome,force:hasRecordId" access="global" controller="Knowledge_Widget_Con">
+    <ltng:require styles="{! $Resource.KnowledgeWidgetResources + '/select2/css/select2.min.css'}"
+                  scripts="{!join(',',
+                           $Resource.KnowledgeWidgetResources + '/jquery/jquery-3.3.1.min.js',
+                           $Resource.KnowledgeWidgetResources + '/fuse/fuse.js',
+                           $Resource.KnowledgeWidgetResources + '/select2/js/select2.full.js')
+                           }"
+                  afterScriptsLoaded="{!c.doInit}"/>
+    <aura:attribute name="recordId" type="Id" />
+    
+    
+    
+    <aura:attribute name="case" type="Object"/>
+    <aura:attribute name="caseArticleMap" type="Object"/>
+    <aura:attribute name="categories" type="Object[]"/>
+    <aura:attribute name="articleTypes" type="Object[]"/>
+    <aura:attribute name="articles" type="Object[]"/>
+    <aura:attribute name="suggestions" type="Object[]"/>
+    <aura:attribute name="article" type="Object"/>
+    <aura:attribute name="suggestion" type="Object"/>
+    <aura:attribute name="isDetail" type="Boolean" default="false"/>
+    <aura:attribute name="isSuggestion" type="Boolean" default="false"/>
+    <aura:attribute name="selectedTab" type="String" default="all" />
+    <!-- <aura:handler name="init" value="{!this}" action="{!c.doInit}"/> -->
+    <lightning:spinner variant="brand" size="large" aura:id="knowledgeSpinner"/>
+    
+    <aura:if isTrue="{!v.isDetail}">
+        <div style="padding:6px">
+            <div class="modal-header">
+                <h5 class="modal-title">
+                    <a onclick="{!c.backToSearch}">
+                        <lightning:icon iconName="utility:back" size="x-small" alternativeText="Back To Search"/>
+                    </a>
+                    <span style="height:30px;margin-left:5px;">
+                        <span class="article-icon"></span>
+                    </span> &nbsp;
+                    <b>{!v.article.Title} </b>
+                    <aura:if isTrue="{!v.article.attributes.added}">
+                         <div class="remove">
+                        	<lightning:buttonIcon variant="bare" iconName="utility:dash" onclick="{! c.detach }" value="{!v.article.attributes.idx}" class="btn"/>
+                        </div>
+                        <aura:set attribute="else">
+                            <div class="add">
+                            	<lightning:buttonIcon variant="bare" iconName="utility:add"  onclick="{! c.attach }" value="{!v.article.KnowledgeArticleId}" class="btn"/>
+                            </div>
+                        </aura:set>
+                    </aura:if>
+                </h5>
+            </div>
+            <div class="modal-body">
+                <ui:outputRichText class="slds-text-longform" value="{!v.article.Body__c}"/>
+                
+            </div>
+            
+        </div>
+        
+        <aura:set attribute="else">
+            <div class="slds-box">
+                
+                <input type="text" class="slds-input " id="search" placeholder="Search Knowledge" style="position:relative;"></input>
+                <div class="slds-grid slds-wrap slds-box slds-m-top_small">
+                    <div class="slds-col slds-size_6-of-12 slds-p-horizontal_x-small">
+                        <div class="slds-form-element">
+                            <select class="slds-select" id="article-types">
+                                
+                                <aura:iteration items="{!v.articleTypes}" var="itm">
+                                    <option value="{!itm.val}">{!itm.name}</option>
+                                </aura:iteration>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="slds-col slds-size_6-of-12">
+                        <div class="slds-form-element">
+                            <select class="slds-select" id="categories">
+                                
+                                <aura:iteration items="{!v.categories}" var="cat">
+                                    <option value="{!cat.val}">{!cat.name}</option>
+                                </aura:iteration>
+                            </select>
+                        </div> 
+                    </div>
+                </div>
+                
+                <lightning:tabset aura:id="tabs" selectedTabId="{!v.selectedTab}">
+                    <lightning:tab label="All Articles" id="all">
+                        <table class="slds-table slds-table_bordered ">
+                            <tbody>
+                                <aura:iteration items="{!v.articles}" var="art" indexVar="index">
+                                    <tr data-category="{!art.DataCategory}" data-article-type="{!art.ArticleType}" class="data-rows">
+                                        <td class="wrapping">
+                                            <aura:if isTrue="{!art.attributes.added}">
+                                                <div class="remove">
+                                                    <lightning:buttonIcon iconName="utility:dash" onclick="{!c.detach}" variant="border-filled" alternativeText="remove" value="{!index}"/>
+                                                </div>
+                                                <aura:set attribute="else">
+                                                    <div class="add">
+                                                        <lightning:buttonIcon iconName="utility:add" onclick="{!c.attach}" variant="border-filled" alternativeText="add"  value="{!art.KnowledgeArticleId}"/>
+                                                    </div>
+                                                </aura:set>
+                                            </aura:if>
+                                            <a style="cursor:pointer" onclick="{!c.openArticle}" data-value="{!index}">
+                                                {!art.Title}
+                                            </a>
+                                            <ul class="article-detail">
+                                                <li>
+                                                    <span>{!art.Title}</span>
+                                                </li>
+                                                <li>
+                                                    <span>{!art.ValidationStatus}</span>
+                                                </li>
+                                                <li>
+                                                    <span><ui:outputDate value="{!art.LastPublishedDate}"/></span>
+                                                </li>
+                                            </ul>
+                                        </td>
+                                    </tr>
+                                </aura:iteration>
+                            </tbody>
+                        </table>
+                    </lightning:tab>
+                    <lightning:tab label="Suggested Articles" id="sugested">
+                        <aura:set attribute="label">
+                            <div>
+                                <span>Suggested Articles</span> <span class="slds-badge" style="line-height: unset;">{!v.suggestions.length}</span>
+                            </div>
+                        </aura:set>
+                        <table class="slds-table slds-table_bordered ">
+                            <tbody>
+                                <aura:iteration items="{!v.suggestions}" var="art" indexVar="index">
+                                    <tr data-category="{!art.DataCategory}" data-article-type="{!art.ArticleType}" class="data-rows">
+                                        <td class="wrapping">
+                                            <aura:if isTrue="{!art.attributes.added}">
+                                                <div class="remove">
+                                                    <lightning:buttonIcon iconName="utility:dash" onclick="{!c.detach}" variant="border-filled" alternativeText="remove" value="{!index}"/>
+                                                </div>
+                                                <aura:set attribute="else">
+                                                    <div class="add">
+                                                        <lightning:buttonIcon iconName="utility:add" onclick="{!c.attach}" variant="border-filled" alternativeText="add"  value="{!art.KnowledgeArticleId}"/>
+                                                    </div>
+                                                </aura:set>
+                                            </aura:if>
+                                            
+                                            <a style="cursor:pointer" onclick="{!c.openSuggestion}" data-value="{!index}">
+                                                {!art.Title}
+                                            </a>
+                                            <ul class="article-detail">
+                                                <li>
+                                                    <span>{!art.Title}</span>
+                                                </li>
+                                                <li>
+                                                    <span>{!art.ValidationStatus}</span>
+                                                </li>
+                                                <li>
+                                                    <span><ui:outputDate value="{!art.LastPublishedDate}"/></span>
+                                                </li>
+                                            </ul>
+                                        </td>
+                                    </tr>
+                                </aura:iteration>
+                            </tbody>
+                        </table>
+                    </lightning:tab>
+                </lightning:tabset>
+            </div>
+        </aura:set>
+        
+    </aura:if>
+</aura:component>

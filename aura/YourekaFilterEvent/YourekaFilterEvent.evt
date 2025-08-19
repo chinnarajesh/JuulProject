@@ -1,0 +1,6 @@
+<aura:event type="APPLICATION" description="Event template">
+    <aura:attribute name="filterOptions" type="Object" default="{}"></aura:attribute>
+    <aura:attribute name="accountOptions" type="Object" default="{}"></aura:attribute>
+    <aura:attribute name="selectedAccounts" type="List" default="[]"></aura:attribute>
+    <aura:attribute name="currentType" type="String" default=""></aura:attribute>
+</aura:event>

@@ -1,0 +1,24 @@
+<aura:component implements="flexipage:availableForRecordHome,force:hasRecordId" access="global" controller="CaseViewerCtrl">
+    <!--
+    <aura:attribute name="viewers" type="Object[]"/>
+    <aura:attribute name="recordId" type="Id" />
+    <aura:attribute name="timer" type="String" />
+    <aura:attribute name="caseviewers" type="Object" />
+    <aura:attribute name="user" type="Object" />
+    <aura:attribute name="skip" type="Boolean" default="false"/>
+     <aura:handler name="init" value="{!this}" action="{!c.doInit}"/>
+    <ltng:require
+                  scripts="{!join(',',
+                               $Resource.noty + '/jquery.min.js',
+                               $Resource.noty + '/idle-timer.min.js',
+                               $Resource.noty + '/swal2/sweetalert2.js'
+                           )}"
+                  styles="{!join(',',
+                          	$Resource.noty + '/swal2/sweetalert2.css'
+                          )}"
+                  afterScriptsLoaded="{!c.doInit}"/>
+    
+    <lightning:workspaceAPI aura:id="workspace"/>
+    <aura:handler name="destroy" value="{!this}" action="{!c.handleDestroy}"/>
+ -->
+</aura:component>

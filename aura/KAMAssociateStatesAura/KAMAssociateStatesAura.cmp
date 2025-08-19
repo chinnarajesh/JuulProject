@@ -1,0 +1,30 @@
+<aura:component implements="force:lightningQuickActionWithoutHeader,force:hasRecordId" access="global">
+    <aura:attribute name="manageAPT" type="boolean" default="false" />
+    <aura:if isTrue="{!v.manageAPT}">
+        <c:kamManageActionPlanTemplate onclose="{!c.closeMethodInAuraController}"
+        onrefresh="{!c.refreshMethodInAuraController}" recordId="{!v.recordId}" />
+        <aura:set attribute="else">
+            <c:kamAssociateStatesClone onclose="{!c.closeMethodInAuraController}"
+                onrefresh="{!c.refreshMethodInAuraController}" recordId="{!v.recordId}"
+                onmyfirstevent="{!c.handleLWCEvent}" />
+        </aura:set>
+    </aura:if>
+    <aura:html tag="style">
+        .cuf-content {
+        padding: 0 0rem !important;
+        }
+        .slds-p-around--medium {
+        padding: 0rem !important;
+        }
+        .slds-modal__content{
+        overflow-y:hidden !important;
+        height:unset !important;
+        max-height:unset !important;
+        }
+        .slds-modal__container{
+        max-width: 80rem !important;
+        width:80% !important;
+        height: 100% !important;
+        }
+    </aura:html>
+</aura:component>

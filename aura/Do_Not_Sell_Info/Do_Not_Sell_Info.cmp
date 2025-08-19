@@ -1,0 +1,77 @@
+<aura:component implements="forceCommunity:availableForAllPageTypes,force:lightningQuickAction" 
+                access="global" controller="CCPACommunityController" >
+    <aura:attribute name = "showTileMenu" type = "Boolean" default = "true" />
+    <aura:attribute name = "showAccountDeletion" type = "Boolean" default = "true" />
+    <aura:attribute name = "showDoNotSellInfo" type = "Boolean" default = "true" />
+    <aura:attribute name = "showDataAccess" type = "Boolean" default = "true" />
+    <aura:attribute name ="verifyCaptcha" type="Boolean" default="false" />
+    <aura:attribute name ="errorMsg" type="String" default="" /> 
+    <aura:attribute name ="CaseValues" type = "Case" default = "{Web_First_Name__c : '',
+                                                                Web_Last_Name__c :'',
+                                                                SuppliedPhone : '',
+                                                                SuppliedEmail : '',
+                                                                Do_not_Sell_my_data__c : false}"/>
+    <aura:attribute name = "NewCase" type = "Case" />
+    <aura:attribute name ="showSpinner" type="Boolean" default="false" />
+    <aura:attribute name ="deviceName" type="String" default="DESKTOP" />
+    <aura:registerEvent name="NewCaseEvent" type="c:showNewCaseEvent"/>
+    <aura:handler name ="init" value = "{!this}" action = "{!c.doInit}"/>
+    <div class="slds-truncate slds-align-middle slds-text-align_center slds-p-top--small">
+        <h1 class="slds-page-header__title" >Do Not Sell Info Request
+        </h1>
+        <span class="subtitle">
+        </span>
+    </div>
+    <div class= "container">
+        <div class="slds-text-body_small slds-text-color_error 
+                    slds-truncate slds-align-middle slds-text-align_center"
+             style = "font-size : .9rem"><b>{!v.errorMsg}</b> </div>
+        <lightning:input aura:id ="Do_Not_Sell_Info" class="slds-form-element__label" 
+                         label="First Name" 
+                         required= "true" 
+                         messageWhenValueMissing="Please Enter First Name"
+                         value = "{!v.CaseValues.Web_First_Name__c}"/>
+        <lightning:input aura:id ="Do_Not_Sell_Info" label="Last Name"  required= "true" 
+                         messageWhenValueMissing="Please Enter Last Name"
+                         value = "{!v.CaseValues.Web_Last_Name__c}"/>
+        <lightning:input aura:id ="Do_Not_Sell_Info" label="Email" type="email" required= "true"
+                         messageWhenValueMissing="Please Enter Email"
+                         value = "{!v.CaseValues.SuppliedEmail}"
+                         />
+        <lightning:input aura:id ="Do_Not_Sell_Info"
+                         label="Phone" type="tel" required= "true" 
+                         pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}"
+                         messageWhenValueMissing="Please Enter Phone Number"
+                         messageWhenPatternMismatch="Phone Number should be of 10"
+                         value = "{!v.CaseValues.SuppliedPhone}"
+                         onchange = "{!c.formatPhone}"/>
+        <lightning:input aura:id ="Do_Not_Sell_Info" class="slds-form-element__label" 
+                         label="Zip or Postal Code" 
+                         required= "true" 
+                         messageWhenValueMissing="Please Enter Zip or Postal Code"
+                         value = "{!v.CaseValues.Ship_To_Zip__c}"
+                         />
+        <br />
+        <lightning:input type="checkbox" label="Do Not Sell My Info" 
+                         checked="{!v.CaseValues.Do_not_Sell_my_data__c}"/>
+        <br />
+        
+        
+        <div class="slds-grid ">
+            <div class="slds-col slds-size_1-of-3">
+                <c:reCaptcha verifyCaptcha = "{!v.verifyCaptcha}"
+                             errorMsg = "{!v.errorMsg}"/>
+            </div>
+            <div class="slds-col slds-size_2-of-3" style ="margin-top : 100px">
+                <aura:if isTrue = "{!(v.deviceName!='PHONE') ||
+                                   and(v.deviceName=='PHONE',v.verifyCaptcha)}">
+                    <lightning:button  variant="brand" label="Back" onclick="{! c.handleClick }"/>
+                    <lightning:button  variant="brand" label="Submit" onclick="{! c.handleClick }"/>
+                </aura:if>
+            </div>
+        </div>
+    </div>
+    <aura:if isTrue="{!v.showSpinner}">
+        <lightning:spinner alternativeText="Loading" size="large" />
+    </aura:if>
+</aura:component>

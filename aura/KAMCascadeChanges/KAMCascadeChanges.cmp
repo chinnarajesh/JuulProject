@@ -1,0 +1,26 @@
+<aura:component implements="force:lightningQuickActionWithoutHeader,force:hasRecordId"> 
+    
+    <div class="modal-header slds-docked-form-header slds-modal__header ">
+        <b><h4 class="title slds-text-heading--medium" >Warning</h4></b>
+    </div>
+    
+    <br></br>
+    <H1> <center>InStoreLocations and Missions will be updated with new dates. <p>Do you want to proceed?</p></center></H1>
+    <br></br>
+   
+    <c:kAMCascadeChangesLWC onclose="{!c.closeMethodInAuraController}"
+                        onrefresh="{!c.refreshMethodInAuraController}" recordId="{!v.recordId}" /> 
+    <aura:html tag="style">
+        .cuf-content {
+        padding: 0 0rem !important;
+        }
+        .slds-p-around--medium {
+        padding: 0rem !important;
+        }       
+        .slds-modal__content{
+        overflow-y:hidden !important;
+        height:unset !important;
+        max-height:unset !important;
+        }
+    </aura:html>
+</aura:component>

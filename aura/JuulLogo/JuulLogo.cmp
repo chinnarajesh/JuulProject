@@ -1,0 +1,6 @@
+<aura:component implements="forceCommunity:availableForAllPageTypes" access="global" >
+	<div class="slds-align_absolute-center" style="width:50%;height: 20%;">
+        <img src="{!$Resource.juulLogo}" />
+    </div>
+    
+</aura:component>
